@@ -36,7 +36,7 @@ function session_init() {
     'has_archive' => true, 
     'hierarchical' => true,
     'menu_position' => null,
-    'supports' => array( 'title', 'editor','custom-fields')
+    'supports' => array( 'title')
   ); 
   register_post_type('session',$args);
 }
@@ -66,65 +66,6 @@ function session_updated_messages( $messages ) {
   return $messages;
 }
 
-add_action( 'init', 'trial_question_init' );
-function trial_question_init() {
-  $labels = array(
-    'name' => _x('Trial Questions', 'post type general name'),
-    'singular_name' => _x('Trial Question', 'post type singular name'),
-    'add_new' => _x('Add New', 'question'),
-    'add_new_item' => __('Add New Question'),
-    'edit_item' => __('Edit Question'),
-    'new_item' => __('New Question'),
-    'all_items' => __('All Questions'),
-    'view_item' => __('View Question'),
-    'search_items' => __('Search Questions'),
-    'not_found' =>  __('No questions found'),
-    'not_found_in_trash' => __('No questions found in Trash'), 
-    'parent_item_colon' => '',
-    'menu_name' => 'Exams'
-
-  );
-  $args = array(
-    'labels' => $labels,
-    'public' => true,
-    'publicly_queryable' => true,
-    'show_ui' => true, 
-    'show_in_menu' => true, 
-    'query_var' => true,
-    'rewrite' => true,
-    'capability_type' => 'post',
-    'has_archive' => true, 
-    'hierarchical' => true,
-    'menu_position' => null,
-    'supports' => array( 'title', 'editor','custom-fields')
-  ); 
-  register_post_type('trial_question',$args);
-}
-
-//add filter to ensure the text Question, or question, is displayed when user updates a question 
-add_filter( 'post_updated_messages', 'trial_question_updated_messages' );
-function trial_question_updated_messages( $messages ) {
-  global $post, $post_ID;
-
-  $messages['trial_question'] = array(
-    0 => '', // Unused. Messages start at index 1.
-    1 => sprintf( __('Question updated. <a href="%s">View question</a>'), esc_url( get_permalink($post_ID) ) ),
-    2 => __('Custom field updated.'),
-    3 => __('Custom field deleted.'),
-    4 => __('Question updated.'),
-    /* translators: %s: date and time of the revision */
-    5 => isset($_GET['revision']) ? sprintf( __('Question restored to revision from %s'), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
-    6 => sprintf( __('Question published. <a href="%s">View question</a>'), esc_url( get_permalink($post_ID) ) ),
-    7 => __('Question saved.'),
-    8 => sprintf( __('Question submitted. <a target="_blank" href="%s">Preview question</a>'), esc_url( add_query_arg( 'preview', 'true', get_permalink($post_ID) ) ) ),
-    9 => sprintf( __('Question scheduled for: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Preview question</a>'),
-      // translators: Publish box date format, see http://php.net/date
-      date_i18n( __( 'M j, Y @ G:i' ), strtotime( $post->post_date ) ), esc_url( get_permalink($post_ID) ) ),
-    10 => sprintf( __('Question draft updated. <a target="_blank" href="%s">Preview question</a>'), esc_url( add_query_arg( 'preview', 'true', get_permalink($post_ID) ) ) ),
-  );
-
-  return $messages;
-}
 add_action( 'init', 'question_init' );
 function question_init() {
   $labels = array(
@@ -140,7 +81,7 @@ function question_init() {
     'not_found' =>  __('No questions found'),
     'not_found_in_trash' => __('No questions found in Trash'), 
     'parent_item_colon' => '',
-    'menu_name' => 'Demos'
+    'menu_name' => 'Quizzs'
 
   );
   $args = array(
@@ -213,6 +154,65 @@ function question_add_help_text( $contextual_help, $screen_id, $screen ) {
 }
 
 
+add_action( 'init', 'trial_question_init' );
+function trial_question_init() {
+  $labels = array(
+    'name' => _x('Trial Questions', 'post type general name'),
+    'singular_name' => _x('Trial Question', 'post type singular name'),
+    'add_new' => _x('Add New', 'question'),
+    'add_new_item' => __('Add New Question'),
+    'edit_item' => __('Edit Question'),
+    'new_item' => __('New Question'),
+    'all_items' => __('All Questions'),
+    'view_item' => __('View Question'),
+    'search_items' => __('Search Questions'),
+    'not_found' =>  __('No questions found'),
+    'not_found_in_trash' => __('No questions found in Trash'), 
+    'parent_item_colon' => '',
+    'menu_name' => 'Demo Exams'
+
+  );
+  $args = array(
+    'labels' => $labels,
+    'public' => true,
+    'publicly_queryable' => true,
+    'show_ui' => true, 
+    'show_in_menu' => true, 
+    'query_var' => true,
+    'rewrite' => true,
+    'capability_type' => 'post',
+    'has_archive' => true, 
+    'hierarchical' => true,
+    'menu_position' => null,
+    'supports' => array( 'title', 'editor','custom-fields')
+  ); 
+  register_post_type('trial_question',$args);
+}
+
+//add filter to ensure the text Question, or question, is displayed when user updates a question 
+add_filter( 'post_updated_messages', 'trial_question_updated_messages' );
+function trial_question_updated_messages( $messages ) {
+  global $post, $post_ID;
+
+  $messages['trial_question'] = array(
+    0 => '', // Unused. Messages start at index 1.
+    1 => sprintf( __('Question updated. <a href="%s">View question</a>'), esc_url( get_permalink($post_ID) ) ),
+    2 => __('Custom field updated.'),
+    3 => __('Custom field deleted.'),
+    4 => __('Question updated.'),
+    /* translators: %s: date and time of the revision */
+    5 => isset($_GET['revision']) ? sprintf( __('Question restored to revision from %s'), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
+    6 => sprintf( __('Question published. <a href="%s">View question</a>'), esc_url( get_permalink($post_ID) ) ),
+    7 => __('Question saved.'),
+    8 => sprintf( __('Question submitted. <a target="_blank" href="%s">Preview question</a>'), esc_url( add_query_arg( 'preview', 'true', get_permalink($post_ID) ) ) ),
+    9 => sprintf( __('Question scheduled for: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Preview question</a>'),
+      // translators: Publish box date format, see http://php.net/date
+      date_i18n( __( 'M j, Y @ G:i' ), strtotime( $post->post_date ) ), esc_url( get_permalink($post_ID) ) ),
+    10 => sprintf( __('Question draft updated. <a target="_blank" href="%s">Preview question</a>'), esc_url( add_query_arg( 'preview', 'true', get_permalink($post_ID) ) ) ),
+  );
+
+  return $messages;
+}
 add_action( 'init', 'create_question_taxonomies', 0 );
 
 //create two taxonomies, genres and subjects for the post type "question"
@@ -309,7 +309,7 @@ function create_question_taxonomies()
   ));
   register_taxonomy('hidden_term',array('question','session'),array(
     'hierarchical' => true,
-    'show_ui' => false,
+    'show_ui' => true,
     'update_count_callback' => '_update_post_term_count',
     'query_var' => true,
     'rewrite' => array( 'slug' => 'hidden_term' ),
@@ -374,21 +374,42 @@ if( !function_exists( 'mfields_remove_div' ) ) {
 }*/
 function add_session_category_automatically($post_ID) {
     global $wpdb;
-	$term = wp_insert_term(
-	  $post_ID, // the term 
-	  'hidden_term', // the taxonomy
-	  array(
-		'slug' => 'hidden-'.$post_ID,
-		'parent'=> '0',
-	  )
-	);
-    //if(!has_term('','subject',$post_ID)){
-        //$hidden_term = get_term_by( 'slug', 'session', 'subject' );
-        $term_slug = array('hidden-'.$post_ID);
-        wp_set_object_terms($post_ID, $term_slug, 'hidden_term');
-    //}
+    $term = wp_insert_term(
+    get_the_title($post_ID), // the term 
+    'hidden_term', // the taxonomy
+    array(
+	'slug' => 'hidden-'.$post_ID,
+	'parent'=> '0',
+    )
+    );
+    $term_slug = array('hidden-'.$post_ID);
+    wp_set_object_terms($post_ID, $term_slug, 'hidden_term');
 }
 add_action('publish_session', 'add_session_category_automatically');
+
+function delete_session_category_automatically($post_ID) {
+    global $wpdb;
+    //$term = get_term_by('slug','hidden-'.$post_ID,'hidden_term');
+    wp_delete_term(12,'hidden_term');
+}
+add_action('delete_session', 'delete_session_category_automatically');
+//function remove_those_menu_items(){
+    //remove_submenu_page( 'edit.php', 'edit-tags.php?taxonomy=hidden_term&post_type=session' );
+//}
+
+//add_filter( 'admin_menu', 'remove_those_menu_items' );
+/*function remove_menus () {
+global $menu;
+    $restricted = array(__('Dashboard'), __('Posts'), __('Media'), __('Links'), __('Pages'), __('Appearance'), __('Tools'), __('Users'), __('Settings'), __('Comments'), __('Plugins'));
+    end ($menu);
+    while (prev($menu)){
+        $value = explode(' ',$menu[key($menu)][0]);
+        if(in_array($value[0] != NULL?$value[0]:"" , $restricted)){unset($menu[key($menu)]);}
+    }
+}
+add_action('admin_menu', 'remove_menus');
+*/
+
 
 add_action( 'after_setup_theme', 'twentyeleven_setup' );
 if ( ! function_exists( 'twentyeleven_setup' ) ):
