@@ -237,7 +237,7 @@ function create_question_taxonomies()
     'menu_name' => __( 'Classs' ),
   ); 
 
-  register_taxonomy('class',array('question','trial_question'),array(
+  register_taxonomy('class',array('question','trial_question','session'),array(
     'hierarchical' => true,
     'labels' => $labels,
     'show_ui' => true,
@@ -272,7 +272,7 @@ function create_question_taxonomies()
     'menu_name' => __( 'Terms' ),
   ); 
 
-  register_taxonomy('term','question',array(
+  register_taxonomy('term',array('question','session'),array(
     'hierarchical' => true,
     'labels' => $labels,
     'show_ui' => true,
@@ -299,7 +299,60 @@ function create_question_taxonomies()
     'menu_name' => __( 'Subjects' ),
   ); 
 
-  register_taxonomy('subject',array('question','trial_question'),array(
+  register_taxonomy('subject',array('question','trial_question','session'),array(
+    'hierarchical' => true,
+    'labels' => $labels,
+    'show_ui' => true,
+    'update_count_callback' => '_update_post_term_count',
+    'query_var' => true,
+    'rewrite' => array( 'slug' => 'subject' ),
+  ));
+  
+  $labels = array(
+    'name' => _x( 'Time', 'taxonomy general name' ),
+    'singular_name' => _x( 'Time', 'taxonomy singular name' ),
+    'search_items' =>  __( 'Search Times' ),
+    'popular_items' => __( 'Popular Times' ),
+    'all_items' => __( 'All Times' ),
+    'parent_item' => null,
+    'parent_item_colon' => null,
+    'edit_item' => __( 'Edit Time' ), 
+    'update_item' => __( 'Update Time' ),
+    'add_new_item' => __( 'Add New Time' ),
+    'new_item_name' => __( 'New Time Name' ),
+    'separate_items_with_commas' => __( 'Separate times with commas' ),
+    'add_or_remove_items' => __( 'Add or remove times' ),
+    'choose_from_most_used' => __( 'Choose from the most used times' ),
+    'menu_name' => __( 'Times' ),
+  ); 
+
+  register_taxonomy('time',array('session'),array(
+    'hierarchical' => true,
+    'labels' => $labels,
+    'show_ui' => true,
+    'update_count_callback' => '_update_post_term_count',
+    'query_var' => true,
+    'rewrite' => array( 'slug' => 'subject' ),
+  ));
+  $labels = array(
+    'name' => _x( 'Level', 'taxonomy general name' ),
+    'singular_name' => _x( 'Level', 'taxonomy singular name' ),
+    'search_items' =>  __( 'Search Levels' ),
+    'popular_items' => __( 'Popular Levels' ),
+    'all_items' => __( 'All Levels' ),
+    'parent_item' => null,
+    'parent_item_colon' => null,
+    'edit_item' => __( 'Edit Level' ), 
+    'update_item' => __( 'Update Level' ),
+    'add_new_item' => __( 'Add New Level' ),
+    'new_item_name' => __( 'New Level Name' ),
+    'separate_items_with_commas' => __( 'Separate levels with commas' ),
+    'add_or_remove_items' => __( 'Add or remove levels' ),
+    'choose_from_most_used' => __( 'Choose from the most used levels' ),
+    'menu_name' => __( 'Levels' ),
+  ); 
+
+  register_taxonomy('level',array('question'),array(
     'hierarchical' => true,
     'labels' => $labels,
     'show_ui' => true,
@@ -337,7 +390,96 @@ function my_request($request) {
 	}
 	return $request;
 }
+// disable default dashboard widgets
+function disable_default_dashboard_widgets() {
 
+	remove_meta_box('dashboard_right_now', 'dashboard', 'core');
+	remove_meta_box('dashboard_right_now', 'dashboard', 'core');
+	remove_meta_box('dashboard_recent_comments', 'dashboard', 'core');
+	remove_meta_box('dashboard_incoming_links', 'dashboard', 'core');
+	remove_meta_box('dashboard_plugins', 'dashboard', 'core');
+
+	remove_meta_box('dashboard_quick_press', 'dashboard', 'core');
+	remove_meta_box('dashboard_recent_drafts', 'dashboard', 'core');
+	remove_meta_box('dashboard_primary', 'dashboard', 'core');
+	remove_meta_box('dashboard_secondary', 'dashboard', 'core');
+}
+add_action('admin_menu', 'disable_default_dashboard_widgets');
+
+add_action( 'load-index.php', 'hide_welcome_panel' );
+
+function hide_welcome_panel() {
+    $user_id = get_current_user_id();
+
+    if ( 1 == get_user_meta( $user_id, 'show_welcome_panel', true ) )
+        update_user_meta( $user_id, 'show_welcome_panel', 0 );
+}
+
+// Hide admin 'Screen Options' tab
+function remove_screen_options_tab()
+{
+    return false;
+}
+add_filter('screen_options_show_screen', 'remove_screen_options_tab');
+
+
+// Session Page
+
+/* Define the custom box */
+
+add_action( 'add_meta_boxes', 'myplugin_add_custom_box' );
+
+// backwards compatible (before WP 3.0)
+// add_action( 'admin_init', 'myplugin_add_custom_box', 1 );
+
+/* Do something with the data entered */
+add_action( 'save_post', 'myplugin_save_postdata' );
+
+/* Adds a box to the main column on the Post and Page edit screens */
+function myplugin_add_custom_box() {
+    add_meta_box( 
+        'myplugin_sectionid',
+        __( 'Session Info', 'session_info' ),
+        'myplugin_inner_custom_box',
+        'session' 
+    );
+}
+
+/* Prints the box content */
+function myplugin_inner_custom_box( $post ) {
+
+  // Use nonce for verification
+  wp_nonce_field( plugin_basename( __FILE__ ), 'myplugin_noncename' );
+  $meta_values = get_post_meta($post->ID, '_myplugin_new_field', true);
+
+  // The actual fields for data entry
+  echo '<label for="range_time_field">';
+       _e("Time of Session", 'session_info' );
+  echo '</label> ';
+  echo '<input type="text" id="range_time_field" name="range_time_field" value="'.$meta_values.'" size="25" />';
+}
+
+/* When the post is saved, saves our custom data */
+function myplugin_save_postdata( $post_id ) {
+   global $typenow;
+  if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) 
+      return;
+
+  // verify this came from the our screen and with proper authorization,
+  // because save_post can be triggered at other times
+
+  if ( !wp_verify_nonce( $_POST['myplugin_noncename'], plugin_basename( __FILE__ ) ) )
+      return;
+
+  // OK, we're authenticated: we need to find and save the data
+
+  $mydata = $_POST['range_time_field'];
+  
+  if ($typenow == 'session') update_post_meta($post_id,'_range_time_field',$mydata);
+  // Do something with $mydata 
+  // probably using add_post_meta(), update_post_meta(), or 
+  // a custom table (see Further Reading section below)
+}
 /*
   register_taxonomy('subject','trial_question',array(
     'hierarchical' => true,
@@ -389,16 +531,17 @@ add_action('publish_session', 'add_session_category_automatically');
 
 function delete_session_category_automatically($post_ID) {
     global $wpdb;
-    //$term = get_term_by('slug','hidden-'.$post_ID,'hidden_term');
-    wp_delete_term(12,'hidden_term');
+    $term = get_term_by('slug','hidden-'.$post_ID,'hidden_term');
+    wp_delete_term($term->term_id,'hidden_term');
 }
-add_action('delete_session', 'delete_session_category_automatically');
+
+add_action('before_delete_post', 'delete_session_category_automatically');
 //function remove_those_menu_items(){
     //remove_submenu_page( 'edit.php', 'edit-tags.php?taxonomy=hidden_term&post_type=session' );
 //}
 
-//add_filter( 'admin_menu', 'remove_those_menu_items' );
-/*function remove_menus () {
+add_filter( 'admin_menu', 'remove_those_menu_items' );
+function remove_menus () {
 global $menu;
     $restricted = array(__('Dashboard'), __('Posts'), __('Media'), __('Links'), __('Pages'), __('Appearance'), __('Tools'), __('Users'), __('Settings'), __('Comments'), __('Plugins'));
     end ($menu);
@@ -408,11 +551,9 @@ global $menu;
     }
 }
 add_action('admin_menu', 'remove_menus');
-*/
-
 
 add_action( 'after_setup_theme', 'twentyeleven_setup' );
-if ( ! function_exists( 'twentyeleven_setup' ) ):
+if (!function_exists('twentyeleven_setup')):
 /**
 * Sets up theme defaults and registers support for various WordPress features.
 *
