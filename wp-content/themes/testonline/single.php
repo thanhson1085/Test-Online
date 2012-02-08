@@ -1,32 +1,88 @@
 <?php
 /**
- * The Template for displaying all single posts.
- *
- * @package WordPress
- * @subpackage Twenty_Eleven
- * @since Twenty Eleven 1.0
+ * Wed Feb 08, 2012 21:50:31 added by Thanh Son 
+ * Email: thanhson1085@gmail.com 
  */
+?>
+<form method="POST" action="#">
+<?php
+$term_name  = ($_GET['session'])?$_GET['session']:'';
+$args=array(
+  'name' => $term_name,
+  'post_type' => 'session',
+  'post_status' => 'publish',
+  'posts_per_page' => 1,
+  'caller_get_posts'=> 1
+);
+$my_query = null;
+$my_query = new WP_Query($args);
+if( $my_query->have_posts() ) {
+  	while ($my_query->have_posts()) : 
+	$my_query->the_post(); 
+	$subjects = wp_get_post_terms($post->ID,'subject',array('fields' => 'names'));
+	$marks = wp_get_post_terms($post->ID,'mark',array('fields' => 'names'));
+	$classes = wp_get_post_terms($post->ID,'class',array('fields' => 'names'));
+	$times = wp_get_post_terms($post->ID,'time',array('fields' => 'names'));
+	$terms = wp_get_post_terms($post->ID,'term',array('fields' => 'names'));
+	?>
 
-get_header(); ?>
+	<p><label>Subject:</label><span><?php  echo $subjects[0];?></span>
+	<label>Class:</label><span><?php echo $classes[0]; ?></span></p>
 
-		<div id="primary">
-			<div id="content" role="main">
+	<p><label>Term:</label><span><?php echo $terms[0]; ?></span>
+	<label>Time:</label><span><?php echo $times[0];?></span></p>
+	<p><label>Maximum Mark:</label><span><?php echo $marks[0];?></span> </p>
 
-				<?php while ( have_posts() ) : the_post(); ?>
+ <?php
+	endwhile;
+}
+wp_reset_query();  // Restore global post data stomped by the_post().
+?>
+<p><label>Your Name:</label><input type="text" name="yourname" />
+<label>Your Class:</label><input type="text" name="yourclass" /></p>
+<?php
+$args = array(
+'post_status' => 'publish',
+'taxonomy_name' => 'hidden_term',
+'taxonomy_term' => $term_name,//Feilong: string,not array!
+'post_type' => 'question',
+);
+$answers = array();
+$answers_true = array();
+$custom_posts = get_posts_by_taxonomy($args);
+if ($custom_posts):
+	foreach ($custom_posts as $post){
+		setup_postdata($post);
+		$answers = array();
+		$answers_true = array();
 
-					<nav id="nav-single">
-						<h3 class="assistive-text"><?php _e( 'Post navigation', 'twentyeleven' ); ?></h3>
-						<span class="nav-previous"><?php previous_post_link( '%link', __( '<span class="meta-nav">&larr;</span> Previous', 'twentyeleven' ) ); ?></span>
-						<span class="nav-next"><?php next_post_link( '%link', __( 'Next <span class="meta-nav">&rarr;</span>', 'twentyeleven' ) ); ?></span>
-					</nav><!-- #nav-single -->
+		?>
+		<p><?php echo $post->post_title; ?></p>
+		<p><?php echo $post->post_content; ?></p>
+		<?php
+		$answers = get_post_metadata($post->ID,array('False','True'));
 
-					<?php get_template_part( 'content', 'single' ); ?>
+		$answers_true = get_post_metadata($post->ID,array('True'));
+		$answers = array_merge($answers,get_post_metadata($post->ID,array('Text')));
+		$input_type = (count($answers_true)>1)?'checkbox':'radio'; 
+		foreach ($answers as $answer){
+			if ($answer->meta_key != 'Text'){
+				?>
+				<p><input type="<?php echo $input_type;?>" name="<?php echo $post->ID;?>" value="<?php echo $answer->meta_id;?>"/><label><?php echo $answer->meta_value;?></label></p>
+				<?php
+			}
+			else{
+				?>
+				<p><input type="<?php echo $input_type;?>" name="<?php echo $post->ID;?>" value="<?php echo $answer->meta_id;?>"/><label><input type="text" /></label></p>
+				<?php
+			}
+		}
+	}
+else : endif;
 
-					<?php comments_template( '', true ); ?>
-
-				<?php endwhile; // end of the loop. ?>
-
-			</div><!-- #content -->
-		</div><!-- #primary -->
-
-<?php get_footer(); ?>
+//print_r($answers);
+//end of get posts by Taxonomy terms
+?>
+<input type="submit" value="Finish"/>
+</form>
+<?php //get_footer(); ?>

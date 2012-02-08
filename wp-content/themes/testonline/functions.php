@@ -386,16 +386,33 @@ function create_question_taxonomies()
     'query_var' => true,
     'rewrite' => array( 'slug' => 'subject' ),
   ));
-  register_taxonomy('hidden_term',array('question','session'),array(
+  $labels = array(
+    'name' => _x( 'Sessions', 'taxonomy general name' ),
+    'singular_name' => _x( 'Session', 'taxonomy singular name' ),
+    'search_items' =>  __( 'Search Sessions' ),
+    'popular_items' => __( 'Popular Sessions' ),
+    'all_items' => __( 'All Sessions' ),
+    'parent_item' => null,
+    'parent_item_colon' => null,
+    'edit_item' => __( 'Edit Session' ), 
+    'update_item' => __( 'Update Session' ),
+    'add_new_item' => __( 'Add New Session' ),
+    'new_item_name' => __( 'New Session Name' ),
+    'separate_items_with_commas' => __( 'Separate marks with commas' ),
+    'add_or_remove_items' => __( 'Add or remove Sessions' ),
+    'choose_from_most_used' => __( 'Choose from the most used sessions' ),
+    'menu_name' => __( 'Sessions' ),
+  ); 
+  register_taxonomy('hidden_term',array('question'),array(
     'hierarchical' => true,
+	'labels' => $labels,
     'show_ui' => true,
     'update_count_callback' => '_update_post_term_count',
     'query_var' => true,
     'rewrite' => array( 'slug' => 'hidden_term' ),
   ));
 
-add_action('restrict_manage_posts','my_restrict_manage_posts');
-
+/*add_action('restrict_manage_posts','my_restrict_manage_posts');
 function my_restrict_manage_posts() {
 	global $typenow;
 
@@ -409,12 +426,30 @@ function my_restrict_manage_posts() {
 		wp_dropdown_categories($args);
 	}
 }
-add_action( 'request', 'my_request' );
+*/
+/*add_action( 'request', 'my_request' );
 function my_request($request) {
 	if (is_admin() && $GLOBALS['PHP_SELF'] == '/wp-admin/edit.php' && isset($request['post_type']) && $request['post_type']=='question') {
 		$request['term'] = get_term($request['subject'],'subject')->name;
 	}
 	return $request;
+}
+*/
+add_action( 'restrict_manage_posts', 'my_restrict_manage_posts' );
+function my_restrict_manage_posts() {
+	global $typenow;
+	$taxonomies = array('term','class','subject', 'level');//$typenow.'_type';
+	if( $typenow == "question" ){
+		foreach ($taxonomies as $tax_slug) {
+			$tax_obj = get_taxonomy($tax_slug);
+			$tax_name = $tax_obj->labels->name;
+			$terms = get_terms($tax_slug);
+			echo "<select name='$tax_slug' id='$tax_slug' class='postform'>";
+			echo "<option value=''>Show All $tax_name</option>";
+			foreach ($terms as $term) { echo '<option value='. $term->slug, $_GET[$tax_slug] == $term->slug ? ' selected="selected"' : '','>' . $term->name .' (' . $term->count .')</option>'; }
+			echo "</select>";
+		}
+	}
 }
 // disable default dashboard widgets
 function disable_default_dashboard_widgets() {
@@ -453,15 +488,10 @@ add_filter('screen_options_show_screen', 'remove_screen_options_tab');
 
 /* Define the custom box */
 
-add_action( 'add_meta_boxes', 'myplugin_add_custom_box' );
+/*add_action( 'add_meta_boxes', 'myplugin_add_custom_box' );
 
-// backwards compatible (before WP 3.0)
-// add_action( 'admin_init', 'myplugin_add_custom_box', 1 );
-
-/* Do something with the data entered */
 add_action( 'save_post', 'myplugin_save_postdata' );
 
-/* Adds a box to the main column on the Post and Page edit screens */
 function myplugin_add_custom_box() {
     add_meta_box( 
         'myplugin_sectionid',
@@ -471,7 +501,6 @@ function myplugin_add_custom_box() {
     );
 }
 
-/* Prints the box content */
 function myplugin_inner_custom_box( $post ) {
 
   // Use nonce for verification
@@ -484,6 +513,7 @@ function myplugin_inner_custom_box( $post ) {
   echo '</label> ';
   echo '<input type="text" id="range_time_field" name="range_time_field" value="'.$meta_values.'" size="25" />';
 }
+*/
 
 /* When the post is saved, saves our custom data */
 function myplugin_save_postdata( $post_id ) {
@@ -577,6 +607,66 @@ global $menu;
     }
 }
 add_action('admin_menu', 'remove_menus');
+
+
+function get_posts_by_taxonomy($args) {
+global $wpdb;
+if ( is_array($args) )
+    $options = &$args;
+else
+    parse_str($args, $options);
+    $defaults = array(
+    'post_type' => null,
+    'post_status' => 'publish',
+    'taxonomy_name' => null,
+    'taxonomy_term' => null,
+    'orderby' => 'post_date',
+    'order' => 'DESC',
+    'numberposts' => '10'
+);
+$options = array_merge($defaults, $options);
+extract($options);
+//Format the post_type list so that it works in the query
+$post_type = "('".str_replace(",","', '",$options['post_type'])."')";
+//Get the term IDs from the Term Names
+$terms = split('[,]', $options['taxonomy_term']);
+$term_ids = $options['taxonomy_term'];
+foreach($terms as $term){
+    $t_data = term_exists($term, $taxonomy_name);
+    $term_ids = str_replace($term,"'".$t_data['term_id']."'",$term_ids);
+}
+$term_ids = "(".$term_ids.")";
+//
+//Build the query
+$query = "SELECT $wpdb->posts.* FROM $wpdb->posts
+INNER JOIN $wpdb->term_relationships ON ($wpdb->posts.ID = $wpdb->term_relationships.object_id)
+INNER JOIN $wpdb->term_taxonomy ON ($wpdb->term_relationships.term_taxonomy_id = $wpdb->term_taxonomy.term_taxonomy_id) WHERE 1=1 ";
+if($options['taxonomy_name'] != null){
+    $query .="AND $wpdb->term_taxonomy.taxonomy = '".$options['taxonomy_name']."' ";
+    if($options['taxonomy_term'] != null){
+        $query .="AND $wpdb->term_taxonomy.term_id IN $term_ids ";
+    }
+}
+if($options['post_type'] != null){$query .="AND $wpdb->posts.post_type IN $post_type ";}
+$query .="AND $wpdb->posts.post_status = '".$options['post_status']."' ";
+$query .="GROUP BY $wpdb->posts.ID ";
+//$query .="ORDER BY $wpdb->posts.".$options['orderby']." ".$options['order'];
+$query .="ORDER BY RAND()";
+
+$my_posts = $wpdb->get_results($query);
+return($my_posts);
+}
+function get_post_metadata($post_id, $meta_keys){
+    global $wpdb;
+    //$meta_key = "('".str_replace(",","','",$meta_key)."')";
+    //echo $meta_key;
+
+    $meta_key_str = "('".join("','",$meta_keys)."')";
+
+    $results = $wpdb->get_results($wpdb->prepare("SELECT * FROM $wpdb->postmeta 
+        WHERE post_id = %d AND meta_key IN ".$meta_key_str."ORDER BY RAND()", $post_id));
+    return $results;
+}
 
 add_action( 'after_setup_theme', 'twentyeleven_setup' );
 if (!function_exists('twentyeleven_setup')):
