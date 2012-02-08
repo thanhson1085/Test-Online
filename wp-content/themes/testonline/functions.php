@@ -157,7 +157,7 @@ function question_add_help_text( $contextual_help, $screen_id, $screen ) {
 add_action( 'init', 'trial_question_init' );
 function trial_question_init() {
   $labels = array(
-    'name' => _x('Trial Questions', 'post type general name'),
+    'name' => _x('Demo Exams', 'post type general name'),
     'singular_name' => _x('Trial Question', 'post type singular name'),
     'add_new' => _x('Add New', 'question'),
     'add_new_item' => __('Add New Question'),
@@ -353,6 +353,32 @@ function create_question_taxonomies()
   ); 
 
   register_taxonomy('level',array('question'),array(
+    'hierarchical' => true,
+    'labels' => $labels,
+    'show_ui' => true,
+    'update_count_callback' => '_update_post_term_count',
+    'query_var' => true,
+    'rewrite' => array( 'slug' => 'subject' ),
+  ));
+  $labels = array(
+    'name' => _x( 'Mark', 'taxonomy general name' ),
+    'singular_name' => _x( 'Mark', 'taxonomy singular name' ),
+    'search_items' =>  __( 'Search Marks' ),
+    'popular_items' => __( 'Popular Marks' ),
+    'all_items' => __( 'All Marks' ),
+    'parent_item' => null,
+    'parent_item_colon' => null,
+    'edit_item' => __( 'Edit Mark' ), 
+    'update_item' => __( 'Update Mark' ),
+    'add_new_item' => __( 'Add New Mark' ),
+    'new_item_name' => __( 'New Mark Name' ),
+    'separate_items_with_commas' => __( 'Separate marks with commas' ),
+    'add_or_remove_items' => __( 'Add or remove makrs' ),
+    'choose_from_most_used' => __( 'Choose from the most used marks' ),
+    'menu_name' => __( 'Marks' ),
+  ); 
+
+  register_taxonomy('mark',array('session'),array(
     'hierarchical' => true,
     'labels' => $labels,
     'show_ui' => true,
