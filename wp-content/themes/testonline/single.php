@@ -3,6 +3,25 @@
  * Wed Feb 08, 2012 21:50:31 added by Thanh Son 
  * Email: thanhson1085@gmail.com 
  */
+function get_weight($answer_id,&$answers){
+	if(empty($answer_id)) return 0;
+	foreach ($answers as $answer){
+		if($answer_id == $answer['id']) return $answer['weight'];
+	}
+}
+function calculate_score(&$selected_ids, &$answer_set){
+	if (empty($selected_ids)) return 0;
+	foreach ($selected_ids as $choice_id){
+		$score += get_weight($choice_id, $answer_set);
+	}
+	return $score;
+}
+foreach ($_POST as $answer_value => $value){
+	if (substr($answer_value,0,10) == 'ans_check_'){
+		//$selected_ids = array_push($selected_ids, array('question_id' => $value, 'meta_id' => $value));
+	}
+}
+print_r($_POST);
 ?>
 <form method="POST" action="#">
 <?php
@@ -79,15 +98,17 @@ if ($custom_posts):
 		$answers = array_merge($answers,get_post_metadata($post->ID,array('Text')));
 		$types = wp_get_post_terms($post->ID,'type',array('fields' => 'names'));
 		$input_type = ($types[0]=='Multiple')?'checkbox':'radio'; 
+		$i = 0;
 		foreach ($answers as $answer){
+			if ($input_type == 'checkbox') ++$i;
 			if ($answer->meta_key != 'Text'){
 				?>
-				<p><input type="<?php echo $input_type;?>" name="<?php echo $post->ID;?>" value="<?php echo $answer->meta_id;?>"/><label><?php echo $answer->meta_value;?></label></p>
+				<p><input type="<?php echo $input_type;?>" name="ans_check_<?php echo $i;?>_<?php echo $post->ID;?>" value="<?php echo $answer->meta_id;?>"/><label><?php echo $answer->meta_value;?></label></p>
 				<?php
 			}
 			else{
 				?>
-				<p><input type="<?php echo $input_type;?>" name="<?php echo $post->ID;?>" value="<?php echo $answer->meta_id;?>"/><label><input type="text" /></label></p>
+				<p><input type="<?php echo $input_type;?>" name="ans_check_<?php echo $post->ID;?>" value="<?php echo $answer->meta_id;?>"/><label><input type="text" name="ans_text_<?php echo $post->ID;?>"/></label></p>
 				<?php
 			}
 		}
