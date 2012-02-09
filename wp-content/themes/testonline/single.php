@@ -19,6 +19,19 @@ $my_query = new WP_Query($args);
 if( $my_query->have_posts() ) {
   	while ($my_query->have_posts()) : 
 	$my_query->the_post(); 
+	if(post_password_required( $post ) && $_POST['yourpassword'] != $post->post_password){
+		?>
+		<p><label>Enter Your Password:</label><span><input type="password" name="yourpassword" /></span>
+		<input type="submit" value="Finish"/>
+		</form>
+		<?php
+		return;
+	}
+	else{
+	?>
+		<input type="hidden" name="yourpassword" value="<?php echo  $_POST['yourpassword'];?>"/>
+	<?php
+	}
 	$subjects = wp_get_post_terms($post->ID,'subject',array('fields' => 'names'));
 	$marks = wp_get_post_terms($post->ID,'mark',array('fields' => 'names'));
 	$classes = wp_get_post_terms($post->ID,'class',array('fields' => 'names'));
@@ -33,7 +46,7 @@ if( $my_query->have_posts() ) {
 	<label>Time:</label><span><?php echo $times[0];?></span></p>
 	<p><label>Maximum Mark:</label><span><?php echo $marks[0];?></span> </p>
 
- <?php
+ 	<?php
 	endwhile;
 }
 wp_reset_query();  // Restore global post data stomped by the_post().
@@ -44,7 +57,7 @@ wp_reset_query();  // Restore global post data stomped by the_post().
 $args = array(
 'post_status' => 'publish',
 'taxonomy_name' => 'hidden_term',
-'taxonomy_term' => $term_name,//Feilong: string,not array!
+'taxonomy_term' => $term_name,
 'post_type' => 'question',
 );
 $answers = array();
@@ -64,7 +77,8 @@ if ($custom_posts):
 
 		$answers_true = get_post_metadata($post->ID,array('True'));
 		$answers = array_merge($answers,get_post_metadata($post->ID,array('Text')));
-		$input_type = (count($answers_true)>1)?'checkbox':'radio'; 
+		$types = wp_get_post_terms($post->ID,'type',array('fields' => 'names'));
+		$input_type = ($types[0]=='Multiple')?'checkbox':'radio'; 
 		foreach ($answers as $answer){
 			if ($answer->meta_key != 'Text'){
 				?>
@@ -83,6 +97,6 @@ else : endif;
 //print_r($answers);
 //end of get posts by Taxonomy terms
 ?>
-<input type="submit" value="Finish"/>
+<p><input type="submit" value="Finish"/></p>
 </form>
 <?php //get_footer(); ?>

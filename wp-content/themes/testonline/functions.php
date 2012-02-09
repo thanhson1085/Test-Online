@@ -3,6 +3,7 @@
 * Mon Feb 06, 2012 09:11:19 added by Thanh Son 
 * Email: thanhson1085@gmail.com 
 */
+	
 if ( ! isset( $content_width ) )
 $content_width = 584;
 
@@ -404,6 +405,31 @@ function create_question_taxonomies()
     'menu_name' => __( 'Sessions' ),
   ); 
   register_taxonomy('hidden_term',array('question'),array(
+    'hierarchical' => true,
+	'labels' => $labels,
+    'show_ui' => true,
+    'update_count_callback' => '_update_post_term_count',
+    'query_var' => true,
+    'rewrite' => array( 'slug' => 'hidden_term' ),
+  ));
+  $labels = array(
+    'name' => _x( 'Types', 'taxonomy general name' ),
+    'singular_name' => _x( 'Type', 'taxonomy singular name' ),
+    'search_items' =>  __( 'Search Types' ),
+    'popular_items' => __( 'Popular Types' ),
+    'all_items' => __( 'All Types' ),
+    'parent_item' => null,
+    'parent_item_colon' => null,
+    'edit_item' => __( 'Edit Type' ), 
+    'update_item' => __( 'Update Type' ),
+    'add_new_item' => __( 'Add New Type' ),
+    'new_item_name' => __( 'New Type Name' ),
+    'separate_items_with_commas' => __( 'Separate marks with commas' ),
+    'add_or_remove_items' => __( 'Add or remove Types' ),
+    'choose_from_most_used' => __( 'Choose from the most used types' ),
+    'menu_name' => __( 'Types' ),
+  ); 
+  register_taxonomy('type',array('question'),array(
     'hierarchical' => true,
 	'labels' => $labels,
     'show_ui' => true,
