@@ -3,6 +3,7 @@
  * Wed Feb 08, 2012 21:50:31 added by Thanh Son 
  * Email: thanhson1085@gmail.com 
  */
+/*
 function get_weight($answer_id,&$answers){
 	if(empty($answer_id)) return 0;
 	foreach ($answers as $answer){
@@ -16,16 +17,89 @@ function calculate_score(&$selected_ids, &$answer_set){
 	}
 	return $score;
 }
-foreach ($_POST as $answer_value => $value){
-	if (substr($answer_value,0,10) == 'ans_check_'){
-		//$selected_ids = array_push($selected_ids, array('question_id' => $value, 'meta_id' => $value));
-	}
-}
-print_r($_POST);
-?>
-<form method="POST" action="#">
-<?php
+*/
 $term_name  = ($_GET['session'])?$_GET['session']:'';
+if ($_GET['a'] == 'result'){
+
+	$score = 0;
+	$total_score = 0;
+	$selected_ids = array();
+    foreach ($_POST as $choice_value => $value){
+        if (substr($choice_value,0,10) == 'ans_check_'){
+            $selected_ids[$value] = substr($choice_value,15);
+		}
+	}
+	$answer_trues = array();
+	foreach ($_POST as $choice_value => $value){
+		if (substr($choice_value,0,10) == 'ans_check_'){
+			//$selected_ids[] = array('question_id' => substr($answer_value,15), 'meta_id' => array($value));
+			$post_id = substr($choice_value,15);
+
+			if (!in_array($post_id,$answers_checked)){
+				$answers_checked[] = $post_id;
+			}
+			else{
+				continue;
+			}
+			$answers = get_post_metadata($post_id,array('True'));
+			$b = true; 	
+			foreach ($answers as $answer){
+				if (!array_key_exists($answer->meta_id, $selected_ids)){	
+					$b = false;
+				}
+			}
+			if ($b){
+				$levels = wp_get_post_terms($post_id,'level',array('fields' => 'names'));
+				$score += $levels[0];
+			}
+		}
+		if (substr($choice_value,0,9) == 'ans_text_'){	
+			$post_id = substr($choice_value,9);
+            $answers = get_post_metadata($post_id,array('Text'));
+            foreach ($answers as $answer){
+                if (strtolower($answer->meta_value) == strtolower($value) ){
+            		$levels = wp_get_post_terms($post_id,'level',array('fields' => 'names'));
+                    $score += $levels[0];
+                }
+            }
+		}
+	}
+	$args=array(
+	  'name' => $term_name,
+	  'post_type' => 'session',
+	  'post_status' => 'publish',
+	  'posts_per_page' => 1,
+	  'caller_get_posts'=> 1
+	);
+	$my_query = null;
+	$my_query = new WP_Query($args);
+	if( $my_query->have_posts() ) {
+		while ($my_query->have_posts()) :
+			$my_query->the_post();
+			$marks = wp_get_post_terms($post->ID,'mark',array('fields' => 'names'));
+			$mark = (float)$marks[0];
+		endwhile;
+	}
+	$args = array(
+	'post_status' => 'publish',
+	'taxonomy_name' => 'hidden_term',
+	'taxonomy_term' => $term_name,
+	'post_type' => 'question',
+	);
+	$custom_posts = get_posts_by_taxonomy($args);
+	if ($custom_posts):
+		foreach ($custom_posts as $post){
+			setup_postdata($post);
+			$answers = array();
+			$answers_true = array();
+			$levels = wp_get_post_terms($post->ID,'level',array('fields' => 'names'));
+			$total_score += (float)$levels[0];
+		}
+	endif;
+			echo round(($score/$total_score)*$mark);	
+	return;
+	
+}
 $args=array(
   'name' => $term_name,
   'post_type' => 'session',
@@ -40,6 +114,7 @@ if( $my_query->have_posts() ) {
 	$my_query->the_post(); 
 	if(post_password_required( $post ) && $_POST['yourpassword'] != $post->post_password){
 		?>
+		<form method="POST" action="?session=<?php echo $term_name;?>">
 		<p><label>Enter Your Password:</label><span><input type="password" name="yourpassword" /></span>
 		<input type="submit" value="Finish"/>
 		</form>
@@ -48,6 +123,7 @@ if( $my_query->have_posts() ) {
 	}
 	else{
 	?>
+		<form method="POST" action="?session=<?php echo $term_name;?>&a=result">
 		<input type="hidden" name="yourpassword" value="<?php echo  $_POST['yourpassword'];?>"/>
 	<?php
 	}
@@ -97,8 +173,19 @@ if ($custom_posts):
 		$answers_true = get_post_metadata($post->ID,array('True'));
 		$answers = array_merge($answers,get_post_metadata($post->ID,array('Text')));
 		$types = wp_get_post_terms($post->ID,'type',array('fields' => 'names'));
-		$input_type = ($types[0]=='Multiple')?'checkbox':'radio'; 
-		$i = 0;
+			
+		switch ($types[0]) {
+			case 'Multiple':
+				$input_type = 'checkbox';
+				break;
+			case 'Single':
+				$input_type = 'radio';
+				break;
+			case 'Text':
+				$input_type = 'text';
+				break;
+		}
+		$i = 1000;
 		foreach ($answers as $answer){
 			if ($input_type == 'checkbox') ++$i;
 			if ($answer->meta_key != 'Text'){
@@ -107,9 +194,11 @@ if ($custom_posts):
 				<?php
 			}
 			else{
-				?>
-				<p><input type="<?php echo $input_type;?>" name="ans_check_<?php echo $post->ID;?>" value="<?php echo $answer->meta_id;?>"/><label><input type="text" name="ans_text_<?php echo $post->ID;?>"/></label></p>
-				<?php
+				if ($input_type == 'text'){
+					?>
+					<p><input type="text" name="ans_text_<?php echo $post->ID;?>"/></p>
+					<?php
+				}
 			}
 		}
 	}

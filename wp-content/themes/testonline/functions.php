@@ -693,7 +693,12 @@ function get_post_metadata($post_id, $meta_keys){
         WHERE post_id = %d AND meta_key IN ".$meta_key_str."ORDER BY RAND()", $post_id));
     return $results;
 }
-
+function custom_login_logo() {
+	echo '<style type="text/css">
+	h1 a { background-image: url('.get_bloginfo('template_directory').'/images/logo.png) !important; }
+	</style>';
+}
+add_action('login_head', 'custom_login_logo');
 add_action( 'after_setup_theme', 'twentyeleven_setup' );
 if (!function_exists('twentyeleven_setup')):
 /**
