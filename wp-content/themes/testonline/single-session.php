@@ -178,6 +178,8 @@ if ($custom_posts):
 			case 'Text':
 				$input_type = 'text';
 				break;
+			default:
+				$input_type = 'checkbox';
 		}
 		$i = 1000;
 		foreach ($answers as $answer){

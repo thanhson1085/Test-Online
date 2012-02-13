@@ -4,7 +4,14 @@
  * Email: thanhson1085@gmail.com 
  */
 
+get_header();
+?>
+<div class="right-sidebar">
+<p><a href="?hidden_term=<?php echo '#';?>">Test Now!</a></p>
+<p><a href="?hidden_term=<?php echo '#';?>">Sample Question</a></p>
+</div>
+<div class="body-content">
+</div>
+<?php
 
-$terms = get_terms(array('taxonomy' => 'subject'));
-print_r($terms);
-foreach($terms as $term){ print_r($term);}
+get_footer();

@@ -40,6 +40,7 @@ function session_init() {
     'supports' => array( 'title')
   ); 
   register_post_type('session',$args);
+	
 }
 
 //add filter to ensure the text Question, or question, is displayed when user updates a question 
@@ -273,7 +274,7 @@ function create_question_taxonomies()
     'menu_name' => __( 'Terms' ),
   ); 
 
-  register_taxonomy('term',array('question','session'),array(
+  register_taxonomy('term',array('trial_question','question','session'),array(
     'hierarchical' => true,
     'labels' => $labels,
     'show_ui' => true,
@@ -429,13 +430,13 @@ function create_question_taxonomies()
     'choose_from_most_used' => __( 'Choose from the most used types' ),
     'menu_name' => __( 'Types' ),
   ); 
-  register_taxonomy('type',array('question'),array(
+  register_taxonomy('type',array('trial_question','question'),array(
     'hierarchical' => true,
 	'labels' => $labels,
     'show_ui' => true,
     'update_count_callback' => '_update_post_term_count',
     'query_var' => true,
-    'rewrite' => array( 'slug' => 'hidden_term' ),
+    'rewrite' => array( 'slug' => 'type' ),
   ));
 
 /*add_action('restrict_manage_posts','my_restrict_manage_posts');
@@ -623,9 +624,10 @@ add_action('before_delete_post', 'delete_session_category_automatically');
 //}
 
 add_filter( 'admin_menu', 'remove_those_menu_items' );
+add_filter( 'show_admin_bar', '__return_false' );
 function remove_menus () {
 global $menu;
-    $restricted = array(__('Dashboard'), __('Posts'), __('Media'), __('Links'), __('Pages'), __('Appearance'), __('Tools')/*, __('Users')*/, __('Settings'), __('Comments'), __('Plugins'));
+    $restricted = array(__('Dashboard'), __('Posts'), __('Media'), __('Links'), __('Pages'), __('Appearance'), __('Tools'), __('Users'), __('Settings'), __('Comments'), __('Plugins'));
     end ($menu);
     while (prev($menu)){
         $value = explode(' ',$menu[key($menu)][0]);
