@@ -9,6 +9,7 @@
 
 </div><!-- #page -->
 <script src="<?php echo get_bloginfo('template_url'); ?>/js/myscript.js"></script>
+<script src="<?php echo get_bloginfo('template_url'); ?>/js/jquery.min.js"></script>
 
 </body>
 </html>
