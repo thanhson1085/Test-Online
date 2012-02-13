@@ -7,7 +7,7 @@
 get_header();
 ?>
 		<?php	
-			$menu_items = wp_get_nav_menu_items(45); /*  Wed Feb 01, 2012 15:57:00 added by Thanh Son: Take care with number */ 
+/*			$menu_items = wp_get_nav_menu_items(45); 
 
 			$category_name = $_GET['category_name'];
 			$current_menu = '';
@@ -61,9 +61,26 @@ get_header();
 			$result .= ($level == 2 || $level == 1)? '</ul></div></div>':'';
 
 			echo $result;
+*/
 		?>
 <div class="right-sidebar">
-<p><a href="?hidden_term=<?php echo '#';?>">Test Now!</a></p>
+<ul>
+<?php
+global $post;
+$args = array( 'numberposts' => 5, 'post_type'=> 'session', 'post_status' => 'publish' );
+$myposts = get_posts( $args );
+foreach( $myposts as $post ) :	setup_postdata($post); ?>
+	<li><a href="<?php the_permalink(); ?>">Test Now!</a></li>
+	<?php 
+	if (get_user_role()){
+		?>
+		<li><a href="?hidden_term=hidden-<?php echo $post->ID; ?>" target="_blank">Result!</a></li>
+		<?php
+	}
+	?>
+
+<?php endforeach; ?>
+</ul>
 <p><a href="?hidden_term=<?php echo '#';?>">Sample Question</a></p>
 </div>
 <div class="body-content">

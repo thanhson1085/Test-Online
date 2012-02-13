@@ -246,7 +246,7 @@ height: 100%; margin:0 auto; width:988px;background-color:#4f8ce1;border-radius:
 .s-menu ul li a{width:auto;text-decoration: none;font-weight:normal;color: white; line-height:31px;padding:8px 8px 8px 0px;}
 .s-menu ul li{padding: 8px 0px 7px 0;}
 .s-menu ul.menu-left li:first-child {border-radius: 5px 0 0 5px;padding-left:8px;}
-.s-menu ul li{line-height:33px;border-top:solid 1px transparent;border-bottom: solid 1px transparent; display: inline;background: url('../../images/mn_border.png') repeat-y right top;}
+.s-menu ul li{line-height:33px;border-top:solid 1px transparent;border-bottom: solid 1px transparent; display: inline;background: url('images/mn_border.png') repeat-y right top;}
 .s-menu ul li a:hover, .s-menu ul li:hover{background-color:#aadbf9;}
 .s-menu ul.menu-right li a{ border-left:solid 1px #ccc; border-right:0;}
 .s-menu ul.menu-right li a:hover{cursor: pointer; background-color:transparent;}

@@ -710,6 +710,16 @@ function custom_login_logo() {
 }
 add_action('login_head', 'custom_login_logo');
 add_action( 'after_setup_theme', 'twentyeleven_setup' );
+
+function get_user_role() {
+    global $current_user;
+
+    $user_roles = $current_user->roles;
+    $user_role = array_shift($user_roles);
+
+    return $user_role;
+}
+
 if (!function_exists('twentyeleven_setup')):
 /**
 * Sets up theme defaults and registers support for various WordPress features.
