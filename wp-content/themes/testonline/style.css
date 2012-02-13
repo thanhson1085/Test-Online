@@ -123,7 +123,39 @@ body {
 	color: #6E94FE;
     font-family: verdana;
 }
-
+p.password-container{
+	padding-top: 200px;
+	text-align: center;
+}
+p.password-container input[type="submit"]{
+    border: solid 1px #6E94FE;
+	background: #6E94FE;
+    border-radius:3px;
+	color: white;
+	cursor: pointer;
+    height: 35px;
+    font-size: 24px;
+    font-family: verdana;
+}
+p.password-container label, p.password-container span{
+	color: #6E94FE;
+    font-size: 24px;
+    font-family: verdana;
+}
+p.password-container input[type="password"]{
+    border: solid 1px #6E94FE;
+    border-radius:3px;
+    height: 35px;
+    width: 200px;
+    font-size: 24px;
+    font-family: verdana;
+	margin-left: 5px;
+	margin-right: 3px;
+	color:#D24939; 
+}
+p.password-container input[type="password"]:focus,p.password-container input[type="submit"]:hover, p.password-container input[type="submit"]:focus {
+	border-color: #6E94FE; box-shadow: 0 0 8px #6E94FE; -moz-box-shadow: 0 0 8px #6E94FE; -webkit-box-shadow: 0 0 8px #6E94FE;outline:0;
+}
 table.tbl-mark{
 	border: solid 1px #ccc;
 }

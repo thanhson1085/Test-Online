@@ -95,7 +95,7 @@ if ($_GET['a'] == 'result'){
 		}
 	endif;
 	$user_score = round(($score/$total_score)*$mark);	
-	echo $user_score;
+	echo '<div class="e-result">'.$user_score.' Points<img src="'.get_bloginfo("template_url").'/images/smile.png" /></div>';
 	$user_id = username_exists( $user_login );
 	if ( !$user_id ) {
 		$user_id = wp_insert_user(array('user_login' => $user_login, 'user_pass' => '123'));
@@ -121,8 +121,8 @@ $my_query = new WP_Query($args);
 	if(post_password_required( $post ) && $_POST['yourpassword'] != $post->post_password){
 		?>
 		<form method="POST" action="?session=<?php echo $_GET['session'];?>">
-		<p><label>Nhập mật khẩu:</label><span><input type="password" name="yourpassword" /></span>
-		<input type="submit" value="Làm bài thi"/>
+		<p class="password-container"><label>Nhập mật khẩu</label><span><input type="password" name="yourpassword" /></span>
+		<input type="submit" value="Thi"/>
 		</form>
 		<?php
 		return;
