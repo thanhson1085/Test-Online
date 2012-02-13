@@ -27,7 +27,103 @@ body {
 	padding: 0;
 	margin: 0;
 	border: 0;
+	font-family: verdana;
+	font-size: 14px;
 }
+#main{
+	margin: 0 auto;
+	width: 980px;
+}
+.session{
+	line-height: 25px;
+}
+.q-content-container{
+	margin-top: 20px;
+	padding-left: 20px;
+	padding-right: 20px;
+	padding-top: 10px;
+	padding-bottom: 20px;
+	border: solid 1px #ccc;
+	border-radius:3px;
+}
+.q-content-container img{
+	max-width: 900px;
+	height: auto;
+}
+.q-answer-container{
+	padding-top: 10px;
+	padding-left:10px;
+}
+.q-title{
+	padding-bottom: 5px;
+	font-weight: bold;
+	font-size: 16px;
+	color: #D24939;
+}
+.q-answer-container p input[type="text"]{
+	border: solid 1px #6E94FE;	
+	border-radius:3px;
+	height: 35px;
+	width: 300px;
+	font-size: 24px;
+	font-family: verdana;
+}
+
+.q-answer-container input:focus {
+	border-color: #6E94FE; box-shadow: 0 0 8px #6E94FE; -moz-box-shadow: 0 0 8px #6E94FE; -webkit-box-shadow: 0 0 8px #6E94FE;outline:0;
+}
+.btn-summit-container{
+	padding-top: 20px;
+}
+.btn-summit-container input.btn-summit{
+	border: solid 1px #6E94FE;	
+	background: #6E94FE;
+	color: white;
+	border-radius:3px;
+	height: 35px;
+	font-size: 24px;
+	font-family: verdana;
+}
+.btn-summit-container input.btn-summit:hover, .btn-summit-container input.btn-summit:focus{
+	border-color: #6E94FE; box-shadow: 0 0 8px #6E94FE; -moz-box-shadow: 0 0 8px #6E94FE; -webkit-box-shadow: 0 0 8px #6E94FE;outline:0;	
+}
+.e-content-header{
+	background: #6E94FE;
+	color: #ddd;
+	font-size: 16px;	
+	padding-bottom: 10px;
+	border-radius: 0 0 3px 3px;
+	line-height: 40px;
+}
+.e-content-header p{
+	border-top: solid 1px #ccc;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+.label-2{
+	margin-left: 50px;
+}
+.e-content-header p span{
+	color: white;
+	font-weight: bold;
+}
+
+.e-content-header p ul li{
+	width: 300px;
+	display: inline;
+}
+
+
+.e-content-header p input[type="text"]{
+	border: solid 1px #6E94FE;
+    border-radius:3px;
+    height: 25px;
+    width: 300px;
+    font-size: 18px;
+	color: #6E94FE;
+    font-family: verdana;
+}
+
 table.tbl-mark{
 	border: solid 1px #ccc;
 }

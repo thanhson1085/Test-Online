@@ -599,20 +599,27 @@ if( !function_exists( 'mfields_remove_div' ) ) {
 }*/
 function add_session_category_automatically($post_ID) {
     global $wpdb;
-    $term = wp_insert_term(
-    get_the_title($post_ID), // the term 
-    'hidden_term', // the taxonomy
-    array(
-	'slug' => 'hidden-'.$post_ID,
-	'parent'=> '0',
-    )
-    );
-    $term_slug = array('hidden-'.$post_ID);
-    wp_set_object_terms($post_ID, $term_slug, 'hidden_term');
+	$term = term_exists('hidden-'.$post_ID,'hidden_term');
+	if (!$term){
+		$term = wp_insert_term(
+		get_the_title($post_ID), // the term 
+		'hidden_term', // the taxonomy
+		array(
+		'slug' => 'hidden-'.$post_ID,
+		'parent'=> '0',
+		)
+		);
+	
+		$term_slug = array('hidden-'.$post_ID);
+		wp_set_object_terms($post_ID, $term_slug, 'hidden_term');
+	}
+	else{
+		wp_update_term($term['term_id'],'hidden_term', array ('name' => get_the_title($post_ID)));
+	}
 }
 add_action('publish_session', 'add_session_category_automatically');
 
-function delete_session_category_automatically($post_ID) {
+function delete_session_category_automatically($post_ID){
     global $wpdb;
     $term = get_term_by('slug','hidden-'.$post_ID,'hidden_term');
     wp_delete_term($term->term_id,'hidden_term');

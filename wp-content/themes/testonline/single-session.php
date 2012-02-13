@@ -3,7 +3,13 @@
  * Wed Feb 08, 2012 21:50:31 added by Thanh Son 
  * Email: thanhson1085@gmail.com 
  */
-$term_name  = ($_GET['session'])?$_GET['session']:'';
+//$term_name  = ($_GET['session'])?$_GET['session']:'';
+get_header();
+?>
+<div class="<?php echo $post->post_type; ?>">
+<?php
+$term_name = $post->post_title;
+
 if ($_GET['a'] == 'result'){
 	$yourname = $_POST['yourname'];
 	$yourclass = $_POST['yourclass'];
@@ -51,6 +57,7 @@ if ($_GET['a'] == 'result'){
             }
 		}
 	}
+/*
 	$args=array(
 	  'name' => $term_name,
 	  'post_type' => 'session',
@@ -63,11 +70,14 @@ if ($_GET['a'] == 'result'){
 	if( $my_query->have_posts() ) {
 		while ($my_query->have_posts()) :
 			$my_query->the_post();
+*/
 			$marks = wp_get_post_terms($post->ID,'mark',array('fields' => 'names'));
 			$mark = (float)$marks[0];
 			$user_login = $post->ID;
+/*
 		endwhile;
 	}
+*/
 	$args = array(
 	'post_status' => 'publish',
 	'taxonomy_name' => 'hidden_term',
@@ -94,6 +104,7 @@ if ($_GET['a'] == 'result'){
 	return;
 	
 }
+/*
 $args=array(
   'name' => $term_name,
   'post_type' => 'session',
@@ -103,21 +114,22 @@ $args=array(
 );
 $my_query = null;
 $my_query = new WP_Query($args);
-if( $my_query->have_posts() ) {
-  	while ($my_query->have_posts()) : 
-	$my_query->the_post(); 
+*/
+//if( $my_query->have_posts() ) {
+//  	while ($my_query->have_posts()) : 
+//	$my_query->the_post(); 
 	if(post_password_required( $post ) && $_POST['yourpassword'] != $post->post_password){
 		?>
-		<form method="POST" action="?session=<?php echo $term_name;?>">
+		<form method="POST" action="?session=<?php echo $_GET['session'];?>">
 		<p><label>Enter Your Password:</label><span><input type="password" name="yourpassword" /></span>
-		<input type="submit" value="Finish"/>
+		<input type="submit" value="Enter"/>
 		</form>
 		<?php
 		return;
 	}
 	else{
 	?>
-		<form method="POST" action="?session=<?php echo $term_name;?>&a=result">
+		<form method="POST" action="?session=<?php echo $_GET['session'];?>&a=result">
 		<input type="hidden" name="yourpassword" value="<?php echo  $_POST['yourpassword'];?>"/>
 	<?php
 	}
@@ -127,21 +139,22 @@ if( $my_query->have_posts() ) {
 	$times = wp_get_post_terms($post->ID,'time',array('fields' => 'names'));
 	$terms = wp_get_post_terms($post->ID,'term',array('fields' => 'names'));
 	?>
-
+	<div class="e-content-header">
 	<p><label>Subject:</label><span><?php  echo $subjects[0];?></span>
-	<label>Class:</label><span><?php echo $classes[0]; ?></span></p>
+	<label class="label-2">Class:</label><span><?php echo $classes[0]; ?></span></p>
 
 	<p><label>Term:</label><span><?php echo $terms[0]; ?></span>
-	<label>Time:</label><span><?php echo $times[0];?></span></p>
+	<label class="label-2">Time:</label><span><?php echo $times[0];?></span></p>
 	<p><label>Maximum Mark:</label><span><?php echo $marks[0];?></span> </p>
-
  	<?php
-	endwhile;
-}
-wp_reset_query();  // Restore global post data stomped by the_post().
+//	endwhile;
+//}
+//wp_reset_query();  // Restore global post data stomped by the_post().
 ?>
 <p><label>Your Name:</label><input type="text" name="yourname" />
-<label>Your Class:</label><input type="text" name="yourclass" /></p>
+<label class="label-2">Your Class:</label><input type="text" name="yourclass" /></p>
+</div>
+<p class="btn-summit-container"><input class="btn-summit" type="submit" value="Finish"/></p>
 <?php
 $args = array(
 'post_status' => 'publish',
@@ -149,6 +162,7 @@ $args = array(
 'taxonomy_term' => $term_name,
 'post_type' => 'question',
 );
+$j=0;
 $answers = array();
 $answers_true = array();
 $custom_posts = get_posts_by_taxonomy($args);
@@ -157,9 +171,10 @@ if ($custom_posts):
 		setup_postdata($post);
 		$answers = array();
 		$answers_true = array();
-
+		$j++;
 		?>
-		<p><?php echo $post->post_title; ?></p>
+		<div class="q-content-container">
+		<p class="q-title"><?php echo $j.': '.$post->post_title; ?></p>
 		<p><?php the_content();//echo $post->post_content; ?></p>
 		<?php
 		$answers = get_post_metadata($post->ID,array('False','True'));
@@ -182,7 +197,12 @@ if ($custom_posts):
 				$input_type = 'checkbox';
 		}
 		$i = 1000;
+		?>
+		<?php
 		foreach ($answers as $answer){
+			?>
+			<div class="q-answer-container">
+			<?php
 			if ($input_type == 'checkbox') ++$i;
 			if ($answer->meta_key != 'Text'){
 				?>
@@ -196,13 +216,19 @@ if ($custom_posts):
 					<?php
 				}
 			}
+			?>
+				</div>
+			<?php
 		}
+		?>
+		</div>
+		<?php
 	}
 else : endif;
 
 //print_r($answers);
 //end of get posts by Taxonomy terms
 ?>
-<p><input type="submit" value="Finish"/></p>
+<p class="btn-summit-container"><input class="btn-summit" type="submit" value="Finish"/></p>
 </form>
-<?php //get_footer(); ?>
+<?php get_footer(); ?>
