@@ -122,7 +122,7 @@ $my_query = new WP_Query($args);
 		?>
 		<form method="POST" action="?session=<?php echo $_GET['session'];?>">
 		<p><label>Nhập mật khẩu:</label><span><input type="password" name="yourpassword" /></span>
-		<input type="submit" value="Enter"/>
+		<input type="submit" value="Làm bài thi"/>
 		</form>
 		<?php
 		return;
@@ -154,7 +154,7 @@ $my_query = new WP_Query($args);
 <p><label>Họ và tên:</label><input type="text" name="yourname" />
 <label class="label-2">Lớp:</label><input type="text" name="yourclass" /></p>
 </div>
-<p class="btn-summit-container"><input class="btn-summit" type="submit" value="Finish"/></p>
+<p class="btn-summit-container"><input class="btn-summit" type="submit" value="Nộp bài"/></p>
 <?php
 $args = array(
 'post_status' => 'publish',
@@ -229,6 +229,6 @@ else : endif;
 //print_r($answers);
 //end of get posts by Taxonomy terms
 ?>
-<p class="btn-summit-container"><input class="btn-summit" type="submit" value="Finish"/></p>
+<p class="btn-summit-container"><input class="btn-summit" type="submit" value="Nộp bài"/></p>
 </form>
 <?php get_footer(); ?>
