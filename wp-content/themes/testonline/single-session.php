@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * Wed Feb 08, 2012 21:50:31 added by Thanh Son 
  * Email: thanhson1085@gmail.com 
@@ -121,7 +121,7 @@ $my_query = new WP_Query($args);
 	if(post_password_required( $post ) && $_POST['yourpassword'] != $post->post_password){
 		?>
 		<form method="POST" action="?session=<?php echo $_GET['session'];?>">
-		<p><label>Enter Your Password:</label><span><input type="password" name="yourpassword" /></span>
+		<p><label>Nhập mật khẩu:</label><span><input type="password" name="yourpassword" /></span>
 		<input type="submit" value="Enter"/>
 		</form>
 		<?php
@@ -140,19 +140,19 @@ $my_query = new WP_Query($args);
 	$terms = wp_get_post_terms($post->ID,'term',array('fields' => 'names'));
 	?>
 	<div class="e-content-header">
-	<p><label>Subject:</label><span><?php  echo $subjects[0];?></span>
-	<label class="label-2">Class:</label><span><?php echo $classes[0]; ?></span></p>
+	<p><label>Môn thi:</label><span><?php  echo $subjects[0];?></span>
+	<label class="label-2">Lớp:</label><span><?php echo $classes[0]; ?></span></p>
 
-	<p><label>Term:</label><span><?php echo $terms[0]; ?></span>
-	<label class="label-2">Time:</label><span><?php echo $times[0];?></span></p>
-	<p><label>Maximum Mark:</label><span><?php echo $marks[0];?></span> </p>
+	<p><label>Học kỳ:</label><span><?php echo $terms[0]; ?></span>
+	<label class="label-2">Thời gian làm bài:</label><span><?php echo $times[0];?></span></p>
+	<p><label>Điểm tối đa:</label><span><?php echo $marks[0];?></span> </p>
  	<?php
 //	endwhile;
 //}
 //wp_reset_query();  // Restore global post data stomped by the_post().
 ?>
-<p><label>Your Name:</label><input type="text" name="yourname" />
-<label class="label-2">Your Class:</label><input type="text" name="yourclass" /></p>
+<p><label>Họ và tên:</label><input type="text" name="yourname" />
+<label class="label-2">Lớp:</label><input type="text" name="yourclass" /></p>
 </div>
 <p class="btn-summit-container"><input class="btn-summit" type="submit" value="Finish"/></p>
 <?php
