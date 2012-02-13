@@ -4,25 +4,11 @@
  * Email: thanhson1085@gmail.com 
  */
 ?>
-
+		<div class="footer"> <div class="footer-info">Developed by Thinh Liet School.</div></div>	
 	</div><!-- #main -->
 
-	<footer id="colophon" role="contentinfo">
-
-			<?php
-				/* A sidebar in the footer? Yep. You can can customize
-				 * your footer with three columns of widgets.
-				 */
-				if ( ! is_404() )
-					get_sidebar( 'footer' );
-			?>
-
-			<div id="site-generator">
-			</div>
-	</footer><!-- #colophon -->
 </div><!-- #page -->
-
-<?php wp_footer(); ?>
+<script src="<?php echo get_bloginfo('template_url'); ?>/js/myscript.js"></script>
 
 </body>
 </html>

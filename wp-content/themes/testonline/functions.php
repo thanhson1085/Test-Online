@@ -543,7 +543,7 @@ function myplugin_inner_custom_box( $post ) {
 */
 
 /* When the post is saved, saves our custom data */
-function myplugin_save_postdata( $post_id ) {
+/*function myplugin_save_postdata( $post_id ) {
    global $typenow;
   if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) 
       return;
@@ -563,6 +563,7 @@ function myplugin_save_postdata( $post_id ) {
   // probably using add_post_meta(), update_post_meta(), or 
   // a custom table (see Further Reading section below)
 }
+*/
 /*
   register_taxonomy('subject','trial_question',array(
     'hierarchical' => true,
@@ -634,7 +635,7 @@ add_filter( 'admin_menu', 'remove_those_menu_items' );
 add_filter( 'show_admin_bar', '__return_false' );
 function remove_menus () {
 global $menu;
-    $restricted = array(__('Dashboard'), __('Posts'), __('Media'), __('Links'), __('Pages'), __('Appearance'), __('Tools'), __('Users'), __('Settings'), __('Comments'), __('Plugins'));
+    $restricted = array(__('Dashboard'), __('Posts'), __('Media'), __('Links'), __('Pages')/*, __('Appearance')*/, __('Tools'), __('Users'), __('Settings'), __('Comments'), __('Plugins'));
     end ($menu);
     while (prev($menu)){
         $value = explode(' ',$menu[key($menu)][0]);

@@ -95,7 +95,18 @@ if ($_GET['a'] == 'result'){
 		}
 	endif;
 	$user_score = round(($score/$total_score)*$mark);	
-	echo '<div class="e-result">'.$user_score.' Points<img src="'.get_bloginfo("template_url").'/images/smile.png" /></div>';
+	if ($user_score > 7){
+		$status_img = "smile.png";
+	}
+	else{
+		if ($user_score >= 5){
+			$status_img = "sad.png";
+		}
+		else{
+			$status_img = "cry.png";
+		}
+	}
+	echo '<p class="e-result"><span>'.$user_score.' Points<img src="'.get_bloginfo("template_url").'/images/'.$status_img.'" /></span></p>';
 	$user_id = username_exists( $user_login );
 	if ( !$user_id ) {
 		$user_id = wp_insert_user(array('user_login' => $user_login, 'user_pass' => '123'));
