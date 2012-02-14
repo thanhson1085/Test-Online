@@ -6,8 +6,11 @@
 
 get_header();
 ?>
+<div class="i-header">
+	<div class="i-logo"><a href="#"><img src="<?php echo get_bloginfo("template_url");?>/images/to-logo.png"></a></div>
+</div>
 		<?php	
-/*			$menu_items = wp_get_nav_menu_items(45); 
+	/*	$menu_items = wp_get_nav_menu_items(45); 
 
 			$category_name = $_GET['category_name'];
 			$current_menu = '';
@@ -61,29 +64,40 @@ get_header();
 			$result .= ($level == 2 || $level == 1)? '</ul></div></div>':'';
 
 			echo $result;
-*/
+	*/
 		?>
-<div class="right-sidebar">
-<ul>
+
+<div class="i-content">
+<div class="i-right-sidebar">
+<ul class="btn-test-list">
 <?php
 global $post;
 $args = array( 'numberposts' => 5, 'post_type'=> 'session', 'post_status' => 'publish' );
 $myposts = get_posts( $args );
 foreach( $myposts as $post ) :	setup_postdata($post); ?>
-	<li><a href="<?php the_permalink(); ?>">Test Now!</a></li>
+	<li><a href="<?php the_permalink(); ?>"><span>Làm bài thi</span></a></li>
 	<?php 
 	if (get_user_role()){
 		?>
-		<li><a href="?hidden_term=hidden-<?php echo $post->ID; ?>" target="_blank">Result!</a></li>
+		<li><a href="?hidden_term=hidden-<?php echo $post->ID; ?>" target="_blank"><span>Kết quả thi<span></a></li>
 		<?php
 	}
+
 	?>
 
 <?php endforeach; ?>
 </ul>
-<p><a href="?hidden_term=<?php echo '#';?>">Sample Question</a></p>
+<!--p><a href="?hidden_term=<?php echo '#';?>">Sample Question</a></p-->
 </div>
-<div class="body-content">
+<div class="i-body-content">
+<?php
+while ( have_posts() ) : the_post(); ?><?php //print_r($post); ?>
+            <div><?php the_ID(); ?></div>
+			<?php
+		
+					endwhile;
+					?>
+</div>
 </div>
 <?php
 

@@ -631,7 +631,7 @@ add_action('before_delete_post', 'delete_session_category_automatically');
     //remove_submenu_page( 'edit.php', 'edit-tags.php?taxonomy=hidden_term&post_type=session' );
 //}
 
-add_filter( 'admin_menu', 'remove_those_menu_items' );
+//add_filter( 'admin_menu', 'remove_those_menu_items' );
 add_filter( 'show_admin_bar', '__return_false' );
 function remove_menus () {
 global $menu;

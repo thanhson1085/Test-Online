@@ -27,7 +27,7 @@ if ($custom_posts):
 
 		?>
 		<div class="p-content-header">
-		<p class="p-title"><span>Ket Qua Thi</span></p>
+		<p class="p-title"><span>Kết quả thi</span></p>
 		<p><label>Môn thi:</label><span><?php  echo $subjects[0];?></span>
 		<label class="label-2">Lớp:</label><span><?php echo $class[1]; ?></span></p>
 
@@ -39,9 +39,9 @@ if ($custom_posts):
 		<table class="tbl-mark">
 		<thead>
 		<th width="5%">STT</th>
-		<th width="50%">Ho va Ten</th>
-		<th width="15%">Diem</th>
-		<th width="30%">Ghi chu</th>
+		<th width="50%">Họ và tên</th>
+		<th width="15%">Điểm</th>
+		<th width="30%">Ghi chú</th>
 		</thead>
 		<tbody>
 		<?php

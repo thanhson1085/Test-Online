@@ -303,3 +303,53 @@ padding-left: 10px;
 .big-thumbnail-container img{border: 0;padding: 0; outline: 0; margin: 0;}
 .s-menu ul li.s-current-menu{ background-color:#80CAF8;}
 .s-menu ul li.s-current-menu:hover{background-color:#aadbf9;}
+
+.i-right-sidebar{
+	width: 200px;
+	float:left;
+	
+}
+
+.i-body-content{
+	width: 760px;
+	min-height: 200px;
+	float: right;
+	margin-left: -220px;
+	background: url(images/flower.png) no-repeat top right;
+
+	
+}
+.i-content{
+	overflow: auto;
+}
+.i-header{
+	height: 100px;
+	border-bottom: solid 1px #ddd;
+	margin-bottom: 10px;
+}
+.btn-test-list li a{
+	text-decoration: none;
+	margin-bottom:20px;
+	margin-left: 10px;
+	margin-top: 10px;
+	border-radius: 10px;
+	background: #6E94FE;
+	width: 140px;
+	height: 60px;
+	display: block;
+	text-align: center;
+	color: white;
+	font-weight: bold;
+	font-size: 16px;
+	text-transform: uppercase;
+}
+.btn-test-list li a:hover, .btn-test-list li a:focus{
+	background: #D24939;
+	color: #ccc;
+	border-color: #000; box-shadow: 0 0 8px #D24939; -moz-box-shadow: 0 0 8px #D24939; -webkit-box-shadow: 0 0 8px #D24939;outline:0;
+
+}
+.btn-test-list li{
+	line-height: 60px;
+}
+
