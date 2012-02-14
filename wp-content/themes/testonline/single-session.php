@@ -185,8 +185,8 @@ if ($custom_posts):
 		$j++;
 		?>
 		<div class="q-content-container">
-		<p class="q-title"><?php echo $j.': '.$post->post_title; ?></p>
-		<p><?php the_content();//echo $post->post_content; ?></p>
+		<p class="q-title">Câu <?php echo $j.': '.$post->post_title; ?></p>
+		<div class="q-desc"><?php the_content();//echo $post->post_content; ?></div>
 		<?php
 		$answers = get_post_metadata($post->ID,array('False','True'));
 
