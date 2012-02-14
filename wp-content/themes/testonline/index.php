@@ -91,6 +91,7 @@ foreach( $myposts as $post ) :	setup_postdata($post); ?>
 </div>
 <div class="i-body-content">
 <?php
+
 while ( have_posts() ) : the_post(); ?><?php //print_r($post); ?>
             <div><?php the_ID(); ?></div>
 			<?php
