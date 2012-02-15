@@ -8,6 +8,20 @@ get_header();
 ?>
 <div class="i-header">
 	<div class="i-logo"><a href="#"><img src="<?php echo get_bloginfo("template_url");?>/images/to-logo.png"></a></div>
+	<div id="topbar">
+		<?php if ( is_user_logged_in() ) { ?>
+					
+			<i>Xin chào <?php echo wp_get_current_user()->user_login; ?></i> | <a href="<?php echo get_admin_url(); ?>">Quản trị</a>
+				| <a href="<?php echo wp_logout_url(); ?>">Đăng xuất</a>
+					
+			<?php } 
+			else{
+					?>
+						<a href="<?php echo wp_login_url(); ?>">Đăng nhập</a> 
+					<?php
+					}
+					?>
+	</div>
 </div>
 		<?php	
 	/*	$menu_items = wp_get_nav_menu_items(45); 
@@ -168,6 +182,7 @@ if ($count > 0) {
 </form>
 </div>
 <div class="i-body-content">
+
 <div class="tq-content-container">
 
 <?php

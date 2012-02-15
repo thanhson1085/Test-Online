@@ -23,6 +23,7 @@ if ($_GET['a'] == 'result'){
 		}
 	}
 	$answer_trues = array();
+	$answers_checked = array();
 	foreach ($_POST as $choice_value => $value){
 		if (substr($choice_value,0,10) == 'ans_check_'){
 			//$selected_ids[] = array('question_id' => substr($answer_value,15), 'meta_id' => array($value));
