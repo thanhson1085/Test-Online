@@ -177,26 +177,50 @@ if ($count > 0) {
 }
 
 ?>
-</div>
+</div>	
 <p class="i-right-btn"><input type="submit" value="Thi thử"/></p>	
 </form>
 </div>
 <div class="i-body-content">
 
 <div class="tq-content-container">
+<div id="i-message"></div>
 
 <?php
-if ( !get_query_var('class')){
+/*if ( !get_query_var('class')){
 	echo '<div class="i-welcome"></div>';
-}
-while ( have_posts() ) : the_post(); ?><?php 
-	if ($post->post_type == 'trial_question'):
+}*/
+$args = array(
+	'tax_query' => array(
+		'relation' => 'AND',
+		array(
+			'taxonomy' => 'class',
+			'field' => 'slug',
+			'terms' => array( $_POST['class'] )
+		),
+		array(
+			'taxonomy' => 'term',
+			'field' => 'slug',
+			'terms' => array( $_POST['term'] )
+		),
+		array(
+			'taxonomy' => 'subject',
+			'field' => 'slug',
+			'terms' => array( $_POST['subject'] )
+		)
+	),
+	'posts_per_page' => '-1',
+	'post_type' => 'trial_question',
+	'post_status' => 'publish',
+);
+$query = new WP_Query( $args );
+while ( $query->have_posts() ) : $query->the_post(); ?><?php 
+
 		$answers = array();
 		$answers_true = array();
-		$j++;
 		?>
 		<div class="q-content-container">
-		<p class="q-title">Câu <?php echo $j.': '.$post->post_title; ?></p>
+		<p class="q-title"><?php echo $post->post_title; ?></p>
 		<div class="q-desc"><?php the_content();//echo $post->post_content; ?></div>
 		<?php
 		$answers = get_post_metadata($post->ID,array('False','True'));
@@ -221,34 +245,39 @@ while ( have_posts() ) : the_post(); ?><?php
 		$i = 1000;
 		?>
 		<?php
-		foreach ($answers as $answer){
-			?>
+					?>
 			<div class="q-answer-container">
 			<?php
+		foreach ($answers as $answer){
+
 			if ($input_type == 'checkbox') ++$i;
 			if ($answer->meta_key != 'Text'){
 				?>
-				<p><input type="<?php echo $input_type;?>" name="ans_check_<?php echo $i;?>_<?php echo $post->ID;?>" value="<?php echo $answer->meta_id;?>"/><label><?php echo $answer->meta_value;?></label></p>
+				<p class="<?php echo $answer->meta_key;?>"><input type="<?php echo $input_type;?>" name="ans_check_<?php echo $i;?>_<?php echo $post->ID;?>" value="<?php echo $answer->meta_id;?>"/><label><?php echo $answer->meta_value;?></label></p>
 				<?php
 			}
 			else{
 				if ($input_type == 'text'){
 					?>
-					<p><input type="text" name="ans_text_<?php echo $post->ID;?>"/></p>
+					<p class="<?php echo $answer->meta_value;?>"><input type="text" name="ans_text_<?php echo $post->ID;?>"/></p>
 					<?php
 				}
 			}
-			?>
+
+		}
+					?>
 				</div>
 			<?php
-		}
 		?>
+		<p class="next-page-container"><span class="btn-bypass">Bỏ qua</span><span class="btn-next">Tiếp theo</span></p>
 		</div>
 	
 			<?php
-			endif;
+	
 					endwhile;
+					
 					?>
+					
 		</div>
 </div>
 </div>

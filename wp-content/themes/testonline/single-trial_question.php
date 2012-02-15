@@ -37,7 +37,7 @@
             else{
                 if ($input_type == 'text'){
                     ?>
-                    <p><input type="text" name="ans_text_<?php echo $post->ID;?>"/></p>
+						<p><input type="text" name="ans_text_<?php echo $post->ID;?>"/></p>
                     <?php
                 }
             }

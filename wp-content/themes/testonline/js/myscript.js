@@ -146,6 +146,81 @@ jQuery(document).ready(function($){
 			jQuery('#'+strparrentmenu).parent().attr('class','s-current-menu');
 		}
 	});
+	
+	jQuery('.tq-content-container .q-content-container').each(function(){ 
+		jQuery(this).fadeIn(300);
+		return false;
+	});
+	
+	
+	jQuery('.btn-next').click(function(){
+		
+		var oThis = jQuery(this).parent().parent();
+		
+		var oTrues = jQuery(this).parent().parent().find('.True input');
+		var b = true;
+		oTrues.each(function(){
+			//var iTrue = jQuery(this).find('input');
+			if (!jQuery(this).attr('checked')){
+				//alert('thanh son');
+				b = false;
+			}
+		});
+		var oFalses = jQuery(this).parent().parent().find('.False input');
+		var c = true;;
+		oFalses.each(function(){
+			//var iFalse = jQuery(this).find('input');
+			if (jQuery(this).attr('checked')){
+				//alert('thanh son');
+				c = false;
+			}
+		});
+		var oTexts = jQuery(this).parent().parent().find('p input[type="text"]');
+		var d = true;;
+		oTexts.each(function(){
+			var iP = jQuery(this).parent();
+			if (jQuery(this).val().toUpperCase() != iP.attr('class').toUpperCase()){
+				//alert('thanh son');
+				d = false;
+			}
+		});
+		var oNext = jQuery(this).parent().parent().next('.q-content-container');
+		if (b && c && d){
+			jQuery('#i-message').css('display','none');
+			oThis.css('display','none');
+			if (typeof oNext.attr('class') !== 'undefined'){
+				oNext.fadeIn(300);
+			}		
+			else{
+				jQuery('#i-message').css('display','none');
+				jQuery('#i-message').html('Chúc mừng! Bạn đã hoàn thành bài kiểm tra.');
+				jQuery('#i-message').fadeIn(1000);
+				//jQuery('#i-message').fadeOut(1000);
+			}
+		}
+		else{
+			jQuery('#i-message').css('display','none');
+			jQuery('#i-message').html('Bạn trả lời chưa đúng! Vui lòng thử lại.');
+			jQuery('#i-message').fadeIn(1000);
+			//jQuery('#i-message').fadeOut(1000);
+		}
+	});
+	jQuery('.btn-bypass').click(function(){
+		var oThis = jQuery(this).parent().parent();
+		oThis.css('display','none');
+		var oNext = jQuery(this).parent().parent().next('.q-content-container');
+		if (typeof oNext.attr('class') !== 'undefined'){
+			jQuery('#i-message').css('display','none');
+			oNext.fadeIn(300);
+		}		
+		else{
+			jQuery('#i-message').css('display','none');
+			jQuery('#i-message').html('Chúc mừng! Bạn đã hoàn thành bài kiểm tra.');
+			jQuery('#i-message').fadeIn(1000);
+			//jQuery('#i-message').fadeOut(1000);
+		}
+	});
 })
+
 
 
