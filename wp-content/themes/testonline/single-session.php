@@ -24,6 +24,7 @@ if ($_GET['a'] == 'result'){
 	}
 	$answer_trues = array();
 	$answers_checked = array();
+	$i=0;
 	foreach ($_POST as $choice_value => $value){
 		if (substr($choice_value,0,10) == 'ans_check_'){
 			//$selected_ids[] = array('question_id' => substr($answer_value,15), 'meta_id' => array($value));
@@ -47,15 +48,30 @@ if ($_GET['a'] == 'result'){
 				$score += $levels[0];
 			}
 		}
-		if (substr($choice_value,0,9) == 'ans_text_'){	
-			$post_id = substr($choice_value,9);
-            $answers = get_post_metadata($post_id,array('Text'));
-            foreach ($answers as $answer){
-                if (strtolower($answer->meta_value) == strtolower($value) ){
-            		$levels = wp_get_post_terms($post_id,'level',array('fields' => 'names'));
-                    $score += $levels[0];
-                }
-            }
+		if (substr($choice_value,0,9) == 'ans_text_'){
+			
+			if( $post_id == substr($choice_value,14)){
+				$i++;
+				
+				$answers = get_post_metadata($post_id,array('Text'),false);
+						if (strtolower($answers[$i]->meta_value) == strtolower($value) ){
+							$levels = wp_get_post_terms($post_id,'level',array('fields' => 'names'));
+							$score += $levels[0]/sizeof($answers);
+						}			
+					
+				
+			}
+			else{
+				$i=0;
+				$post_id = substr($choice_value,14);
+				$answers = get_post_metadata($post_id,array('Text'),false);
+				//foreach ($answers as $answer){
+						if (strtolower($answers[$i]->meta_value) == strtolower($value) ){
+							$levels = wp_get_post_terms($post_id,'level',array('fields' => 'names'));
+							$score += $levels[0]/sizeof($answers);
+						}			
+				//}
+			}
 		}
 	}
 /*
@@ -112,7 +128,7 @@ if ($_GET['a'] == 'result'){
 	if ( !$user_id ) {
 		$user_id = wp_insert_user(array('user_login' => $user_login, 'user_pass' => '123'));
 	}
-	add_user_meta($user_id,'result', $yourname.';'.$yourclass.';'.$user_score );
+	add_user_meta($user_id,'result', str_replace(';','',$yourname).';'.str_replace(';','',$yourclass).';'.$user_score );
 	return;
 	
 }
@@ -192,7 +208,7 @@ if ($custom_posts):
 		$answers = get_post_metadata($post->ID,array('False','True'));
 
 		$answers_true = get_post_metadata($post->ID,array('True'));
-		$answers = array_merge($answers,get_post_metadata($post->ID,array('Text')));
+		$answers = array_merge($answers,get_post_metadata($post->ID,array('Text'), false));
 		$types = wp_get_post_terms($post->ID,'type',array('fields' => 'names'));
 			
 		switch ($types[0]) {
@@ -210,10 +226,11 @@ if ($custom_posts):
 		}
 		$i = 1000;
 		?>
+		<div class="q-answer-container">
 		<?php
 		foreach ($answers as $answer){
 			?>
-			<div class="q-answer-container">
+			
 			<?php
 			if ($input_type == 'checkbox') ++$i;
 			if ($answer->meta_key != 'Text'){
@@ -223,16 +240,20 @@ if ($custom_posts):
 			}
 			else{
 				if ($input_type == 'text'){
-					?>
-					<p><input type="text" name="ans_text_<?php echo $post->ID;?>"/></p>
-					<?php
+					$i++;
+
+						?>
+						<p><input type="text" name="ans_text_<?php echo $i;?>_<?php echo $post->ID;?>"/></p>
+						<?php
+					
 				}
 			}
 			?>
-				</div>
+				
 			<?php
 		}
 		?>
+			</div>
 		</div>
 		<?php
 	}

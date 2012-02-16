@@ -12,11 +12,15 @@ $args = array(
 'post_type' => 'session',
 );
 $custom_posts = get_posts_by_taxonomy($args);
+$user_results = array();
+
 if ($custom_posts):
     foreach ($custom_posts as $post){
         setup_postdata($post);
 		$user = get_userdatabylogin($post->ID);
-		$user_results = get_user_meta($user->ID, 'result');
+		$user_results = get_user_meta($user->ID, 'result',false);
+
+		
 		$subjects = wp_get_post_terms($post->ID,'subject',array('fields' => 'names'));
 		$marks = wp_get_post_terms($post->ID,'mark',array('fields' => 'names'));
 		$classes = wp_get_post_terms($post->ID,'class',array('fields' => 'names'));
@@ -35,7 +39,11 @@ if ($custom_posts):
 		<label class="label-2">Thời gian làm bài:</label><span><?php echo $times[0];?></span></p>
 		<p><label>Điểm tối đa:</label><span><?php echo $marks[0];?></span> </p>
 		</div>
-
+		<?php
+		if (empty($user_results)){
+			continue;
+		}
+		?>
 		<table class="tbl-mark">
 		<thead>
 		<th width="5%">STT</th>

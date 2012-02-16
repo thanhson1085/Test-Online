@@ -190,6 +190,13 @@ jQuery(document).ready(function($){
 			oThis.css('display','none');
 			if (typeof oNext.attr('class') !== 'undefined'){
 				oNext.fadeIn(300);
+				//alert('thanh son';
+				var i = jQuery('#true-answers').html();
+				i++;
+				jQuery('#true-answers').html(i);
+				var j = jQuery('#no-answers').html();
+				j++;
+				jQuery('#no-answers').html(j);
 			}		
 			else{
 				jQuery('#i-message').css('display','none');
@@ -212,6 +219,9 @@ jQuery(document).ready(function($){
 		if (typeof oNext.attr('class') !== 'undefined'){
 			jQuery('#i-message').css('display','none');
 			oNext.fadeIn(300);
+				var j = jQuery('#no-answers').html();
+				j++;
+				jQuery('#no-answers').html(j);
 		}		
 		else{
 			jQuery('#i-message').css('display','none');

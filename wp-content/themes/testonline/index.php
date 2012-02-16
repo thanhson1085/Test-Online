@@ -103,7 +103,7 @@ foreach( $myposts as $post ) :	setup_postdata($post); ?>
 </ul>
 <!--p><a href="?hidden_term=<?php echo '#';?>">Sample Question</a></p-->
 <h2 class="i-right-h2">Ôn tập</h2>
-<form method="POST" action="index.php">
+<form method="POST" action="index.php?post_type=trial_question">
 <div class="i-term-container">
 <h3 class="i-right-h3">Chọn lớp</h3>
 <?php
@@ -121,6 +121,7 @@ if ($count > 0) {
     	}
 		else{
 			echo '<p><input type="radio" name="class" checked="checked" value="'.$term->slug.'"/><label>' . $term->name . '</label></p>';
+			$class_name = $term->name;
 		}
 		$checked='';
     }
@@ -128,31 +129,7 @@ if ($count > 0) {
 }
 ?>
 </div>
-<div class="i-term-container">
-<h3 class="i-right-h3">Chọn môn</h3>
-<?php
-$args = array( 'taxonomy' => 'subject' );
 
-$terms = get_terms('subject', $args);
-
-$count = count($terms); 
-$checked = (!get_query_var('subject'))? 'checked="checked"': '';
-if ($count > 0) {
-
-    foreach ($terms as $term) {
-		if (get_query_var('subject') != $term->slug){
-			echo '<p><input type="radio" name="subject" '.$checked.' value="'.$term->slug.'"/><label>' . $term->name . '</label></p>';
-    	}
-		else{
-			echo '<p><input type="radio" name="subject" checked="checked" value="'.$term->slug.'"/><label>' . $term->name . '</label></p>';
-		}
-		$checked='';	
-    }
-
-}
-
-?>
-</div>
 <div class="i-term-container">
 <h3 class="i-right-h3">Chọn học kỳ</h3>
 <?php
@@ -170,6 +147,7 @@ if ($count > 0) {
     	}
 		else{
 			echo '<p><input type="radio" name="term" checked="checked" value="'.$term->slug.'"/><label>' . $term->name . '</label></p>';
+			$term_name = $term->name;
 		}
 		$checked='';	
     }
@@ -178,13 +156,36 @@ if ($count > 0) {
 
 ?>
 </div>	
+<div class="i-term-container">
+<h3 class="i-right-h3">Chọn môn</h3>
+<?php
+$args = array( 'taxonomy' => 'subject' );
+
+$terms = get_terms('subject', $args);
+
+$count = count($terms); 
+$checked = (!get_query_var('subject'))? 'checked="checked"': '';
+if ($count > 0) {
+
+    foreach ($terms as $term) {
+		if (get_query_var('subject') != $term->slug){
+			echo '<p><input type="radio" name="subject" '.$checked.' value="'.$term->slug.'"/><label>' . $term->name . '</label></p>';
+    	}
+		else{
+			echo '<p><input type="radio" name="subject" checked="checked" value="'.$term->slug.'"/><label>' . $term->name . '</label></p>';
+			$subject_name = $term->name;
+		}
+		$checked='';	
+    }
+}
+?>
+</div>
 <p class="i-right-btn"><input type="submit" value="Thi thử"/></p>	
 </form>
 </div>
 <div class="i-body-content">
 
 <div class="tq-content-container">
-<div id="i-message"></div>
 
 <?php
 /*if ( !get_query_var('class')){
@@ -212,9 +213,44 @@ $args = array(
 	'posts_per_page' => '-1',
 	'post_type' => 'trial_question',
 	'post_status' => 'publish',
+	'order' => 'ASC',
 );
 $query = new WP_Query( $args );
-while ( $query->have_posts() ) : $query->the_post(); ?><?php 
+if ($query->post-count){
+?>
+<div id="i-test-info">
+<ul>
+<li><span>
+<?php echo 'Lớp: '.$class_name;?>
+</span></li>
+<li><span>
+<?php echo 'Học kỳ: '.$term_name;?>
+</span></li>
+<li><span>
+<?php echo 'Môn: '.$subject_name;?>
+</span></li>
+<li><span>
+<?php echo 'Làm đúng: <span id="true-answers">0</span>/'.$query->post_count;?>
+</span></li>
+<li><span>
+<?php echo 'Đang làm câu thứ: <span id="no-answers">1</span>';?>
+</span></li>
+</ul>
+</div>
+<div id="i-message"></div>
+<?php
+}
+else{
+	if ($_GET['post_type'] == 'trial_question'){
+		?>
+		<div id="i-message" style="display: block;">Không có bài tập trong mục bạn đang tìm kiếm</div>
+		<?php
+	}
+}
+while ( $query->have_posts() ) : $query->the_post(); ?>
+
+
+		<?php 
 
 		$answers = array();
 		$answers_true = array();
@@ -226,7 +262,7 @@ while ( $query->have_posts() ) : $query->the_post(); ?><?php
 		$answers = get_post_metadata($post->ID,array('False','True'));
 
 		$answers_true = get_post_metadata($post->ID,array('True'));
-		$answers = array_merge($answers,get_post_metadata($post->ID,array('Text')));
+		$answers = array_merge($answers,get_post_metadata($post->ID,array('Text'),false));
 		$types = wp_get_post_terms($post->ID,'type',array('fields' => 'names'));
 			
 		switch ($types[0]) {

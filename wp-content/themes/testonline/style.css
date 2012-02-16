@@ -86,6 +86,7 @@ body {
 	width: 300px;
 	font-size: 24px;
 	font-family: verdana;
+	margin-top: 10px;
 }
 
 .q-answer-container input:focus {
@@ -357,7 +358,7 @@ padding-left: 10px;
 .btn-test-list li a{
 	text-decoration: none;
 	margin: 0 auto;
-	margin-bottom:20px;
+	margin-bottom:10px;
 
 	margin-top: 10px;
 	border-radius: 5px;
@@ -389,8 +390,8 @@ padding-left: 10px;
 	line-height: 25px;
 }
 .i-term-container{
-	border: solid 1px #DDD;
-	border-top: solid 25px #DDD;
+	border: solid 1px #6E94FE;
+	border-top: solid 25px #6E94FE;
 	border-radius: 5px;
 	padding: 5px;
 	padding-bottom:10px;
@@ -404,7 +405,7 @@ padding-left: 10px;
 .i-right-h3{
 	margin-top: -25px;
 	margin-bottom: 10px;
-	color:#D24939;
+	color:#FFF;
 	font-weight: bold;
 }
 .i-right-btn{ 
@@ -451,11 +452,11 @@ padding-left: 10px;
 #i-message{
 	display:none;
 
-	background:#DFE7FF;
+	background:#D24939;
 	margin-top: 10px;
 	border-radius: 5px;
 	line-height: 15px;
-	color:#FF7363;
+	color:#FFF;
 	padding: 10px;
 }
 
@@ -470,3 +471,20 @@ padding-left: 10px;
 	cursor: pointer;
 	
 }
+
+#i-test-info{
+	background:#6E94FE;
+	margin-top: 10px;
+	border-radius: 5px;
+	line-height: 15px;
+	color:#FFF;
+	padding: 10px;
+	text-align: justify;
+	
+}
+#i-test-info ul {list-style: none; }
+#i-test-info ul  li{display: inline; text-align: justify;}
+#i-test-info ul  li{padding-right: 30px;}
+
+.icon{ height: 10px; vertical-align: middle; padding:0;margin:0; margin-right: 5px;}
+
