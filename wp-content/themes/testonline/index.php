@@ -271,11 +271,45 @@ if ($query->post-count){
 <?php
 }
 else{
-	if ($_GET['post_type'] == 'trial_question'){
+	if ($_GET['post_type'] == 'trial_question' && $_POST['class'] && $_POST['term'] && $_POST['subject']){
 		?>
 		<div id="i-message" style="display: block;">Không có bài tập trong mục bạn đang tìm kiếm</div>
 		<?php
 	}
+	
+		?>	
+		<div class="i-intro-container">
+			<div class="i-intro">
+				<h1>Giới thiệu</h1>
+				<p>Phần mềm thi và ôn tập trực tuyến của trường tiểu học Thịnh Liệt</p>
+				<p><img src="<?php echo get_bloginfo('template_url');?>/images/subbn.gif"/></p>
+				<h2>Chức năng phần mềm</h2>
+				<h3>Dành cho giáo viên</h3>
+					<ul>
+						<li>Quản lý đề thi</li>
+						<li>Quản lý câu hỏi thi</li>
+						<li>Quản lý câu hỏi ôn tập</li>
+						<li>Quản lý môn học</li>
+						<li>Quản lý học kỳ</li>
+						<li>Quản lý lớp học</li>
+						<li>Quản lý điểm tối đa của đề thi</li>
+						<li>Quản lý điểm tối đa của câu hỏi</li>
+						<li>Quản lý điểm của học sinh</li>
+					</ul>
+				<h3>Dành cho học sinh</h3>
+					<ul>
+						<li>Làm bài thi</li>
+						<li>Ôn tập</li>
+					</ul>
+				<h2> Công nghệ sử dụng trong phần mềm </h2>
+					<ul>
+						<li>Mã nguồn mở wordpress</li>
+						<li>HTML, CSS3, jQuery</li>
+					</ul>
+			</div>
+		</div>
+		<?php
+	
 }
 while ( $query->have_posts() ) : $query->the_post(); ?>
 

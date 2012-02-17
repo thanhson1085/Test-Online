@@ -203,6 +203,9 @@ jQuery(document).ready(function($){
 				jQuery('#no-answers').html(j);
 			}		
 			else{
+				var i = jQuery('#true-answers').html();
+				i++;
+				jQuery('#true-answers').html(i);
 				jQuery('#i-message').css('display','none');
 				jQuery('#i-message').html('Chúc mừng! Bạn đã hoàn thành bài kiểm tra.');
 				jQuery('#i-message').fadeIn(1000);

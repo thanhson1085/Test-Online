@@ -711,4 +711,50 @@ transform: rotate(0deg);
 	top:-10px;
 	border-color: #ccc; box-shadow: 0 3px 18px #000; -moz-box-shadow: 0 3px 18px #000; -webkit-box-shadow: 0 3px 18px #000;outline:0;
 }
+.i-intro{
+	background: white;
+	padding: 10px;
+	line-height: 1.5;
+	border: solid 1px #ccc;
+	border-radius: 5px;
+	margin-bottom: 20px;
+	margin-top: 10px;
+	padding-bottom: 20px;
+	}
+.i-intro h1{
+	font-size: 20px;
+	font-weight: bold;
+	color: #d0162d;
+	text-transform: uppercase;
+	line-height: 2;
+	border-bottom: solid 1px #ccc;
+	margin-bottom: 10px;
+	background: url(images/big_bullet.png) no-repeat top left;
+	padding-left: 40px;
+}
+
+.i-intro h2{
+	font-size: 18px;
+	color: #508b13;
+	font-weight: bold;
+	
+	line-height: 2;
+}
+.i-intro h3{
+	font-size: 16px;
+	color:#2995e0;
+	font-family: arial;
+	font-weight: bold;
+	text-transform: uppercase;
+	line-height: 2;
+}
+.i-intro ul{
+	list-style: dotted;
+	
+}
+.i-intro ul li{
+	color: #cb1677;
+	margin-left: 20px;
+	
+}
 ::selection{background:#FF5E99;color:#fff;text-shadow:none;}
