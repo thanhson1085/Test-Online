@@ -17,11 +17,11 @@ if ($_GET['post_type'] != 'trial_question'){
 				foreach( $myposts as $post ) :	setup_postdata($post); ?>
 					
 
-					<div class="d-btn-test"> <img src="<?php echo get_bloginfo('template_url');?>/images/micky.gif" /><a href="<?php the_permalink(); ?>"/>BÀI THI</a></div>
+					<div class="d-btn-test"> <img src="<?php echo get_bloginfo('template_url');?>/images/micky.gif" /><a href="<?php the_permalink(); ?>"/>Bài Thi</a></div>
 				<?php endforeach; ?>	
 					
 		
-			<div class="d-btn-demo"> <img src="<?php echo get_bloginfo('template_url');?>/images/micky.gif" /><a href="?post_type=trial_question"/>ÔN TẬP<a></div>
+			<div class="d-btn-demo"> <img src="<?php echo get_bloginfo('template_url');?>/images/micky.gif" /><a href="?post_type=trial_question"/>Ôn Tập<a></div>
 
 			<div class="img3"><img src="<?php echo get_bloginfo('template_url');?>/images/img3.jpg" /></div>
 			<div class="img1"><img src="<?php echo get_bloginfo('template_url');?>/images/img1.jpg" /></div>
@@ -54,7 +54,7 @@ if ($_GET['post_type'] != 'trial_question'){
 	</div>
 </div>
 		<?php	
-	/*	$menu_items = wp_get_nav_menu_items(45); 
+		$menu_items = wp_get_nav_menu_items(45); 
 
 			$category_name = $_GET['category_name'];
 			$current_menu = '';
@@ -108,7 +108,7 @@ if ($_GET['post_type'] != 'trial_question'){
 			$result .= ($level == 2 || $level == 1)? '</ul></div></div>':'';
 
 			echo $result;
-	*/
+	
 		?>
 
 <div class="i-content">

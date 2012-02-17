@@ -63,6 +63,7 @@
 <script src="<?php echo get_bloginfo('template_url'); ?>/js/jquery.min.js"></script>
 <script src="<?php echo get_bloginfo('template_url'); ?>/js/myscript.js"></script>
 
+
 </head>
 
 <body <?php body_class(); ?>>

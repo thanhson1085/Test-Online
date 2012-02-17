@@ -130,9 +130,43 @@ render:function($){
 }
 
 }
-
+function display(){ 
+	if (milisec == 0 && seconds == 0){
+		jQuery('#i-submit-form').submit();
+	}
+ if (milisec<=0){ 
+    milisec=60
+    seconds-=1 
+ } 
+ if (seconds<=-1){ 
+    milisec=0 
+    seconds+=1 
+ } 
+ else 
+    milisec-=1 
+    document.getElementById("clock").firstChild.nodeValue = seconds+"."+milisec 
+    setTimeout("display()",1000) 
+} 
+var milisec=0 
+var seconds;
 jQuery(document).ready(function($){
+	//alert(jQuery('#max-time').html());
+	jQuery('#i-submit-form').submit(function(){
+		
+		if ( jQuery('input[name="yourname"]').val() == "" && jQuery('input[name="yourclass"]').val() == ""){
+			alert('Vui lòng nhập tên và lớp!');
+			return false;
+		}
+	})
+	seconds = jQuery('#max-time').html(); 
 	jkmegamenu.render($)
+//Timer
+	
+	//document.getElementById("clock").firstChild.nodeValue ='30' 
+	if(typeof jQuery('#clock').attr('id') != 'undefined'){
+		display(); 
+	}
+//end
 	jQuery('.megamenu').each(function(){ 
 		var found = jQuery(this).find('.column ul li');
 		if(found.length == 0){

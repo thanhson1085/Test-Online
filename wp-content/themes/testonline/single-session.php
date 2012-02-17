@@ -157,7 +157,7 @@ $my_query = new WP_Query($args);
 	}
 	else{
 	?>
-		<form method="POST" action="?session=<?php echo $_GET['session'];?>&a=result">
+		<form id="i-submit-form" method="POST" action="?session=<?php echo $_GET['session'];?>&a=result">
 		<input type="hidden" name="yourpassword" value="<?php echo  $_POST['yourpassword'];?>"/>
 	<?php
 	}
@@ -172,7 +172,7 @@ $my_query = new WP_Query($args);
 	<label class="label-2">Lớp:</label><span><?php echo $classes[0]; ?></span></p>
 
 	<p><label>Học kỳ:</label><span><?php echo $terms[0]; ?></span>
-	<label class="label-2">Thời gian làm bài:</label><span><?php echo $times[0];?></span></p>
+	<label class="label-2">Thời gian làm bài:</label><span id="max-time"><?php echo $times[0];?></span></p>
 	<p><label>Điểm tối đa:</label><span><?php echo $marks[0];?></span> </p>
  	<?php
 //	endwhile;
@@ -183,7 +183,9 @@ $my_query = new WP_Query($args);
 <p><label class="label-2">Lớp:</label><input type="text" name="yourclass" /></p>
 </div>
 <div class="q-img"><a href="<?php echo get_bloginfo('url');?>"><img src="<?php echo get_bloginfo('template_url');?>/images/art.jpg"/></a></div>
-<p class="btn-summit-container"><input class="btn-summit" type="submit" value="Nộp bài"/></p>
+<p class="btn-summit-container"><input class="btn-summit" type="submit" value="Nộp bài"/><span id="clock">Thanh Son</span></p>
+<div class="q-page">
+
 <?php
 $args = array(
 'post_status' => 'publish',
@@ -263,6 +265,7 @@ else : endif;
 //print_r($answers);
 //end of get posts by Taxonomy terms
 ?>
+</div>
 <p class="btn-summit-container"><input class="btn-summit" type="submit" value="Nộp bài"/></p>
 </form>
 <?php get_footer(); ?>
