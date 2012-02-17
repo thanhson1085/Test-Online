@@ -147,6 +147,10 @@ jQuery(document).ready(function($){
 		}
 	});
 	
+	jQuery('.d-page-container').css('height',jQuery(window).height());
+	jQuery('#page').css('min-height',jQuery(window).height());
+
+	jQuery('.d-page').css('top',jQuery(window).height()/2 - jQuery('.d-page').height()/2);
 	jQuery('.tq-content-container .q-content-container').each(function(){ 
 		jQuery(this).fadeIn(300);
 		return false;

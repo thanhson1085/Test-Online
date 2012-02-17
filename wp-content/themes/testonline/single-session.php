@@ -123,7 +123,7 @@ if ($_GET['a'] == 'result'){
 			$status_img = "cry.png";
 		}
 	}
-	echo '<p class="e-result"><span>'.$user_score.' Points<img src="'.get_bloginfo("template_url").'/images/'.$status_img.'" /></span></p>';
+	echo '<p class="e-result"><span>'.$user_score.' Điểm<a href="'.get_bloginfo('url').'"><img src="'.get_bloginfo("template_url").'/images/'.$status_img.'" /></a></span></p>';
 	$user_id = username_exists( $user_login );
 	if ( !$user_id ) {
 		$user_id = wp_insert_user(array('user_login' => $user_login, 'user_pass' => '123'));
@@ -179,9 +179,10 @@ $my_query = new WP_Query($args);
 //}
 //wp_reset_query();  // Restore global post data stomped by the_post().
 ?>
-<p><label>Họ và tên:</label><input type="text" name="yourname" />
-<label class="label-2">Lớp:</label><input type="text" name="yourclass" /></p>
+<p><label>Họ và tên:</label><input type="text" name="yourname" /></p>
+<p><label class="label-2">Lớp:</label><input type="text" name="yourclass" /></p>
 </div>
+<div class="q-img"><a href="<?php echo get_bloginfo('url');?>"><img src="<?php echo get_bloginfo('template_url');?>/images/art.jpg"/></a></div>
 <p class="btn-summit-container"><input class="btn-summit" type="submit" value="Nộp bài"/></p>
 <?php
 $args = array(
@@ -243,7 +244,7 @@ if ($custom_posts):
 					$i++;
 
 						?>
-						<p><input type="text" name="ans_text_<?php echo $i;?>_<?php echo $post->ID;?>"/></p>
+						<p><input type="text" name="ans_text_<?php echo rand(1000,9999);?>_<?php echo $post->ID;?>"/></p>
 						<?php
 					
 				}

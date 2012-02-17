@@ -5,9 +5,39 @@
  */
 
 get_header();
+if ($_GET['post_type'] != 'trial_question'){
+	?>
+	<div class="d-page-container">
+		<div class="d-page">	
+			<div class="d-logo"></div>
+				<?php
+				global $post;
+				$args = array( 'numberposts' => 1, 'post_type'=> 'session', 'post_status' => 'publish' );
+				$myposts = get_posts( $args );
+				foreach( $myposts as $post ) :	setup_postdata($post); ?>
+					
+
+					<div class="d-btn-test"> <img src="<?php echo get_bloginfo('template_url');?>/images/micky.gif" /><a href="<?php the_permalink(); ?>"/>BÀI THI</a></div>
+				<?php endforeach; ?>	
+					
+		
+			<div class="d-btn-demo"> <img src="<?php echo get_bloginfo('template_url');?>/images/micky.gif" /><a href="?post_type=trial_question"/>ÔN TẬP<a></div>
+
+			<div class="img3"><img src="<?php echo get_bloginfo('template_url');?>/images/img3.jpg" /></div>
+			<div class="img1"><img src="<?php echo get_bloginfo('template_url');?>/images/img1.jpg" /></div>
+			<div class="img2"><img src="<?php echo get_bloginfo('template_url');?>/images/img2.jpg" /></div>
+		</div>
+	</div>
+	<?php
+	get_footer();
+	return;
+}
+
 ?>
 <div class="i-header">
-	<div class="i-logo"><a href="#"><img src="<?php echo get_bloginfo("template_url");?>/images/to-logo.png"></a></div>
+	<div class="i-logo"><a href="<?php echo get_bloginfo('url');?>"><img src="<?php echo get_bloginfo("template_url");?>/images/logo2.png"></a></div>
+	<div class="img4"><img src="<?php echo get_bloginfo('template_url');?>/images/img2.jpg" /></div>
+	<div class="img5"><img src="<?php echo get_bloginfo('template_url');?>/images/img12.jpg" /></div>
 	<div id="topbar">
 		<?php if ( is_user_logged_in() ) { ?>
 					
@@ -86,7 +116,7 @@ get_header();
 <ul class="btn-test-list">
 <?php
 global $post;
-$args = array( 'numberposts' => 5, 'post_type'=> 'session', 'post_status' => 'publish' );
+$args = array( 'numberposts' => 1, 'post_type'=> 'session', 'post_status' => 'publish' );
 $myposts = get_posts( $args );
 foreach( $myposts as $post ) :	setup_postdata($post); ?>
 	<li><a href="<?php the_permalink(); ?>"><span>Làm bài thi</span></a></li>
@@ -295,7 +325,7 @@ while ( $query->have_posts() ) : $query->the_post(); ?>
 			else{
 				if ($input_type == 'text'){
 					?>
-					<p class="<?php echo $answer->meta_value;?>"><input type="text" name="ans_text_<?php echo $post->ID;?>"/></p>
+					<p class="<?php echo $answer->meta_value;?>"><input type="text" name="ans_text_<?php echo rand(1000,9999);?>_<?php echo $post->ID;?>"/></p>
 					<?php
 				}
 			}
