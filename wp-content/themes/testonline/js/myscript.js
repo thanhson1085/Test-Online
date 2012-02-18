@@ -142,19 +142,36 @@ function display(){
     milisec=0 
     seconds+=1 
  } 
- else 
+  else 
     milisec-=1 
-    document.getElementById("clock").firstChild.nodeValue = seconds+"."+milisec 
+	if (milisec < 10){
+		milisecs = '0' + milisec;
+	}
+	else{
+		milisecs = milisec;
+	}
+	 if (seconds < 10){
+		second = '0' + seconds;
+	}
+	else{
+		second = seconds;
+	}
+    jQuery('#clock').html(second+":"+milisecs); 
     setTimeout("display()",1000) 
-} 
+}
+ 
 var milisec=0 
 var seconds;
+var question_list="";
 jQuery(document).ready(function($){
 	//alert(jQuery('#max-time').html());
+
 	jQuery('#i-submit-form').submit(function(){
 		
 		if ( jQuery('input[name="yourname"]').val() == "" && jQuery('input[name="yourclass"]').val() == ""){
-			alert('Vui lòng nhập tên và lớp!');
+			jQuery('.q-message').html('Vui lòng nhập tên và lớp học của bạn!');
+			jQuery('.q-message').fadeIn(300);
+			//setTimeout("jQuery('#q-message').fadeOut(300)",10000)
 			return false;
 		}
 	})
@@ -217,7 +234,7 @@ jQuery(document).ready(function($){
 		var d = true;;
 		oTexts.each(function(){
 			var iP = jQuery(this).parent();
-			if (jQuery(this).val().toUpperCase() != iP.attr('class').toUpperCase()){
+			if (jQuery(this).val().trim().toUpperCase() != iP.attr('class').trim().toUpperCase()){
 				//alert('thanh son');
 				d = false;
 			}
@@ -270,6 +287,16 @@ jQuery(document).ready(function($){
 			jQuery('#i-message').fadeIn(1000);
 			//jQuery('#i-message').fadeOut(1000);
 		}
+	});
+	var i = 0;
+		jQuery('.q-content-container').each(function(){
+		i ++;
+		question_list += '<span class="'+jQuery(this).attr('id')+'">Câu '+i+'</span>| ';	
+		});
+	jQuery('#i-question-list').html(question_list);
+	jQuery('#i-question-list span').click(function(){
+		jQuery('.q-content-container').css('display','none');
+		jQuery('#'+jQuery(this).attr('class')).fadeIn(300);
 	});
 })
 

@@ -10,19 +10,19 @@ $content_width = 584;
 add_action( 'init', 'session_init' );
 function session_init() {
   $labels = array(
-    'name' => _x('Sessions', 'post type general name'),
-    'singular_name' => _x('Session', 'post type singular name'),
+    'name' => _x('Đề thi', 'post type general name'),
+    'singular_name' => _x('Đề thi', 'post type singular name'),
     'add_new' => _x('Add New', 'session'),
-    'add_new_item' => __('Add New Session'),
-    'edit_item' => __('Edit Session'),
-    'new_item' => __('New Session'),
-    'all_items' => __('All Sessions'),
-    'view_item' => __('View Session'),
-    'search_items' => __('Search Sessions'),
-    'not_found' =>  __('No sessions found'),
-    'not_found_in_trash' => __('No sessions found in Trash'), 
+    'add_new_item' => __('Add New Đề thi'),
+    'edit_item' => __('Edit Đề thi'),
+    'new_item' => __('New Đề thi'),
+    'all_items' => __('All Đề thi'),
+    'view_item' => __('View Đề thi'),
+    'search_items' => __('Search Đề thi'),
+    'not_found' =>  __('No Đề thi found'),
+    'not_found_in_trash' => __('No Đề thi found in Trash'), 
     'parent_item_colon' => '',
-    'menu_name' => 'Sessions'
+    'menu_name' => 'Đề thi'
 
   );
   $args = array(
@@ -71,19 +71,19 @@ function session_updated_messages( $messages ) {
 add_action( 'init', 'question_init' );
 function question_init() {
   $labels = array(
-    'name' => _x('Questions', 'post type general name'),
-    'singular_name' => _x('Question', 'post type singular name'),
-    'add_new' => _x('Add New', 'question'),
-    'add_new_item' => __('Add New Question'),
-    'edit_item' => __('Edit Question'),
-    'new_item' => __('New Question'),
-    'all_items' => __('All Questions'),
-    'view_item' => __('View Question'),
-    'search_items' => __('Search Questions'),
-    'not_found' =>  __('No questions found'),
-    'not_found_in_trash' => __('No questions found in Trash'), 
+    'name' => _x('Câu hỏi thi', 'post type general name'),
+    'singular_name' => _x('Câu hỏi', 'post type singular name'),
+    'add_new' => _x('Thêm mới', 'question'),
+    'add_new_item' => __('Thêm mới Câu hỏi'),
+    'edit_item' => __('Sửa Câu hỏi'),
+    'new_item' => __('Câu hỏi mới'),
+    'all_items' => __('Tất cả Câu hỏi'),
+    'view_item' => __('View Câu hỏi'),
+    'search_items' => __('Tìm Câu hỏi'),
+    'not_found' =>  __('No Câu hỏi found'),
+    'not_found_in_trash' => __('No Câu hỏi found in Trash'), 
     'parent_item_colon' => '',
-    'menu_name' => 'Quizzs'
+    'menu_name' => 'Câu hỏi thi'
 
   );
   $args = array(
@@ -159,19 +159,19 @@ function question_add_help_text( $contextual_help, $screen_id, $screen ) {
 add_action( 'init', 'trial_question_init' );
 function trial_question_init() {
   $labels = array(
-    'name' => _x('Demo Exams', 'post type general name'),
-    'singular_name' => _x('Trial Question', 'post type singular name'),
+    'name' => _x('Câu hỏi ôn tập', 'post type general name'),
+    'singular_name' => _x('Câu hỏi ôn tập', 'post type singular name'),
     'add_new' => _x('Add New', 'question'),
     'add_new_item' => __('Add New Question'),
     'edit_item' => __('Edit Question'),
     'new_item' => __('New Question'),
     'all_items' => __('All Questions'),
     'view_item' => __('View Question'),
-    'search_items' => __('Search Questions'),
+    'search_items' => __('Tìm Câu hỏi'),
     'not_found' =>  __('No questions found'),
     'not_found_in_trash' => __('No questions found in Trash'), 
     'parent_item_colon' => '',
-    'menu_name' => 'Demo Exams'
+    'menu_name' => 'Câu hỏi ôn tập'
 
   );
   $args = array(
@@ -222,20 +222,20 @@ function create_question_taxonomies()
 {
 
   $labels = array(
-    'name' => _x( 'Classes', 'taxonomy general name' ),
-    'singular_name' => _x( 'Class', 'taxonomy singular name' ),
-    'search_items' =>  __( 'Search Classes' ),
-    'popular_items' => __( 'Popular Classes' ),
-    'all_items' => __( 'All Classes' ),
+    'name' => _x( 'Lớp', 'taxonomy general name' ),
+    'singular_name' => _x( 'Lớp', 'taxonomy singular name' ),
+    'search_items' =>  __( 'Tìm kiếm Lớp' ),
+    'popular_items' => __( 'Popular Lớp' ),
+    'all_items' => __( 'Tất cả các lớp' ),
     'parent_item' => null,
     'parent_item_colon' => null,
-    'edit_item' => __( 'Edit Class' ), 
-    'update_item' => __( 'Update Class' ),
-    'add_new_item' => __( 'Add New Class' ),
-    'new_item_name' => __( 'New Class Name' ),
+    'edit_item' => __( 'Sửa Lớp' ), 
+    'update_item' => __( 'Cập nhật Lớp' ),
+    'add_new_item' => __( 'Thêm mới Lớp' ),
+    'new_item_name' => __( 'Tên Lớp mới' ),
     'separate_items_with_commas' => __( 'Separate classes with commas' ),
-    'add_or_remove_items' => __( 'Add or remove classes' ),
-    'choose_from_most_used' => __( 'Choose from the most used classes' ),
+    'add_or_remove_items' => __( 'Thêm hoặc xóa lớp' ),
+    'choose_from_most_used' => __( 'Chọn từ lớp thường được sử dụng' ),
     'menu_name' => __( 'Classs' ),
   ); 
 
@@ -257,21 +257,21 @@ function create_question_taxonomies()
   ));
 */
   $labels = array(
-    'name' => _x( 'Terms', 'taxonomy general name' ),
-    'singular_name' => _x( 'Term', 'taxonomy singular name' ),
-    'search_items' =>  __( 'Search Terms' ),
-    'popular_items' => __( 'Popular Terms' ),
-    'all_items' => __( 'All Terms' ),
+    'name' => _x( 'Học kỳ', 'taxonomy general name' ),
+    'singular_name' => _x( 'Học kỳ', 'taxonomy singular name' ),
+    'search_items' =>  __( 'Tìm Học kỳ' ),
+    'popular_items' => __( 'Popular Học kỳ' ),
+    'all_items' => __( 'Tất cả Học kỳ' ),
     'parent_item' => null,
     'parent_item_colon' => null,
-    'edit_item' => __( 'Edit Term' ), 
-    'update_item' => __( 'Update Term' ),
-    'add_new_item' => __( 'Add New Term' ),
-    'new_item_name' => __( 'New Term Name' ),
+    'edit_item' => __( 'Edit Học kỳ' ), 
+    'update_item' => __( 'Update Học kỳ' ),
+    'add_new_item' => __( 'Add New Học kỳ' ),
+    'new_item_name' => __( 'New Học kỳ Name' ),
     'separate_items_with_commas' => __( 'Separate terms with commas' ),
     'add_or_remove_items' => __( 'Add or remove terms' ),
     'choose_from_most_used' => __( 'Choose from the most used terms' ),
-    'menu_name' => __( 'Terms' ),
+    'menu_name' => __( 'Học kỳ' ),
   ); 
 
   register_taxonomy('term',array('trial_question','question','session'),array(
@@ -284,21 +284,21 @@ function create_question_taxonomies()
   ));
 
   $labels = array(
-    'name' => _x( 'Subjects', 'taxonomy general name' ),
-    'singular_name' => _x( 'Subject', 'taxonomy singular name' ),
-    'search_items' =>  __( 'Search Subjects' ),
-    'popular_items' => __( 'Popular Subjects' ),
-    'all_items' => __( 'All Subjects' ),
+    'name' => _x( 'Môn', 'taxonomy general name' ),
+    'singular_name' => _x( 'Môn', 'taxonomy singular name' ),
+    'search_items' =>  __( 'Search Môn' ),
+    'popular_items' => __( 'Popular Môn' ),
+    'all_items' => __( 'All Môn' ),
     'parent_item' => null,
     'parent_item_colon' => null,
-    'edit_item' => __( 'Edit Subject' ), 
-    'update_item' => __( 'Update Subject' ),
-    'add_new_item' => __( 'Add New Subject' ),
-    'new_item_name' => __( 'New Subject Name' ),
+    'edit_item' => __( 'Edit Môn' ), 
+    'update_item' => __( 'Update Môn' ),
+    'add_new_item' => __( 'Add New Môn' ),
+    'new_item_name' => __( 'New Môn Name' ),
     'separate_items_with_commas' => __( 'Separate subjects with commas' ),
     'add_or_remove_items' => __( 'Add or remove subjects' ),
     'choose_from_most_used' => __( 'Choose from the most used subjects' ),
-    'menu_name' => __( 'Subjects' ),
+    'menu_name' => __( 'Môn' ),
   ); 
 
   register_taxonomy('subject',array('question','trial_question','session'),array(
@@ -311,17 +311,17 @@ function create_question_taxonomies()
   ));
   
   $labels = array(
-    'name' => _x( 'Time', 'taxonomy general name' ),
-    'singular_name' => _x( 'Time', 'taxonomy singular name' ),
-    'search_items' =>  __( 'Search Times' ),
-    'popular_items' => __( 'Popular Times' ),
-    'all_items' => __( 'All Times' ),
+    'name' => _x( 'Thời gian làm bài', 'taxonomy general name' ),
+    'singular_name' => _x( 'Thời gian làm bài', 'taxonomy singular name' ),
+    'search_items' =>  __( 'Search Thời gian làm bài' ),
+    'popular_items' => __( 'Popular Thời gian làm bài' ),
+    'all_items' => __( 'All Thời gian làm bài' ),
     'parent_item' => null,
     'parent_item_colon' => null,
-    'edit_item' => __( 'Edit Time' ), 
-    'update_item' => __( 'Update Time' ),
-    'add_new_item' => __( 'Add New Time' ),
-    'new_item_name' => __( 'New Time Name' ),
+    'edit_item' => __( 'Edit Thời gian làm bài' ), 
+    'update_item' => __( 'Update Thời gian làm bài' ),
+    'add_new_item' => __( 'Add New Thời gian làm bài' ),
+    'new_item_name' => __( 'New Thời gian làm bài Name' ),
     'separate_items_with_commas' => __( 'Separate times with commas' ),
     'add_or_remove_items' => __( 'Add or remove times' ),
     'choose_from_most_used' => __( 'Choose from the most used times' ),
@@ -337,17 +337,17 @@ function create_question_taxonomies()
     'rewrite' => array( 'slug' => 'subject' ),
   ));
   $labels = array(
-    'name' => _x( 'Level', 'taxonomy general name' ),
-    'singular_name' => _x( 'Level', 'taxonomy singular name' ),
-    'search_items' =>  __( 'Search Levels' ),
-    'popular_items' => __( 'Popular Levels' ),
-    'all_items' => __( 'All Levels' ),
+    'name' => _x( 'Độ khó', 'taxonomy general name' ),
+    'singular_name' => _x( 'Độ khó', 'taxonomy singular name' ),
+    'search_items' =>  __( 'Search Độ khó' ),
+    'popular_items' => __( 'Popular Độ khó' ),
+    'all_items' => __( 'All Độ khó' ),
     'parent_item' => null,
     'parent_item_colon' => null,
-    'edit_item' => __( 'Edit Level' ), 
-    'update_item' => __( 'Update Level' ),
-    'add_new_item' => __( 'Add New Level' ),
-    'new_item_name' => __( 'New Level Name' ),
+    'edit_item' => __( 'Edit Độ khó' ), 
+    'update_item' => __( 'Update Độ khó' ),
+    'add_new_item' => __( 'Add New Độ khó' ),
+    'new_item_name' => __( 'New Độ khó Name' ),
     'separate_items_with_commas' => __( 'Separate levels with commas' ),
     'add_or_remove_items' => __( 'Add or remove levels' ),
     'choose_from_most_used' => __( 'Choose from the most used levels' ),
@@ -363,17 +363,17 @@ function create_question_taxonomies()
     'rewrite' => array( 'slug' => 'subject' ),
   ));
   $labels = array(
-    'name' => _x( 'Mark', 'taxonomy general name' ),
-    'singular_name' => _x( 'Mark', 'taxonomy singular name' ),
-    'search_items' =>  __( 'Search Marks' ),
-    'popular_items' => __( 'Popular Marks' ),
-    'all_items' => __( 'All Marks' ),
+    'name' => _x( 'Điểm', 'taxonomy general name' ),
+    'singular_name' => _x( 'Điểm', 'taxonomy singular name' ),
+    'search_items' =>  __( 'Search Điểm' ),
+    'popular_items' => __( 'Popular Điểm' ),
+    'all_items' => __( 'All Điểm' ),
     'parent_item' => null,
     'parent_item_colon' => null,
-    'edit_item' => __( 'Edit Mark' ), 
-    'update_item' => __( 'Update Mark' ),
-    'add_new_item' => __( 'Add New Mark' ),
-    'new_item_name' => __( 'New Mark Name' ),
+    'edit_item' => __( 'Edit Điểm' ), 
+    'update_item' => __( 'Update Điểm' ),
+    'add_new_item' => __( 'Add New Điểm' ),
+    'new_item_name' => __( 'New Điểm Name' ),
     'separate_items_with_commas' => __( 'Separate marks with commas' ),
     'add_or_remove_items' => __( 'Add or remove makrs' ),
     'choose_from_most_used' => __( 'Choose from the most used marks' ),
@@ -389,17 +389,17 @@ function create_question_taxonomies()
     'rewrite' => array( 'slug' => 'subject' ),
   ));
   $labels = array(
-    'name' => _x( 'Sessions', 'taxonomy general name' ),
-    'singular_name' => _x( 'Session', 'taxonomy singular name' ),
-    'search_items' =>  __( 'Search Sessions' ),
-    'popular_items' => __( 'Popular Sessions' ),
-    'all_items' => __( 'All Sessions' ),
+    'name' => _x( 'Đề thi', 'taxonomy general name' ),
+    'singular_name' => _x( 'Đề thi', 'taxonomy singular name' ),
+    'search_items' =>  __( 'Search Đề thi' ),
+    'popular_items' => __( 'Popular Đề thi' ),
+    'all_items' => __( 'All Đề thi' ),
     'parent_item' => null,
     'parent_item_colon' => null,
-    'edit_item' => __( 'Edit Session' ), 
-    'update_item' => __( 'Update Session' ),
-    'add_new_item' => __( 'Add New Session' ),
-    'new_item_name' => __( 'New Session Name' ),
+    'edit_item' => __( 'Edit Đề thi' ), 
+    'update_item' => __( 'Update Đề thi' ),
+    'add_new_item' => __( 'Add New Đề thi' ),
+    'new_item_name' => __( 'New Đề thi Name' ),
     'separate_items_with_commas' => __( 'Separate marks with commas' ),
     'add_or_remove_items' => __( 'Add or remove Sessions' ),
     'choose_from_most_used' => __( 'Choose from the most used sessions' ),
@@ -414,17 +414,17 @@ function create_question_taxonomies()
     'rewrite' => array( 'slug' => 'hidden_term' ),
   ));
   $labels = array(
-    'name' => _x( 'Types', 'taxonomy general name' ),
-    'singular_name' => _x( 'Type', 'taxonomy singular name' ),
-    'search_items' =>  __( 'Search Types' ),
-    'popular_items' => __( 'Popular Types' ),
-    'all_items' => __( 'All Types' ),
+    'name' => _x( 'Dạng câu hỏi', 'taxonomy general name' ),
+    'singular_name' => _x( 'Dạng câu hỏi', 'taxonomy singular name' ),
+    'search_items' =>  __( 'Search Dạng câu hỏi' ),
+    'popular_items' => __( 'Popular Dạng câu hỏi' ),
+    'all_items' => __( 'All Dạng câu hỏi' ),
     'parent_item' => null,
     'parent_item_colon' => null,
-    'edit_item' => __( 'Edit Type' ), 
-    'update_item' => __( 'Update Type' ),
-    'add_new_item' => __( 'Add New Type' ),
-    'new_item_name' => __( 'New Type Name' ),
+    'edit_item' => __( 'Edit Dạng câu hỏi' ), 
+    'update_item' => __( 'Update Dạng câu hỏi' ),
+    'add_new_item' => __( 'Add New Dạng câu hỏi' ),
+    'new_item_name' => __( 'New Dạng câu hỏi Name' ),
     'separate_items_with_commas' => __( 'Separate marks with commas' ),
     'add_or_remove_items' => __( 'Add or remove Types' ),
     'choose_from_most_used' => __( 'Choose from the most used types' ),
@@ -472,8 +472,20 @@ function my_restrict_manage_posts() {
 			$tax_name = $tax_obj->labels->name;
 			$terms = get_terms($tax_slug);
 			echo "<select name='$tax_slug' id='$tax_slug' class='postform'>";
-			echo "<option value=''>Show All $tax_name</option>";
-			foreach ($terms as $term) { echo '<option value='. $term->slug, $_GET[$tax_slug] == $term->slug ? ' selected="selected"' : '','>' . $term->name .' (' . $term->count .')</option>'; }
+			echo "<option value=''>Tìm theo $tax_name</option>";
+			foreach ($terms as $term) { echo '<option value='. $term->slug, $_GET[$tax_slug] == $term->slug ? ' selected="selected"' : '','>' . $term->name .'</option>'; }
+			echo "</select>";
+		}
+	}
+	$taxonomies = array('hidden_term');
+	if( $typenow == "question"){
+		foreach ($taxonomies as $tax_slug) {
+			$tax_obj = get_taxonomy($tax_slug);
+			$tax_name = $tax_obj->labels->name;
+			$terms = get_terms($tax_slug);
+			echo "<select name='$tax_slug' id='$tax_slug' class='postform'>";
+			echo "<option value=''>Tìm theo $tax_name</option>";
+			foreach ($terms as $term) { echo '<option value='. $term->slug, $_GET[$tax_slug] == $term->slug ? ' selected="selected"' : '','>' . $term->name .' </option>'; }
 			echo "</select>";
 		}
 	}
@@ -794,4 +806,12 @@ add_action( 'wp_before_admin_bar_render', 'remove_admin_bar_links' );
 
 if ( function_exists('register_sidebar') )
     register_sidebar();
+	
+add_filter('title_save_pre', 'check_title'); //if no post title set it to notitle
+function check_title($post_title) {
+	if ($_POST['post_type'] == 'session'){
+	  $post_title = str_replace(' - ', ' ' , $post_title ); //set this to what you want the post name/url to be ?
+	}
+	return $post_title;
+}
 ?>

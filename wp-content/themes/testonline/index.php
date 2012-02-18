@@ -21,11 +21,15 @@ if ($_GET['post_type'] != 'trial_question'){
 				<?php endforeach; ?>	
 					
 		
-			<div class="d-btn-demo"> <img src="<?php echo get_bloginfo('template_url');?>/images/micky.gif" /><a href="?post_type=trial_question"/>Ôn Tập<a></div>
+			<div class="d-btn-demo"> <img src="<?php echo get_bloginfo('template_url');?>/images/micky.gif" /><a href="?post_type=trial_question"/>Phần Mềm<a></div>
 
 			<div class="img3"><img src="<?php echo get_bloginfo('template_url');?>/images/img3.jpg" /></div>
-			<div class="img1"><img src="<?php echo get_bloginfo('template_url');?>/images/img1.jpg" /></div>
+			
 			<div class="img2"><img src="<?php echo get_bloginfo('template_url');?>/images/img2.jpg" /></div>
+			<div class="img1"><img src="<?php echo get_bloginfo('template_url');?>/images/img1.jpg" /></div>
+			
+		
+			<div class="d-flower3"><img src="<?php echo get_bloginfo('template_url');?>/images/flower3.png" /></div>
 		</div>
 	</div>
 	<?php
@@ -35,7 +39,7 @@ if ($_GET['post_type'] != 'trial_question'){
 
 ?>
 <div class="i-header">
-	<div class="i-logo"><a href="<?php echo get_bloginfo('url');?>"><img src="<?php echo get_bloginfo("template_url");?>/images/logo2.png"></a></div>
+	<div class="i-logo"><a href="<?php echo get_bloginfo('url');?>"><img src="<?php echo get_bloginfo("template_url");?>/images/logo4.png"></a></div>
 	<div class="img4"><img src="<?php echo get_bloginfo('template_url');?>/images/img2.jpg" /></div>
 	<div class="img5"><img src="<?php echo get_bloginfo('template_url');?>/images/img12.jpg" /></div>
 	<div id="topbar">
@@ -54,12 +58,12 @@ if ($_GET['post_type'] != 'trial_question'){
 	</div>
 </div>
 		<?php	
-		$menu_items = wp_get_nav_menu_items(45); 
+/*		$menu_items = wp_get_nav_menu_items(45); 
 
 			$category_name = $_GET['category_name'];
 			$current_menu = '';
 			
-			$result ='';
+			$result = '';
 			$result .= '<div class="s-menu-container"><div class="s-menu"><ul class="menu-left">';
 			foreach ($menu_items as $menu_item){
 				//$pos = strpos($menu_item->url, $category_name);
@@ -107,7 +111,7 @@ if ($_GET['post_type'] != 'trial_question'){
 			}
 			$result .= ($level == 2 || $level == 1)? '</ul></div></div>':'';
 
-			echo $result;
+			echo $result;*/
 	
 		?>
 
@@ -267,7 +271,9 @@ if ($query->post-count){
 </span></li>
 </ul>
 </div>
+<div id="i-question-list"></div>
 <div id="i-message"></div>
+
 <?php
 }
 else{
@@ -311,6 +317,7 @@ else{
 		<?php
 	
 }
+$j=0;
 while ( $query->have_posts() ) : $query->the_post(); ?>
 
 
@@ -318,8 +325,9 @@ while ( $query->have_posts() ) : $query->the_post(); ?>
 
 		$answers = array();
 		$answers_true = array();
+		$j++;
 		?>
-		<div class="q-content-container">
+		<div class="q-content-container" id="q-item-<?php echo $j;?>">
 		<p class="q-title"><?php echo $post->post_title; ?></p>
 		<div class="q-desc"><?php the_content();//echo $post->post_content; ?></div>
 		<?php

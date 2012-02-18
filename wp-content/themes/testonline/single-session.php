@@ -54,7 +54,7 @@ if ($_GET['a'] == 'result'){
 				$i++;
 				
 				$answers = get_post_metadata($post_id,array('Text'),false);
-						if (strtolower($answers[$i]->meta_value) == strtolower($value) ){
+						if (trim(strtolower($answers[$i]->meta_value)) == trim(strtolower($value)) ){
 							$levels = wp_get_post_terms($post_id,'level',array('fields' => 'names'));
 							$score += $levels[0]/sizeof($answers);
 						}			
@@ -66,7 +66,7 @@ if ($_GET['a'] == 'result'){
 				$post_id = substr($choice_value,14);
 				$answers = get_post_metadata($post_id,array('Text'),false);
 				//foreach ($answers as $answer){
-						if (strtolower($answers[$i]->meta_value) == strtolower($value) ){
+						if (trim(strtolower($answers[$i]->meta_value)) == trim(strtolower($value)) ){
 							$levels = wp_get_post_terms($post_id,'level',array('fields' => 'names'));
 							$score += $levels[0]/sizeof($answers);
 						}			
@@ -183,7 +183,10 @@ $my_query = new WP_Query($args);
 <p><label class="label-2">Lớp:</label><input type="text" name="yourclass" /></p>
 </div>
 <div class="q-img"><a href="<?php echo get_bloginfo('url');?>"><img src="<?php echo get_bloginfo('template_url');?>/images/art.jpg"/></a></div>
-<p class="btn-summit-container"><input class="btn-summit" type="submit" value="Nộp bài"/><span id="clock">Thanh Son</span></p>
+<p class="btn-summit-container"><input class="btn-summit" type="submit" value="Nộp bài"/><span id="clock"></span></p>
+<div class="q-message">
+	
+</div>
 <div class="q-page">
 
 <?php
@@ -265,6 +268,9 @@ else : endif;
 //print_r($answers);
 //end of get posts by Taxonomy terms
 ?>
+</div>
+<div class="q-message">
+	
 </div>
 <p class="btn-summit-container"><input class="btn-summit" type="submit" value="Nộp bài"/></p>
 </form>
