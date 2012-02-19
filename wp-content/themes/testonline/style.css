@@ -82,6 +82,7 @@ input[type="text"]{width: 10px;}
 .tq-content-container .q-content-container{
 	margin-top: 10px;
 	border: solid 1px #ccc;
+	padding-bottom: 50px;
 	display: none;
 }
 .tq-content-container .q-content-container img{
@@ -403,10 +404,10 @@ border-bottom: solid 1px #ccc;
 	text-decoration: none;
 	margin: 0 auto;
 	margin-bottom:10px;
-
+	
 	margin-top: 10px;
 	border-radius: 5px;
-	background: #00e716;
+
 	width: 194px;
 	height: 35px;
 	display: block;
@@ -415,16 +416,22 @@ border-bottom: solid 1px #ccc;
 	font-weight: bold;
 	font-size: 16px;
 	text-transform: uppercase;
+	background: #00e716 url(images/nobita.png) no-repeat top left;
 }
 .btn-test-list li a:hover, .btn-test-list li a:focus{
-	background: #65DF38;
+	background: #65DF38 url(images/nobita.png) no-repeat top left;
 	color: #ddd;
 	border-color: #000; box-shadow: 0 0 4px #65DF38; -moz-box-shadow: 0 0 4px #65DF38; -webkit-box-shadow: 0 0 4px #65DF38;outline:0;
 
 }
 .btn-test-list li{
 	line-height: 35px;
+
 }
+.btn-test-list li a span{
+	padding-left: 25px;
+}
+
 .i-right-h2{
 	color: #444;
 	text-transform: uppercase;
@@ -442,6 +449,7 @@ border-bottom: solid 1px #ccc;
 	margin-bottom: 10px;
 	background: white;
 	
+	
 }
 
 .i-term-container label,.i-term-container input{
@@ -449,18 +457,22 @@ border-bottom: solid 1px #ccc;
 }
 .i-right-h3{
 	text-transform: uppercase;
-	margin-top: -30px;
+	margin-top: -35px;
+	padding-top:5px;
+	padding-left: 40px;
 	margin-bottom: 10px;
 	color:#FFF;
 	font-weight: bold;
+	background: transparent url(images/bird1.png) no-repeat top left;
+	height: 35px;
 }
 .i-right-btn{ 
-	text-align: center;
+	text-align: left;
 }
 .i-right-btn input{
 	width: 194px;
-	height: 30px;
-	background:#00e716;
+	height: 35px;
+	background:#00e716 url(images/nobita2.png) no-repeat top right;
 	color: white;
 	border-radius: 5px;
 	outline: 0;
@@ -471,7 +483,7 @@ border-bottom: solid 1px #ccc;
 	font-family:verdana;
 }
 .i-right-btn input:hover{
-	background: #65DF38;
+	background: #65DF38 url(images/nobita2.png) no-repeat top right;
 	color: #ddd;
 	border-color: #000; box-shadow: 0 0 4px #65DF38; -moz-box-shadow: 0 0 4px #65DF38; -webkit-box-shadow: 0 0 4px #65DF38;outline:0;
 	cursor: pointer;
@@ -496,18 +508,18 @@ border-bottom: solid 1px #ccc;
 .i-logo{
 	position: absolute;
 	float: right;
-	top: -5px;
+	top: 5px;
 	right: 10px;
 	color: #00e716;
 	
 		
 }
 .i-logo a img{
-	height: 75px;
+	height: 95px;
 }
 .next-page-container{
 	text-align: right;
-	bottom: -40px;
+	bottom: 15px;
 	position: absolute;
 	float: right;
 	right: 0;
@@ -847,8 +859,17 @@ transform: rotate(0deg);
 	padding-top: 5px;
 	line-height: 25px;
 }
-#i-question-list span{ margin-right: 10px;}
+#i-question-list span{ margin-right: 5px; border-right: solid 1px #FFF; padding-right: 5px;}
 #i-question-list span:hover{ 
 color: #cb1677;
 cursor: pointer;}
+#i-passed-list{
+	background: white;
+	border-radius: 5px;
+	border: solid 1px #ccc;
+	color: #00e716;
+	padding: 10px;
+	margin-top: 10px;
+	display:none;
+}
 ::selection{background:#FF5E99;color:#fff;text-shadow:none;}

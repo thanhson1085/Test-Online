@@ -23,9 +23,9 @@ if ($_GET['post_type'] != 'trial_question'){
 		
 			<div class="d-btn-demo"> <img src="<?php echo get_bloginfo('template_url');?>/images/micky.gif" /><a href="?post_type=trial_question"/>Phần Mềm<a></div>
 
-			<div class="img3"><img src="<?php echo get_bloginfo('template_url');?>/images/img3.jpg" /></div>
+			<div class="img3"><img src="<?php echo get_bloginfo('template_url');?>/images/img7.jpg" /></div>
 			
-			<div class="img2"><img src="<?php echo get_bloginfo('template_url');?>/images/img2.jpg" /></div>
+			<div class="img2"><img src="<?php echo get_bloginfo('template_url');?>/images/img8.jpg" /></div>
 			<div class="img1"><img src="<?php echo get_bloginfo('template_url');?>/images/img1.jpg" /></div>
 			
 		
@@ -39,8 +39,8 @@ if ($_GET['post_type'] != 'trial_question'){
 
 ?>
 <div class="i-header">
-	<div class="i-logo"><a href="<?php echo get_bloginfo('url');?>"><img src="<?php echo get_bloginfo("template_url");?>/images/logo4.png"></a></div>
-	<div class="img4"><img src="<?php echo get_bloginfo('template_url');?>/images/img2.jpg" /></div>
+	<div class="i-logo"><a href="<?php echo get_bloginfo('url');?>"><img src="<?php echo get_bloginfo("template_url");?>/images/logo5.png"></a></div>
+	<div class="img4"><img src="<?php echo get_bloginfo('template_url');?>/images/img8.jpg" /></div>
 	<div class="img5"><img src="<?php echo get_bloginfo('template_url');?>/images/img12.jpg" /></div>
 	<div id="topbar">
 		<?php if ( is_user_logged_in() ) { ?>
@@ -127,7 +127,7 @@ foreach( $myposts as $post ) :	setup_postdata($post); ?>
 	<?php 
 	if (get_user_role()){
 		?>
-		<li><a href="?hidden_term=hidden-<?php echo $post->ID; ?>" target="_blank"><span>Kết quả thi<span></a></li>
+		<li><a href="?hidden_term=hidden-<?php echo $post->ID; ?>" target="_blank"><span>Kết quả thi</span></a></li>
 		<?php
 	}
 
@@ -214,7 +214,7 @@ if ($count > 0) {
 }
 ?>
 </div>
-<p class="i-right-btn"><input type="submit" value="Thi thử"/></p>	
+<p class="i-right-btn"><input type="submit" value="Ôn tập"/></p>	
 </form>
 </div>
 <div class="i-body-content">
@@ -327,7 +327,7 @@ while ( $query->have_posts() ) : $query->the_post(); ?>
 		$answers_true = array();
 		$j++;
 		?>
-		<div class="q-content-container" id="q-item-<?php echo $j;?>">
+		<div class="q-content-container notyet" id="q-item-<?php echo $j;?>">
 		<p class="q-title"><?php echo $post->post_title; ?></p>
 		<div class="q-desc"><?php the_content();//echo $post->post_content; ?></div>
 		<?php
@@ -374,20 +374,26 @@ while ( $query->have_posts() ) : $query->the_post(); ?>
 
 		}
 					?>
-				</div>
+				
 			<?php
 		?>
-		<p class="next-page-container"><span class="btn-bypass">Bỏ qua</span><span class="btn-next">Tiếp theo</span></p>
 		</div>
+		<p class="next-page-container"><span class="btn-bypass">Bỏ qua</span><span class="btn-next">Tiếp theo</span></p>
 	
+		
+	</div>
 			<?php
 	
 					endwhile;
 					
 					?>
-					
+			<div id="i-passed-list"></div>		
 		</div>
+		
 </div>
+	
+</div>
+
 </div>
 <?php
 

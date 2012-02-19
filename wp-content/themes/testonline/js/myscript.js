@@ -163,6 +163,8 @@ function display(){
 var milisec=0 
 var seconds;
 var question_list="";
+var current_question = 1;
+var passed_list="<span> Những câu hỏi đã làm xong:</span>";
 jQuery(document).ready(function($){
 	//alert(jQuery('#max-time').html());
 
@@ -226,7 +228,7 @@ jQuery(document).ready(function($){
 		oFalses.each(function(){
 			//var iFalse = jQuery(this).find('input');
 			if (jQuery(this).attr('checked')){
-				//alert('thanh son');
+			
 				c = false;
 			}
 		});
@@ -235,31 +237,52 @@ jQuery(document).ready(function($){
 		oTexts.each(function(){
 			var iP = jQuery(this).parent();
 			if (jQuery(this).val().trim().toUpperCase() != iP.attr('class').trim().toUpperCase()){
-				//alert('thanh son');
 				d = false;
 			}
 		});
-		var oNext = jQuery(this).parent().parent().next('.q-content-container');
+		var oNext = jQuery(this).parent().parent().next('.q-content-container.notyet');
 		if (b && c && d){
 			jQuery('#i-message').css('display','none');
 			oThis.css('display','none');
 			if (typeof oNext.attr('class') !== 'undefined'){
 				oNext.fadeIn(300);
-				//alert('thanh son';
 				var i = jQuery('#true-answers').html();
 				i++;
+				jQuery('#i-passed-list').fadeIn(300);
 				jQuery('#true-answers').html(i);
-				var j = jQuery('#no-answers').html();
-				j++;
-				jQuery('#no-answers').html(j);
+				oThis.attr('class','q-content-container true');
+				oThis.find('input').attr('disabled','disabled');
+				passed_list += '<span>'+jQuery('.'+oThis.attr('id')).html()+', </span>';
+				jQuery('#i-passed-list').html(passed_list);
+				current_question++;
+				jQuery('#no-answers').html(current_question);
+			
+		
 			}		
 			else{
 				var i = jQuery('#true-answers').html();
 				i++;
 				jQuery('#true-answers').html(i);
-				jQuery('#i-message').css('display','none');
-				jQuery('#i-message').html('Chúc mừng! Bạn đã hoàn thành bài kiểm tra.');
-				jQuery('#i-message').fadeIn(1000);
+				oThis.attr('class','q-content-container true');
+				oThis.find('input').attr('disabled','disabled');
+				passed_list += '<span>'+jQuery('.'+oThis.attr('id')).html()+', </span>';
+				jQuery('#i-passed-list').html(passed_list);
+				var e = true;
+				jQuery('.q-content-container.notyet').each(function(){
+					
+					jQuery('.q-content-container').css('display','none');
+					jQuery(this).fadeIn(300);
+					current_question = jQuery(this).attr('id').substring(7);
+					jQuery('#no-answers').html(current_question);
+
+					e = false;
+					return;
+				});
+				if (e){
+					jQuery('#i-message').css('display','none');
+					jQuery('#i-message').html('Chúc mừng! Bạn đã hoàn thành bài kiểm tra.');
+					jQuery('#i-message').fadeIn(1000);
+				}
 				//jQuery('#i-message').fadeOut(1000);
 			}
 		}
@@ -273,31 +296,49 @@ jQuery(document).ready(function($){
 	jQuery('.btn-bypass').click(function(){
 		var oThis = jQuery(this).parent().parent();
 		oThis.css('display','none');
-		var oNext = jQuery(this).parent().parent().next('.q-content-container');
+		var oNext = jQuery(this).parent().parent().next('.q-content-container.notyet');
 		if (typeof oNext.attr('class') !== 'undefined'){
 			jQuery('#i-message').css('display','none');
 			oNext.fadeIn(300);
-				var j = jQuery('#no-answers').html();
-				j++;
-				jQuery('#no-answers').html(j);
+			current_question++;
+			jQuery('#no-answers').html(current_question);
+				
 		}		
 		else{
 			jQuery('#i-message').css('display','none');
-			jQuery('#i-message').html('Chúc mừng! Bạn đã hoàn thành bài kiểm tra.');
-			jQuery('#i-message').fadeIn(1000);
-			//jQuery('#i-message').fadeOut(1000);
+				var e = true;
+				jQuery('.q-content-container.notyet').each(function(){
+					
+					jQuery('.q-content-container').css('display','none');
+					jQuery(this).fadeIn(300);
+					current_question = jQuery(this).attr('id').substring(7);
+					jQuery('#no-answers').html(current_question);
+
+					e = false;
+					return;
+				});
+			
+				if (e){
+					jQuery('#i-message').css('display','none');
+					jQuery('#i-message').html('Chúc mừng! Bạn đã hoàn thành bài kiểm tra.');
+					jQuery('#i-message').fadeIn(1000);
+				}
 		}
 	});
 	var i = 0;
 		jQuery('.q-content-container').each(function(){
 		i ++;
-		question_list += '<span class="'+jQuery(this).attr('id')+'">Câu '+i+'</span>| ';	
+		question_list += '<span class="'+jQuery(this).attr('id')+'">Câu '+i+'</span> ';	
 		});
 	jQuery('#i-question-list').html(question_list);
 	jQuery('#i-question-list span').click(function(){
 		jQuery('.q-content-container').css('display','none');
 		jQuery('#'+jQuery(this).attr('class')).fadeIn(300);
+		current_question = jQuery(this).attr('class').substring(7);
+		jQuery('#no-answers').html(current_question);
+		
 	});
+
 })
 
 
