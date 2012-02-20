@@ -647,7 +647,7 @@ add_action('before_delete_post', 'delete_session_category_automatically');
 add_filter( 'show_admin_bar', '__return_false' );
 function remove_menus () {
 global $menu;
-    $restricted = array();//array(__('Quizzs'),__('Sessions'),__('Demo'),__('Dashboard'), __('Posts'), __('Media'), __('Links'), __('Pages'), __('Appearance'), __('Tools'), __('Users'), __('Settings'), __('Comments'), __('Plugins'));
+    $restricted = array(__('Dashboard'), __('Posts'), __('Media'), __('Links'), __('Pages'), __('Appearance'), __('Tools'), __('Users'), __('Settings'), __('Comments'), __('Plugins'));
     end ($menu);
     while (prev($menu)){
         $value = explode(' ',$menu[key($menu)][0]);
