@@ -15,11 +15,8 @@ if ($_GET['post_type'] != 'trial_question'){
 				$args = array( 'numberposts' => 1, 'post_type'=> 'session', 'post_status' => 'publish' );
 				$myposts = get_posts( $args );
 				foreach( $myposts as $post ) :	setup_postdata($post); ?>
-					
-
 					<div class="d-btn-test"> <img src="<?php echo get_bloginfo('template_url');?>/images/micky.gif" /><a href="<?php the_permalink(); ?>"/>Bài Thi</a></div>
 				<?php endforeach; ?>	
-					
 		
 			<div class="d-btn-demo"> <img src="<?php echo get_bloginfo('template_url');?>/images/micky.gif" /><a href="?post_type=trial_question"/>Phần Mềm<a></div>
 
@@ -57,168 +54,12 @@ if ($_GET['post_type'] != 'trial_question'){
 					?>
 	</div>
 </div>
-		<?php	
-/*		$menu_items = wp_get_nav_menu_items(45); 
-
-			$category_name = $_GET['category_name'];
-			$current_menu = '';
-			
-			$result = '';
-			$result .= '<div class="s-menu-container"><div class="s-menu"><ul class="menu-left">';
-			foreach ($menu_items as $menu_item){
-				//$pos = strpos($menu_item->url, $category_name);
-				$pos = ($category_name)?preg_match('/'.$category_name.'$/i', $menu_item->url):false;
-			    $current_menu = ($pos)? 's-current-menu': 's-menu-item';	
-				if(empty($menu_item->menu_item_parent)) $result .= '<li class="'.$current_menu.'"> <a id="s-menu-'.$menu_item->ID.'" href="'.$menu_item->url.'">'.$menu_item->title.'</a></li>';
-			}
-			$result .='</ul></div></div>';
-			echo $result;
-			?>
-
-			<?php
-			$level = 0;
-			$result='';
-			foreach ($menu_items as $menu_item){
-                //$pos = strpos($menu_item->url, $category_name);
-				$pos = ($category_name)?preg_match('/'.$category_name.'$/i', $menu_item->url):false;
-                $current_menu = ($pos)? 's-current-menu': 's-menu-item';
-				if(empty($menu_item->menu_item_parent)){
-					$menu_parent = $menu_item->ID;
-					$result .= ($level == 2 || $level == 1)? '</ul></div></div>':'';
-					$level = 0;
-					$column = 0;
-				}
-				else{
-                    //$dynamic_url = wp_get_nav_menu_item_url($menu_item);
-                    if ($menu_item->menu_item_parent == $menu_parent) {
-						$result .= ($level == 0 )? '<div class="megamenu" id="s-submenu-'.$menu_parent.'">': '';
-						$result .= ($level == 2 || $level == 1)? '</ul></div>':'';
-						if ($column == 3 || $level == 1){
-							$result .= '<br style="clear: left" />';
-							$column = 0;
-						}
-                        //$result .= '<div class="column"><script type="text/javascript">jkmegamenu.definemenu("#s-menu-'.$menu_parent.'", "#s-submenu-'.$menu_parent.'", "mouseover");</script><h3><a href="'.get_home_url().$dynamic_url.'">'.$menu_item->title.'</a></h3><ul>';
-						$result .= '<div class="column"><script type="text/javascript">jkmegamenu.definemenu("#s-menu-'.$menu_parent.'", "#s-submenu-'.$menu_parent.'", "mouseover");</script><h3 class="'.$current_menu.'"><a href="'.$menu_item->url.'">'.$menu_item->title.'</a></h3><ul>';
-						$level = 1;
-						$column += 1;	
-					}
-					else{
-                        $result .= '<li class="'.$current_menu.'"><a href="'.$menu_item->url.'">'.$menu_item->title.'</a></li>';
-                        //$result .= '<li><a href="'.get_home_url().$dynamic_url.'">'.$menu_item->title.'</a></li>';
-                        $level = 2;
-					}
-				}
-			}
-			$result .= ($level == 2 || $level == 1)? '</ul></div></div>':'';
-
-			echo $result;*/
-	
-		?>
-
-<div class="i-content">
+	<div class="i-content">
 <div class="i-right-sidebar">
-<ul class="btn-test-list">
-<?php
-global $post;
-$args = array( 'numberposts' => 1, 'post_type'=> 'session', 'post_status' => 'publish' );
-$myposts = get_posts( $args );
-foreach( $myposts as $post ) :	setup_postdata($post); ?>
-	<li><a href="<?php the_permalink(); ?>"><span>Làm bài thi</span></a></li>
-	<?php 
-	if (get_user_role()){
-		?>
-		<li><a href="?hidden_term=hidden-<?php echo $post->ID; ?>" target="_blank"><span>Kết quả thi</span></a></li>
-		<?php
-	}
-
-	?>
-
-<?php endforeach; ?>
-</ul>
-<!--p><a href="?hidden_term=<?php echo '#';?>">Sample Question</a></p-->
-<h2 class="i-right-h2">Ôn tập</h2>
-<form method="POST" action="index.php?post_type=trial_question">
-<div class="i-term-container">
-<h3 class="i-right-h3">Chọn lớp</h3>
-<?php
-$args = array( 'taxonomy' => 'class' );
-
-$terms = get_terms('class', $args);
-
-$count = count($terms);
-$checked = (!get_query_var('class'))? 'checked="checked"': '';
-if ($count > 0) {
-
-    foreach ($terms as $term) {
-		if (get_query_var('class') != $term->slug){
-			echo '<p><input type="radio" name="class" '.$checked.' value="'.$term->slug.'"/><label>' . $term->name . '</label></p>';
-    	}
-		else{
-			echo '<p><input type="radio" name="class" checked="checked" value="'.$term->slug.'"/><label>' . $term->name . '</label></p>';
-			$class_name = $term->name;
-		}
-		$checked='';
-    }
-
-}
-?>
-</div>
-
-<div class="i-term-container">
-<h3 class="i-right-h3">Chọn học kỳ</h3>
-<?php
-$args = array( 'taxonomy' => 'term' );
-
-$terms = get_terms('term', $args);
-
-$count = count($terms); 
-$checked = (!get_query_var('term'))? 'checked="checked"': '';
-if ($count > 0) {
-
-    foreach ($terms as $term) {
-		if ($_POST['term'] != $term->slug){
-			echo '<p><input type="radio" name="term" '.$checked.' value="'.$term->slug.'"/><label>' . $term->name . '</label></p>';
-    	}
-		else{
-			echo '<p><input type="radio" name="term" checked="checked" value="'.$term->slug.'"/><label>' . $term->name . '</label></p>';
-			$term_name = $term->name;
-		}
-		$checked='';	
-    }
-
-}
-
-?>
-</div>	
-<div class="i-term-container">
-<h3 class="i-right-h3">Chọn môn</h3>
-<?php
-$args = array( 'taxonomy' => 'subject' );
-
-$terms = get_terms('subject', $args);
-
-$count = count($terms); 
-$checked = (!get_query_var('subject'))? 'checked="checked"': '';
-if ($count > 0) {
-
-    foreach ($terms as $term) {
-		if (get_query_var('subject') != $term->slug){
-			echo '<p><input type="radio" name="subject" '.$checked.' value="'.$term->slug.'"/><label>' . $term->name . '</label></p>';
-    	}
-		else{
-			echo '<p><input type="radio" name="subject" checked="checked" value="'.$term->slug.'"/><label>' . $term->name . '</label></p>';
-			$subject_name = $term->name;
-		}
-		$checked='';	
-    }
-}
-?>
-</div>
-<p class="i-right-btn"><input type="submit" value="Ôn tập"/></p>	
-</form>
+	<?php get_sidebar();?>
 </div>
 <div class="i-body-content">
-
+<span> <?php //echo get_query_var['class'].'-'.get_query_var['classterm'].'-'.get_query_var['subject']; ?></span>
 <div class="tq-content-container">
 
 <?php
@@ -231,17 +72,17 @@ $args = array(
 		array(
 			'taxonomy' => 'class',
 			'field' => 'slug',
-			'terms' => array( $_POST['class'] )
+			'terms' => array( get_query_var('class') /*$_POST['class']*/ )
 		),
 		array(
-			'taxonomy' => 'term',
+			'taxonomy' => 'classterm',
 			'field' => 'slug',
-			'terms' => array( $_POST['term'] )
+			'terms' => array( get_query_var('classterm')/*$_POST['term']*/ )
 		),
 		array(
 			'taxonomy' => 'subject',
 			'field' => 'slug',
-			'terms' => array( $_POST['subject'] )
+			'terms' => array( get_query_var('subject')/*$_POST['subject']*/ )
 		)
 	),
 	'posts_per_page' => '-1',
@@ -277,7 +118,7 @@ if ($query->post-count){
 <?php
 }
 else{
-	if ($_GET['post_type'] == 'trial_question' && $_POST['class'] && $_POST['term'] && $_POST['subject']){
+	if ($_GET['post_type'] == 'trial_question' && get_query_var('class') && get_query_var('classterm') && get_query_var('subject')){
 		?>
 		<div id="i-message" style="display: block;">Không có bài tập trong mục bạn đang tìm kiếm</div>
 		<?php
@@ -378,7 +219,15 @@ while ( $query->have_posts() ) : $query->the_post(); ?>
 			<?php
 		?>
 		</div>
-		<p class="next-page-container"><span class="btn-bypass">Bỏ qua</span><span class="btn-next">Tiếp theo</span></p>
+		<p class="next-page-container">
+		<?php
+			if (is_user_logged_in()):
+			?>
+			<span class="btn-edit"><a target="_blank" href="<?php echo get_bloginfo('url');?>/wp-admin/post.php?post=<?php echo $post->ID;?>&action=edit">Edit</a></span>
+			<?php
+			endif;
+			?>
+		<span class="btn-bypass">Bỏ qua</span><span class="btn-next">Tiếp theo</span></p>
 	
 		
 	</div>
@@ -390,11 +239,59 @@ while ( $query->have_posts() ) : $query->the_post(); ?>
 			<div id="i-passed-list"></div>		
 		</div>
 		
+<div class="wg-container"><!-- start widget -->
+<?php
+	$args = array('taxonomy'=>'class');
+	$classes = get_terms('class',$args);
+	$args = array('taxonomy'=>'classterm');
+	$classterms = get_terms('classterm',$args);
+	$args = array('taxonomy'=>'subject');
+	$subjects = get_terms('subject',$args);
+	?>
+	<div id="wg-classes-list">
+	<ul>
+	<?php
+	foreach ($classes as $class){
+		echo '<li>Lop '.$class->name;
+		?>
+		<div class="wg-classterms-list">
+		<ul>
+		<?php
+		foreach ($classterms as $classterm){
+			echo '<li>Hoc ky '.$classterm->name;
+			?>
+				<div class="wg-subject-list">
+				<ul>
+				<?php
+				foreach ($subjects as $subject){
+					echo '<li><a href="?post_type=trial_question&class='.$class->slug.'&classterm='.$classterm->slug.'&subject='.$subject->slug.'">'.$subject->name;
+					echo '</a></li>';
+				}
+				?>
+				</ul>
+				</div>
+
+			<?php
+
+			echo '</li>'; 
+		}
+		?>
+		</ul>
+		</div>
+
+		<?php
+		echo '</li>';	
+	}
+	?>
+	</ul>
+	</div>
+<?php
+?>
+</div><!-- end widget -->
 </div>
 	
 </div>
 
-</div>
 <?php
 
 get_footer();

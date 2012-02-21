@@ -165,7 +165,7 @@ $my_query = new WP_Query($args);
 	$marks = wp_get_post_terms($post->ID,'mark',array('fields' => 'names'));
 	$classes = wp_get_post_terms($post->ID,'class',array('fields' => 'names'));
 	$times = wp_get_post_terms($post->ID,'time',array('fields' => 'names'));
-	$terms = wp_get_post_terms($post->ID,'term',array('fields' => 'names'));
+	$terms = wp_get_post_terms($post->ID,'classterm',array('fields' => 'names'));
 	?>
 	<div class="e-content-header">
 	<p><label>Môn thi:</label><span><?php  echo $subjects[0];?></span>

@@ -274,13 +274,13 @@ function create_question_taxonomies()
     'menu_name' => __( 'Học kỳ' ),
   ); 
 
-  register_taxonomy('term',array('trial_question','question','session'),array(
+  register_taxonomy('classterm',array('trial_question','question','session'),array(
     'hierarchical' => true,
     'labels' => $labels,
     'show_ui' => true,
     'update_count_callback' => '_update_post_term_count',
     'query_var' => true,
-    'rewrite' => array( 'slug' => 'term' ),
+    'rewrite' => array( 'slug' => 'classterm' ),
   ));
 
   $labels = array(
@@ -647,7 +647,7 @@ add_action('before_delete_post', 'delete_session_category_automatically');
 add_filter( 'show_admin_bar', '__return_false' );
 function remove_menus () {
 global $menu;
-    $restricted = array(__('Dashboard'), __('Posts'), __('Media'), __('Links'), __('Pages'), __('Appearance'), __('Tools'), __('Users'), __('Settings'), __('Comments'), __('Plugins'));
+    $restricted = array();//array(__('Dashboard'), __('Posts'), __('Media'), __('Links'), __('Pages'), __('Appearance'), __('Tools'), __('Users'), __('Settings'), __('Comments'), __('Plugins'));
     end ($menu);
     while (prev($menu)){
         $value = explode(' ',$menu[key($menu)][0]);

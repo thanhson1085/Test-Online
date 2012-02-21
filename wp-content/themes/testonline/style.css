@@ -460,11 +460,11 @@ border-bottom: solid 1px #ccc;
 	margin-top: -35px;
 	padding-top:5px;
 	padding-left: 40px;
-	margin-bottom: 10px;
+	margin-bottom: 0;
 	color:#FFF;
 	font-weight: bold;
 	background: transparent url(images/bird1.png) no-repeat top left;
-	height: 35px;
+	height: 30px;
 }
 .i-right-btn{ 
 	text-align: left;
@@ -537,7 +537,7 @@ border-bottom: solid 1px #ccc;
 	width: 940px;
 }
 
-.btn-bypass, .btn-next{
+.btn-edit, .btn-bypass, .btn-next{
 	padding: 5px;
 	background: #00e716;
 	border-radius: 5px;
@@ -547,6 +547,11 @@ border-bottom: solid 1px #ccc;
 	margin: 10px;
 	cursor: pointer;
 	
+}
+
+.btn-edit a{
+	color: white;
+	text-decoration: none;
 }
 
 #i-test-info{
@@ -872,4 +877,45 @@ cursor: pointer;}
 	margin-top: 10px;
 	display:none;
 }
+.wg-container{
+	overflow: auto;
+	border: solid 1px #ccc;
+	background-color: white;
+	line-height: 25px;
+	margin-top: 10px;
+	position: relative;
+}
+#wg-classes-list{
+	margin: 0 auto;
+}
+#wg-classes-list > ul{
+	list-style: none;
+	margin: 0 auto;
+}
+#wg-classes-list > ul > li{
+	margin: 10px;
+	float: left;
+	width: 125px;
+	display: block;
+	font-weight: bold;		
+	color: #d0162d;
+}
+.wg-classterms-list > ul > li{
+	color: #1c1c1c;
+	list-style: none;
+	border-top: solid 1px #ccc;
+}
+.wg-subject-list{
+	line-height: 20px;
+}
+.wg-subject-list ul{
+	list-style: none;	
+}
+.wg-subject-list > ul > li > a{
+	font-weight: normal;
+	text-decoration:none;	
+	color:#2995e0;
+	
+}
+
 ::selection{background:#FF5E99;color:#fff;text-shadow:none;}
