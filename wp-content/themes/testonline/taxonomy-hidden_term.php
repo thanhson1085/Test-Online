@@ -21,8 +21,7 @@ if ($custom_posts):
 		//print_r($users);
 		//echo $post->ID;
 		//$user = get_userdatabylogin($post->ID);
-		//$user_results = get_user_meta($user->ID, 'result',false);
-
+		//$user_results = get_user_meta(null, $post->ID, false);
 		
 		$subjects = wp_get_post_terms($post->ID,'subject',array('fields' => 'names'));
 		$marks = wp_get_post_terms($post->ID,'mark',array('fields' => 'names'));
@@ -58,12 +57,13 @@ if ($custom_posts):
 		<?php
 			//foreach ($user_results as $key => $user_result){
 			foreach ($users as $key => $user_result){
-				//$result = explode(';',$user_result);
+				$user_results = get_user_meta($user_result->ID, $post->ID, true);
+				$user = get_userdata($user_result->ID);
 				?>
 				<tr>
 				<td class="aligncenter"><?php echo $key; ?></td>
-				<td class="alignleft"><?php echo $user_result->user_login;//$result[0]; ?></td>
-				<td class="aligncenter"><?php echo '';//$result[2]; ?></td>
+				<td class="alignleft"><?php echo $user->first_name;?></td>
+				<td class="aligncenter"><?php echo $user_results; ?></td>
 				<td class="aligncenter"></td>
 				</tr>
 			<?php
