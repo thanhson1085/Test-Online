@@ -4,6 +4,9 @@
 * Email: thanhson1085@gmail.com 
 */
 	
+define('THEMELIB', TEMPLATEPATH . '/library');
+require_once(THEMELIB . '/extensions/user-tax.php');
+
 if ( ! isset( $content_width ) )
 $content_width = 584;
 
@@ -239,7 +242,7 @@ function create_question_taxonomies()
     'menu_name' => __( 'Classs' ),
   ); 
 
-  register_taxonomy('class',array('question','trial_question','session'),array(
+  register_taxonomy('class',array('question','trial_question','session','user'),array(
     'hierarchical' => true,
     'labels' => $labels,
     'show_ui' => true,

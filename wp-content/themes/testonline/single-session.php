@@ -9,6 +9,7 @@ get_header();
 <div class="<?php echo $post->post_type; ?>">
 <?php
 $term_name = $post->post_title;
+$session_post_id = $post->ID;
 
 if ($_GET['a'] == 'result'){
 	$yourname = $_POST['yourname'];
@@ -124,11 +125,12 @@ if ($_GET['a'] == 'result'){
 		}
 	}
 	echo '<p class="e-result"><span>'.$user_score.' Điểm<a href="'.get_bloginfo('url').'"><img src="'.get_bloginfo("template_url").'/images/'.$status_img.'" /></a></span></p>';
-	$user_id = username_exists( $user_login );
+	/*$user_id = username_exists( $user_login );
 	if ( !$user_id ) {
 		$user_id = wp_insert_user(array('user_login' => $user_login, 'user_pass' => '123'));
-	}
-	add_user_meta($user_id,'result', str_replace(';','',$yourname).';'.str_replace(';','',$yourclass).';'.$user_score );
+	}*/
+	//add_user_meta($user_id,'result', str_replace(';','',$yourname).';'.str_replace(';','',$yourclass).';'.$user_score );
+	add_user_meta(get_current_user_id(), $session_post_id, $user_score);
 	return;
 	
 }
