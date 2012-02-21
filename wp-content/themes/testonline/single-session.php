@@ -45,8 +45,10 @@ if ($_GET['a'] == 'result'){
 				}
 			}
 			if ($b){
+				$questions = get_post_metadata($post_id,array('Question'),false);
+				$no_question = ($questions)?sizeof($questions): 1;
 				$levels = wp_get_post_terms($post_id,'level',array('fields' => 'names'));
-				$score += $levels[0];
+				$score += $levels[0]/sizeof($no_question);
 			}
 		}
 		if (substr($choice_value,0,9) == 'ans_text_'){
@@ -55,10 +57,12 @@ if ($_GET['a'] == 'result'){
 				$i++;
 				
 				$answers = get_post_metadata($post_id,array('Text'),false);
-						if (trim(strtolower($answers[$i]->meta_value)) == trim(strtolower($value)) ){
-							$levels = wp_get_post_terms($post_id,'level',array('fields' => 'names'));
-							$score += $levels[0]/sizeof($answers);
-						}			
+				if (trim(strtolower($answers[$i]->meta_value)) == trim(strtolower($value)) ){
+					$questions = get_post_metadata($post_id,array('Question'),false);
+					$no_question = ($questions)?sizeof($questions): 1;
+					$levels = wp_get_post_terms($post_id,'level',array('fields' => 'names'));
+					$score += $levels[0]/sizeof($answers)/$no_question;
+				}			
 					
 				
 			}
@@ -213,10 +217,12 @@ if ($custom_posts):
 		<p class="q-title">Câu <?php echo $j.': '.$post->post_title; ?></p>
 		<div class="q-desc"><?php the_content();//echo $post->post_content; ?></div>
 		<?php
-		$answers = get_post_metadata($post->ID,array('False','True'));
+		$questions = get_post_metadata($post->ID, array('Question','False','True','Text'),false);
+		//print_r($questions);
+		//$answers = get_post_metadata($post->ID,array('False','True'));
 
-		$answers_true = get_post_metadata($post->ID,array('True'));
-		$answers = array_merge($answers,get_post_metadata($post->ID,array('Text'), false));
+		//$answers_true = get_post_metadata($post->ID,array('True'));
+		//$answers = array_merge($answers,get_post_metadata($post->ID,array('Text'), false));
 		$types = wp_get_post_terms($post->ID,'type',array('fields' => 'names'));
 			
 		switch ($types[0]) {
@@ -236,10 +242,7 @@ if ($custom_posts):
 		?>
 		<div class="q-answer-container">
 		<?php
-		foreach ($answers as $answer){
-			?>
-			
-			<?php
+/*		foreach ($answers as $answer){
 			if ($input_type == 'checkbox') ++$i;
 			if ($answer->meta_key != 'Text'){
 				?>
@@ -256,9 +259,24 @@ if ($custom_posts):
 					
 				}
 			}
-			?>
-				
-			<?php
+*/
+        foreach ($questions as $question){
+            if ($question->meta_key == 'True' || $question->meta_key == 'False'){
+                ?>
+                <p><input type="<?php echo $input_type;?>" name="ans_check_<?php echo $i;?>_<?php echo $post->ID;?>" value="<?php echo $question->meta_id;?>"/><label><?php echo $question->meta_value;?></label></p>
+                <?php
+            }
+			elseif ($question->meta_key == 'Question'){
+				?>
+				<p><?php echo $question->meta_value; ?></p>
+				<?php
+			}
+            elseif ($question->meta_key == 'Text'){
+					?>
+					<p><input type="text" name="ans_text_<?php echo rand(1000,9999);?>_<?php echo $post->ID;?>"/></p>
+					<?php
+            }
+
 		}
 		?>
 			</div>
