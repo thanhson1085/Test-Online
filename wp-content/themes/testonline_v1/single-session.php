@@ -9,9 +9,9 @@ get_header();
 <div class="<?php echo $post->post_type; ?>">
 <?php
 $term_name = $post->post_title;
-$session_post_id = $post->ID;
 
 if ($_GET['a'] == 'result'){
+	print_r($_POST);
 	$yourname = $_POST['yourname'];
 	$yourclass = $_POST['yourclass'];
 	if (!$yourname || !$yourclass) die('enter your name and your class'); 
@@ -23,32 +23,37 @@ if ($_GET['a'] == 'result'){
             $selected_ids[$value] = substr($choice_value,15);
 		}
 	}
-	$answer_trues = array();
 	$answers_checked = array();
+	$questions_checked = array();
 	$i=0;
 	foreach ($_POST as $choice_value => $value){
 		if (substr($choice_value,0,10) == 'ans_check_'){
 			//$selected_ids[] = array('question_id' => substr($answer_value,15), 'meta_id' => array($value));
 			$post_id = substr($choice_value,15);
-
-			if (!in_array($post_id,$answers_checked)){
-				$answers_checked[] = $post_id;
+			//$answers_checked[] = $value;
+			
+			if (!in_array($post_id,$questions_checked)){
+				$questions_checked[] = $post_id;
 			}
 			else{
 				continue;
 			}
+			$answers_checked = array();
 			$answers = get_post_metadata($post_id,array('True'));
 			$b = true; 	
+			$answers_checked= array_keys($selected_ids, $post_id);
 			foreach ($answers as $answer){
+				foreach ($answers_checked as $answer_checked){
+					if ($answer->meta_id != $answer_checked) $b = false;
+				}
 				if (!array_key_exists($answer->meta_id, $selected_ids)){	
 					$b = false;
 				}
 			}
 			if ($b){
-				$questions = get_post_metadata($post_id,array('Question'),false);
-				$no_question = ($questions)?sizeof($questions): 1;
 				$levels = wp_get_post_terms($post_id,'level',array('fields' => 'names'));
-				$score += $levels[0]/sizeof($no_question);
+				$level = ( $levels )?$levels[0]: 1;
+				$score += $level;
 			}
 		}
 		if (substr($choice_value,0,9) == 'ans_text_'){
@@ -57,12 +62,11 @@ if ($_GET['a'] == 'result'){
 				$i++;
 				
 				$answers = get_post_metadata($post_id,array('Text'),false);
-				if (trim(strtolower($answers[$i]->meta_value)) == trim(strtolower($value)) ){
-					$questions = get_post_metadata($post_id,array('Question'),false);
-					$no_question = ($questions)?sizeof($questions): 1;
-					$levels = wp_get_post_terms($post_id,'level',array('fields' => 'names'));
-					$score += $levels[0]/sizeof($answers)/$no_question;
-				}			
+						if (trim(strtolower($answers[$i]->meta_value)) == trim(strtolower($value)) ){
+							$levels = wp_get_post_terms($post_id,'level',array('fields' => 'names'));
+							$level = ( $levels )?$levels[0]: 1;
+							$score += $level/sizeof($answers);
+						}			
 					
 				
 			}
@@ -73,33 +77,19 @@ if ($_GET['a'] == 'result'){
 				//foreach ($answers as $answer){
 						if (trim(strtolower($answers[$i]->meta_value)) == trim(strtolower($value)) ){
 							$levels = wp_get_post_terms($post_id,'level',array('fields' => 'names'));
-							$score += $levels[0]/sizeof($answers);
+							$level = ( $levels )?$levels[0]: 1;
+							$score += $level/sizeof($answers);
 						}			
 				//}
 			}
 		}
 	}
-/*
-	$args=array(
-	  'name' => $term_name,
-	  'post_type' => 'session',
-	  'post_status' => 'publish',
-	  'posts_per_page' => 1,
-	  'caller_get_posts'=> 1
-	);
-	$my_query = null;
-	$my_query = new WP_Query($args);
-	if( $my_query->have_posts() ) {
-		while ($my_query->have_posts()) :
-			$my_query->the_post();
-*/
+	//print_r($answers_checked);
+
 			$marks = wp_get_post_terms($post->ID,'mark',array('fields' => 'names'));
-			$mark = (float)$marks[0];
+			$mark = ($marks)?(float)$marks[0]: 10;
 			$user_login = $post->ID;
-/*
-		endwhile;
-	}
-*/
+
 	$args = array(
 	'post_status' => 'publish',
 	'taxonomy_name' => 'hidden_term',
@@ -113,15 +103,17 @@ if ($_GET['a'] == 'result'){
 			$answers = array();
 			$answers_true = array();
 			$levels = wp_get_post_terms($post->ID,'level',array('fields' => 'names'));
-			$total_score += (float)$levels[0];
+			$level = ( $levels )?(float)$levels[0]: 1;
+			$total_score += $level;
+			//echo $levels[0];
 		}
 	endif;
 	$user_score = round(($score/$total_score)*$mark);	
-	if ($user_score > 7){
+	if ($user_score > round(((2/3)*$total_score))){
 		$status_img = "smile.png";
 	}
 	else{
-		if ($user_score >= 5){
+		if ($user_score >= round(((1/2)*$total_score))){
 			$status_img = "sad.png";
 		}
 		else{
@@ -129,12 +121,11 @@ if ($_GET['a'] == 'result'){
 		}
 	}
 	echo '<p class="e-result"><span>'.$user_score.' Điểm<a href="'.get_bloginfo('url').'"><img src="'.get_bloginfo("template_url").'/images/'.$status_img.'" /></a></span></p>';
-	/*$user_id = username_exists( $user_login );
+	$user_id = username_exists( $user_login );
 	if ( !$user_id ) {
 		$user_id = wp_insert_user(array('user_login' => $user_login, 'user_pass' => '123'));
-	}*/
-	//add_user_meta($user_id,'result', str_replace(';','',$yourname).';'.str_replace(';','',$yourclass).';'.$user_score );
-	add_user_meta(get_current_user_id(), $session_post_id, $user_score);
+	}
+	add_user_meta($user_id,'result', str_replace(';','',$yourname).';'.str_replace(';','',$yourclass).';'.$user_score );
 	return;
 	
 }
@@ -189,7 +180,9 @@ $my_query = new WP_Query($args);
 <p><label class="label-2">Lớp:</label><input type="text" name="yourclass" /></p>
 </div>
 <div class="q-img"><a href="<?php echo get_bloginfo('url');?>"><img src="<?php echo get_bloginfo('template_url');?>/images/art.jpg"/></a></div>
-<p class="btn-summit-container"><input class="btn-summit" type="submit" value="Nộp bài"/><span id="clock"></span></p>
+<p class="btn-summit-container"><input class="btn-summit" type="submit" value="Nộp bài"/>
+<span><a target="_blank" href="<?php echo get_bloginfo('url');?>/wp-admin/post.php?post=<?php echo $post->ID;?>&action=edit">Sửa nội dung</a>
+</span><span id="clock"></span></p>
 <div class="q-message">
 	
 </div>
@@ -214,15 +207,13 @@ if ($custom_posts):
 		$j++;
 		?>
 		<div class="q-content-container">
-		<p class="q-title">Câu <?php echo $j.': '.$post->post_title; ?></p>
+		<p class="q-title">Câu <?php echo $j.': '.$post->post_title; ?><span><a target="_blank" href="<?php echo get_bloginfo('url');?>/wp-admin/post.php?post=<?php echo $post->ID;?>&action=edit">Sửa nội dung</a></span></p>
 		<div class="q-desc"><?php the_content();//echo $post->post_content; ?></div>
 		<?php
-		$questions = get_post_metadata($post->ID, array('Question','False','True','Text'),false);
-		//print_r($questions);
-		//$answers = get_post_metadata($post->ID,array('False','True'));
+		$answers = get_post_metadata($post->ID,array('False','True'),false);
 
-		//$answers_true = get_post_metadata($post->ID,array('True'));
-		//$answers = array_merge($answers,get_post_metadata($post->ID,array('Text'), false));
+		$answers_true = get_post_metadata($post->ID,array('True'));
+		$answers = array_merge($answers,get_post_metadata($post->ID,array('Text'), false));
 		$types = wp_get_post_terms($post->ID,'type',array('fields' => 'names'));
 			
 		switch ($types[0]) {
@@ -242,7 +233,10 @@ if ($custom_posts):
 		?>
 		<div class="q-answer-container">
 		<?php
-/*		foreach ($answers as $answer){
+		foreach ($answers as $answer){
+			?>
+			
+			<?php
 			if ($input_type == 'checkbox') ++$i;
 			if ($answer->meta_key != 'Text'){
 				?>
@@ -259,26 +253,9 @@ if ($custom_posts):
 					
 				}
 			}
-*/
-        foreach ($questions as $question){
-            if ($question->meta_key == 'True' || $question->meta_key == 'False'){
-				if ($input_type == 'checkbox') ++$i;
-                ?>
-                <p><input type="<?php echo $input_type;?>" name="ans_check_<?php echo $i;?>_<?php echo $post->ID;?>" value="<?php echo $question->meta_id;?>"/><label><?php echo $question->meta_value;?></label></p>
-                <?php
-            }
-			elseif ($question->meta_key == 'Question'){
-				++$i;
-				?>
-				<p><?php echo $question->meta_value; ?></p>
-				<?php
-			}
-            elseif ($question->meta_key == 'Text'){
-					?>
-					<p><input type="text" name="ans_text_<?php echo rand(1000,9999);?>_<?php echo $post->ID;?>"/></p>
-					<?php
-            }
-
+			?>
+				
+			<?php
 		}
 		?>
 			</div>
