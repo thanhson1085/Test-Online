@@ -123,7 +123,7 @@ else{
 		<div id="i-message" style="display: block;">Không có bài tập trong mục bạn đang tìm kiếm</div>
 		<?php
 	}
-	
+	if (get_user_role() != 'administrator'):
 		?>	
 		<div class="i-intro-container">
 			<div class="i-intro">
@@ -135,6 +135,7 @@ else{
 			</div>
 		</div>
 		<?php
+	endif;
 	
 }
 $j=0;

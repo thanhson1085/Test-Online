@@ -743,7 +743,7 @@ function add_admin_bar_link() {
 	$wp_admin_bar->add_menu( array(
 		'id' => 'site_link',
 		'title' => __( 'Trang chủ'),
-		'href' => __(get_bloginfo('url')),
+		'href' => __(get_bloginfo('url').'?post_type=trial_question'),
 		) );
 	$wp_admin_bar->add_menu( array(
 		'id' => 'session_link',

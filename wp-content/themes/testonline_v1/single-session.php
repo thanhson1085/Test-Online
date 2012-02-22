@@ -3,8 +3,9 @@
  * Wed Feb 08, 2012 21:50:31 added by Thanh Son 
  * Email: thanhson1085@gmail.com 
  */
-//$term_name  = ($_GET['session'])?$_GET['session']:'';
+
 get_header();
+
 ?>
 <div class="<?php echo $post->post_type; ?>">
 <?php
@@ -14,6 +15,7 @@ if ($_GET['a'] == 'result'){
 	print_r($_POST);
 	$yourname = $_POST['yourname'];
 	$yourclass = $_POST['yourclass'];
+	
 	if (!$yourname || !$yourclass) die('enter your name and your class'); 
 	$score = 0;
 	$total_score = 0;
@@ -179,7 +181,7 @@ $my_query = new WP_Query($args);
 <p><label>Họ và tên:</label><input type="text" name="yourname" /></p>
 <p><label class="label-2">Lớp:</label><input type="text" name="yourclass" /></p>
 </div>
-<div class="q-img"><a href="<?php echo get_bloginfo('url');?>"><img src="<?php echo get_bloginfo('template_url');?>/images/art.jpg"/></a></div>
+<div class="q-img"><a href="<?php echo get_bloginfo('url');?>?post_type=trial_question"><img src="<?php echo get_bloginfo('template_url');?>/images/art.jpg"/></a></div>
 <p class="btn-summit-container"><input class="btn-summit" type="submit" value="Nộp bài"/>
 <?php if (get_user_role() == 'administrator'):?>
 <span><a target="_blank" href="<?php echo get_bloginfo('url');?>/wp-admin/post.php?post=<?php echo $post->ID;?>&action=edit">

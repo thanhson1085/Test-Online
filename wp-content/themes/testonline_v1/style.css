@@ -138,6 +138,7 @@ input[type="text"]{width: 10px;}
 	font-weight: normal;
 	float: right;
 	right:10px;
+	bottom: 10px;
 	line-height: 35px;
 	color: #d1132c;
 	text-decoration: underline;
@@ -925,17 +926,24 @@ cursor: pointer;}
 	list-style: none;
 	border-top: solid 1px #ccc;
 }
-.wg-subject-list{
+.wg-session-list,.wg-subject-list{
 	line-height: 20px;
 }
-.wg-subject-list ul{
+.wg-session-list ul, .wg-subject-list ul{
 	list-style: none;	
 }
-.wg-subject-list > ul > li > a{
+.wg-session-list > ul > li > a,.wg-subject-list > ul > li > a{
 	font-weight: normal;
 	text-decoration:none;	
 	color:#2995e0;
+	font-size: 12px;
 	
 }
-
+.wg-session-list > ul > li > a{
+	font-size: 11px;
+}
+.wg-subject-list > ul > li > a:hover, .wg-session-list > ul > li > a:hover{
+	text-decoration: underline;
+	color: #ccc;
+}
 ::selection{background:#FF5E99;color:#fff;text-shadow:none;}

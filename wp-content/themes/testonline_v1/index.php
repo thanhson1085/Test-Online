@@ -39,7 +39,7 @@ if ($_GET['post_type'] != 'trial_question'){
 
 ?>
 <div class="i-header">
-	<div class="i-logo"><a href="<?php echo get_bloginfo('url');?>"><img src="<?php echo get_bloginfo("template_url");?>/images/logo5.png"></a></div>
+	<div class="i-logo"><a href="<?php echo get_bloginfo('url');?>?post_type=trial_question"><img src="<?php echo get_bloginfo("template_url");?>/images/logo5.png"></a></div>
 	<div class="img4"><img src="<?php echo get_bloginfo('template_url');?>/images/img8.jpg" /></div>
 	<div class="img5"><img src="<?php echo get_bloginfo('template_url');?>/images/img12.jpg" /></div>
 	<div id="topbar">
@@ -228,9 +228,10 @@ else{
 		<div id="i-message" style="display: block;">Không có bài tập trong mục bạn đang tìm kiếm</div>
 		<?php
 	}
-	
+	if (get_user_role() != 'administrator'):
 		?>	
-				<div class="i-intro-container">
+		
+		<div class="i-intro-container">
 			<div class="i-intro">
 			<?php 
 				$my_post_id = 1;
@@ -241,6 +242,8 @@ else{
 			</div>
 		</div>
 		<?php
+		
+	endif;
 	
 }
 $j=0;
@@ -323,7 +326,7 @@ while ( $query->have_posts() ) : $query->the_post(); ?>
 					?>
 			<div id="i-passed-list"></div>		
 		</div>
-	<div class="wg-container"><!-- start widget -->
+<div class="wg-container"><!-- start widget -->
 <?php
 	$args = array('taxonomy'=>'class');
 	$classes = get_terms('class',$args);
@@ -373,9 +376,100 @@ while ( $query->have_posts() ) : $query->the_post(); ?>
 ?>
 </div><!-- end widget -->	
 
+
+<div class="wg-container"><!-- start widget -->
+<?php
+	$args = array('taxonomy'=>'class');
+	$classes = get_terms('class',$args);
+	$args = array('taxonomy'=>'classterm');
+	$classterms = get_terms('classterm',$args);
+	$args = array('taxonomy'=>'hidden_term');
+	$hidden_terms = get_terms('hidden_term',$args);
+	?>
+	<div id="wg-classes-list">
+	<ul>
+	<?php
+	foreach ($classes as $class){
+		echo '<li>Lớp '.$class->name;
+		?>
+		<div class="wg-classterms-list">
+		<ul>
+		<?php
+		foreach ($classterms as $classterm){
+			echo '<li id="classterm-'.$classterm->slug.'-'.$class->slug.'">Học kỳ '.$classterm->name;
+			?>
+				<div class="wg-session-list">
+				<div id="session-item-<?php echo $classterm->slug;?>"></div>
+				<?php
+				$args = array(
+					'tax_query' => array(
+						'relation' => 'AND',
+						array(
+							'taxonomy' => 'class',
+							'field' => 'slug',
+							'terms' => array( $class->slug) 
+						),
+						array(
+							'taxonomy' => 'classterm',
+							'field' => 'slug',
+							'terms' => array( $classterm->slug )
+						),
+					
+					),
+					'posts_per_page' => '-1',
+					'post_type' => 'session',
+					'post_status' => 'all',
+					'order' => 'ASC',
+				);
+				$query = new WP_Query( $args );
+				?>
+				<ul>
+				<?php
+				while ( $query->have_posts() ) : $query->the_post();
+
+				
+				//foreach ($hidden_terms as $hidden_term){
+					echo '<li><a href="?session='.$post->post_name.'">'.$post->post_title;
+					echo '</a></li>';
+				//}
+			
+					//the_title();
+				endwhile;
+					?>
+				</ul>
+				
+				</div>
+
+			<?php
+
+			echo '</li>'; 
+		}
+		?>
+		</ul>
+		</div>
+
+		<?php
+		echo '</li>';	
+	}
+	?>
+	</ul>
+	</div>
+<?php
+?>
+</div><!-- end widget -->	
 </div>
 
 </div>
 <?php
+$html = '<script type="text/javascript">';
+$html .= 'jQuery(document).ready(function() {';
+$html .= 'jQuery(".wg-classterms-list ul li").live("click", function() {';
 
+$html .= 'var classterm_slug = 1;';
+$html .= 'var class_slug = 1;';
+$html .= 'jQuery.post("' . get_bloginfo('template_url') . '/library/ajax/session.php",{ classterm: classterm_slug, class: class_slug, modo: "ajaxget" },';
+$html .= 'function(data){ jQuery("#session-item-1").html(data); }';
+$html .= ');});});';
+$html .= '</script>';
+echo $html;
 get_footer();
