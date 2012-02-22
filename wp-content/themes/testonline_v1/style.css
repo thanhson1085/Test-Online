@@ -124,20 +124,37 @@ input[type="text"]{width: 10px;}
 .btn-summit-container{
 	padding-top: 20px;
 }
+.btn-summit-container span a{
+	padding-top: 5px;
+	padding-bottom: 5px;
+	text-decoration: underline;
+	color: #d1132c;
+	
+}
+.q-content-container p span.q-edit-buton a{
+	position: absolute;
+	margin:0;
+	padding:0;
+	font-weight: normal;
+	float: right;
+	right:10px;
+	line-height: 35px;
+	color: #d1132c;
+	text-decoration: underline;
+	font-size: 13px;
+}
 .btn-summit-container input.btn-summit{
 	border: solid 1px #d1132c;	
 	background: #d1132c;
-		color: #FFF;
-		padding-left: 10px;
-		padding-right: 10px;
-
+	color: #FFF;
+	padding-left: 10px;
+	padding-right: 10px;	
 	text-transform: uppercase;
 	border-radius:3px;
 	height: 35px;
 	font-size: 18px;
-
-	    font-family: Georgia, "Times New Roman", Times, serif;
-
+	text-decoration: none;
+	font-family: Georgia, "Times New Roman", Times, serif;
 }
 .btn-summit-container input.btn-summit:hover, .btn-summit-container input.btn-summit:focus{
 	color: #CA7246;

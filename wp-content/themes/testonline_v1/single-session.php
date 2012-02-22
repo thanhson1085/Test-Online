@@ -181,8 +181,11 @@ $my_query = new WP_Query($args);
 </div>
 <div class="q-img"><a href="<?php echo get_bloginfo('url');?>"><img src="<?php echo get_bloginfo('template_url');?>/images/art.jpg"/></a></div>
 <p class="btn-summit-container"><input class="btn-summit" type="submit" value="Nộp bài"/>
-<span><a target="_blank" href="<?php echo get_bloginfo('url');?>/wp-admin/post.php?post=<?php echo $post->ID;?>&action=edit">Sửa nội dung</a>
-</span><span id="clock"></span></p>
+<?php if (get_user_role() == 'administrator'):?>
+<span><a target="_blank" href="<?php echo get_bloginfo('url');?>/wp-admin/post.php?post=<?php echo $post->ID;?>&action=edit">
+Sửa nội dung đề thi</a>
+</span>
+<?php endif;?><span id="clock"></span></p>
 <div class="q-message">
 	
 </div>
@@ -207,7 +210,12 @@ if ($custom_posts):
 		$j++;
 		?>
 		<div class="q-content-container">
-		<p class="q-title">Câu <?php echo $j.': '.$post->post_title; ?><span><a target="_blank" href="<?php echo get_bloginfo('url');?>/wp-admin/post.php?post=<?php echo $post->ID;?>&action=edit">Sửa nội dung</a></span></p>
+		<p class="q-title">Câu <?php echo $j.': '.$post->post_title; ?>
+		<?php if (get_user_role() == 'administrator'):?>
+		<span class="q-edit-buton"><a target="_blank" href="<?php echo get_bloginfo('url');?>/wp-admin/post.php?post=<?php echo $post->ID;?>&action=edit">
+		Sửa nội dung câu hỏi</a></span>
+		<?php endif;?>
+		</p>
 		<div class="q-desc"><?php the_content();//echo $post->post_content; ?></div>
 		<?php
 		$answers = get_post_metadata($post->ID,array('False','True'),false);
