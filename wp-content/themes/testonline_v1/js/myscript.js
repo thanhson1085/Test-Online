@@ -211,7 +211,11 @@ jQuery(document).ready(function($){
 		jQuery('#no-answers').html(current_question);
 		
 	});
-
+	jQuery('.wg-menu ul li div').click(function(){
+		jQuery('.wg-menu ul li ul').hide(300);
+		var ul_item = jQuery(this).parent().find('ul');
+		ul_item.show(300);
+	});
 })
 
 

@@ -376,100 +376,104 @@ while ( $query->have_posts() ) : $query->the_post(); ?>
 ?>
 </div><!-- end widget -->	
 
-
+<?php if (is_user_logged_in()):?>
 <div class="wg-container"><!-- start widget -->
-<?php
-	$args = array('taxonomy'=>'class');
-	$classes = get_terms('class',$args);
-	$args = array('taxonomy'=>'classterm');
-	$classterms = get_terms('classterm',$args);
-	$args = array('taxonomy'=>'hidden_term');
-	$hidden_terms = get_terms('hidden_term',$args);
-	?>
-	<div id="wg-classes-list">
+<div class="wg-menu">
 	<ul>
-	<?php
-	foreach ($classes as $class){
-		echo '<li>Lớp '.$class->name;
-		?>
-		<div class="wg-classterms-list">
-		<ul>
-		<?php
-		foreach ($classterms as $classterm){
-			echo '<li id="classterm-'.$classterm->slug.'-'.$class->slug.'">Học kỳ '.$classterm->name;
-			?>
-				<div class="wg-session-list">
-				<div id="session-item-<?php echo $classterm->slug;?>"></div>
-				<?php
-				$args = array(
-					'tax_query' => array(
-						'relation' => 'AND',
-						array(
-							'taxonomy' => 'class',
-							'field' => 'slug',
-							'terms' => array( $class->slug) 
-						),
-						array(
-							'taxonomy' => 'classterm',
-							'field' => 'slug',
-							'terms' => array( $classterm->slug )
-						),
-					
-					),
-					'posts_per_page' => '-1',
-					'post_type' => 'session',
-					'post_status' => 'all',
-					'order' => 'ASC',
-				);
-				$query = new WP_Query( $args );
-				?>
-				<ul>
-				<?php
-				while ( $query->have_posts() ) : $query->the_post();
+		<li>
+			<div><span>Chọn Lớp:</span><span class="checked-item">Tất cả</span></div>
+			<ul>
+				<li id="class_all">
+					Tất cả
+				</li>
+				<?php 
+					$args = array('taxonomy'=>'class');
+					$classes = get_terms('class',$args);
+					foreach ($classes as $class){
+						echo '<li id="class_'.$class->slug.'">';
+						echo 'Lớp '.$class->name;
+						echo '</li>';
+					}
+				?>			
 
-				
-				//foreach ($hidden_terms as $hidden_term){
-					echo '<li><a href="?session='.$post->post_name.'">'.$post->post_title;
-					echo '</a></li>';
-				//}
+			</ul>
 			
-					//the_title();
-				endwhile;
-					?>
-				</ul>
-				
-				</div>
-
-			<?php
-
-			echo '</li>'; 
-		}
-		?>
-		</ul>
-		</div>
-
-		<?php
-		echo '</li>';	
-	}
-	?>
+		</li>
 	</ul>
-	</div>
-<?php
-?>
-</div><!-- end widget -->	
-</div>
+	<ul>
+		<li>
+			<div><span>Chọn học kỳ:</span><span class="checked-item">Tất cả</span></div>
+			<ul>
+				<li id="classterm_all">
+					Tất cả
+				</li>
+				<?php 
+					$args = array('taxonomy'=>'classterm');
+					$classterms = get_terms('classterm',$args);
+					foreach ($classterms as $classterm){
+						echo '<li id="classterm_'.$classterm->slug.'">';
+						echo 'Học kỳ '.$classterm->name;
+						echo '</li>';
+					}
+				?>			
 
+			</ul>
+			
+		</li>
+	</ul>
+	<ul>
+		<li>
+			<div><span>Chọn môn:</span><span class="checked-item">Tất cả</span></div>
+			<ul>
+				<li id="subject_all">
+					Tất cả
+				</li>
+				<?php 
+					$args = array('taxonomy'=>'subject');
+					$subjects = get_terms('subject',$args);
+					foreach ($subjects as $subject){
+						echo '<li id="subject_'.$subject->slug.'">';
+						echo 'Môn '.$subject->name;
+						echo '</li>';
+					}
+				?>			
+
+			</ul>
+			
+		</li>
+	</ul>
 </div>
+<div id="session-items"></div>
+</div><!-- end widget -->	
 <?php
 $html = '<script type="text/javascript">';
+$html .= 'var classterm_slug = "all";';
+$html .= 'var class_slug = "all";';
+$html .= 'var subject_slug = "all";';
 $html .= 'jQuery(document).ready(function() {';
-$html .= 'jQuery(".wg-classterms-list ul li").live("click", function() {';
-
-$html .= 'var classterm_slug = 1;';
-$html .= 'var class_slug = 1;';
-$html .= 'jQuery.post("' . get_bloginfo('template_url') . '/library/ajax/session.php",{ classterm: classterm_slug, class: class_slug, modo: "ajaxget" },';
-$html .= 'function(data){ jQuery("#session-item-1").html(data); }';
+$html .= 'jQuery.post("' . get_bloginfo('template_url') . '/library/ajax/session.php",{modo: "ajaxget" },';
+$html .= 'function(data){ jQuery("#session-items").html(data); }';
+$html .= ');';
+$html .= 'jQuery(".wg-menu ul li ul li").live("click", function() {';
+$html .= 'var get_id = jQuery(this).attr("id");';
+$html .= 'var arr_id = get_id.split("_");';
+$html .= 'if (arr_id[0] == "classterm")';
+$html .= 'classterm_slug = arr_id[1];';
+$html .= 'if (arr_id[0] == "class")';
+$html .= 'class_slug = arr_id[1];';
+$html .= 'if (arr_id[0] == "subject")';
+$html .= 'subject_slug = arr_id[1];';
+$html .= 'var checked_item = jQuery(this).parent().parent().find("span.checked-item");checked_item.html(jQuery(this).html());';
+$html .= 'jQuery.post("' . get_bloginfo('template_url') . '/library/ajax/session.php",{ subject: subject_slug, classterm: classterm_slug, class: class_slug, modo: "ajaxget" },';
+$html .= 'function(data){ jQuery("#session-items").html(data); }';
 $html .= ');});});';
 $html .= '</script>';
 echo $html;
+endif;
+?>
+
+</div>
+
+</div>
+<?php 
 get_footer();
