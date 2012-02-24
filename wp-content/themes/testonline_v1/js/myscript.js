@@ -216,6 +216,15 @@ jQuery(document).ready(function($){
 		var ul_item = jQuery(this).parent().find('ul');
 		ul_item.show(300);
 	});
+	$('#loadingDiv')
+    .hide()  // hide it initially
+    .ajaxStart(function() {
+        $(this).show();
+    })
+    .ajaxStop(function() {
+        $(this).hide();
+    })
+;
 })
 
 

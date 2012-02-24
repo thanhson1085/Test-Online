@@ -37,7 +37,7 @@ function session_init() {
     'has_archive' => true, 
     'hierarchical' => true,
     'menu_position' => null,
-    'supports' => array( 'title')
+    'supports' => array( 'title','editor')
   ); 
   register_post_type('session',$args);
 	
@@ -280,7 +280,7 @@ function create_question_taxonomies()
     'show_ui' => true,
     'update_count_callback' => '_update_post_term_count',
     'query_var' => true,
-    'rewrite' => array( 'slug' => 'term' ),
+    'rewrite' => array( 'slug' => 'classterm' ),
   ));
 
   $labels = array(
@@ -465,7 +465,7 @@ function my_request($request) {
 add_action( 'restrict_manage_posts', 'my_restrict_manage_posts' );
 function my_restrict_manage_posts() {
 	global $typenow;
-	$taxonomies = array('term','class','subject');//$typenow.'_type';
+	$taxonomies = array('classterm','class','subject');//$typenow.'_type';
 	if( $typenow == "question" || $typenow == "trial_question" || $typenow == "session" ){
 		foreach ($taxonomies as $tax_slug) {
 			$tax_obj = get_taxonomy($tax_slug);
@@ -818,4 +818,71 @@ function check_title($post_title) {
 	}
 	return $post_title;
 }
+function MyAjaxFunction(){
+	global $post;
+	
+	if (!empty($_POST['class'])) if ($_POST['class'] == 'all') $_POST['class'] = null;
+	
+	if (!empty($_POST['subject'])) if ($_POST['subject'] == 'all') $_POST['subject'] = null;
+	if (!empty($_POST['classterm'])) if ($_POST['classterm'] == 'all') $_POST['classterm'] = null;
+	//require_once('../../../../../wp-blog-header.php');
+	$tax_query = array();
+	$tax_query['relation'] = 'AND';
+	if ($_POST['class']){
+		array_push($tax_query,array(
+				'taxonomy' => 'class',
+				'field' => 'slug',
+				'terms' => array($_POST['class']),
+				)
+			);
+	}
+	if ($_POST['classterm']){
+		array_push($tax_query,array(
+				'taxonomy' => 'classterm',
+				'field' => 'slug',
+				'terms' => array($_POST['classterm']),
+				)
+			);
+	}
+	if ($_POST['subject']){
+		array_push($tax_query,array(
+				'taxonomy' => 'subject',
+				'field' => 'slug',
+				'terms' => array($_POST['subject']),
+				)
+			);
+	}
+
+	$args = array(
+		'tax_query' => $tax_query,
+		'posts_per_page' => '-1',
+		'post_type' => 'session',
+		'post_status' => 'pending,publish',
+		'order' => 'ASC',
+	);
+	$query = new WP_Query( $args );
+	$html .='<h3>Danh mục đề thi</h3><ul>';
+
+	while ( $query->have_posts() ) : $query->the_post();
+
+	
+	//foreach ($hidden_terms as $hidden_term){
+		$html .= '<li><a href="?session='.$post->post_name.'">'.$post->post_title;
+		$html .= '</a><a class="resultlink" target="_blank" href="?hidden_term=hidden-'.$post->ID.'">(Xem kết quả)</a></li>';
+	//}
+
+	endwhile;
+	if (!$query->post-count){
+		$html .= '<li>Không có đề thi nào trong danh mục tìm kiếm</li>';
+	}
+
+	$html .= '</ul>';
+	echo ($html);
+	die();
+	//return $html;
+	//return;
+	}
+    // creating Ajax call for WordPress
+    add_action( 'wp_ajax_nopriv_MyAjaxFunction', 'MyAjaxFunction' );
+    add_action( 'wp_ajax_MyAjaxFunction', 'MyAjaxFunction' );
 ?>

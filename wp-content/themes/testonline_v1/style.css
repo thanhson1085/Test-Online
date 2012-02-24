@@ -36,6 +36,9 @@ body {
 	font-size: 14px;
 }
 input[type="text"]{width: 10px;}
+h1 {font-size: 20px; font-weight: bold;line-height: 40px;}
+h2 {font-size: 18px; font-weight: bold;line-height: 35px;}
+h3 {font-size: 16px; font-weight: bold;line-height: 30px;}
 #page{
 	background: #FFFAE6 url(images/cell.png);
 }
@@ -50,12 +53,16 @@ input[type="text"]{width: 10px;}
 	
 }
 .q-page{
+	background: white;
 	border: solid 1px #ccc;
 	border-radius:3px;
 	margin-top: 20px;
 	width:960px;
 	border-color: #ccc; box-shadow: 0 3px 18px #000; -moz-box-shadow: 0 3px 18px #000; -webkit-box-shadow: 0 3px 18px #000;outline:0;
 
+}
+.q-page-content{
+	margin: 20px;
 }
 .q-page h2{
 	color: #fff;
@@ -1008,5 +1015,16 @@ cursor: pointer;}
 }
 #session-items ul li a:hover{
 	color: #FF7911;
+}
+#loadingDiv{
+	background: transparent;
+	position: absolute;
+	float:right;
+	bottom: 10px;
+	right: 10px;
+}
+a.resultlink{	
+	float: right;
+	margin-right:10px;
 }
 ::selection{background:#FF5E99;color:#fff;text-shadow:none;}

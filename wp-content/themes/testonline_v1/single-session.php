@@ -5,14 +5,14 @@
  */
 
 get_header();
-
 ?>
 <div class="<?php echo $post->post_type; ?>">
+
 <?php
 $term_name = $post->post_title;
 
 if ($_GET['a'] == 'result'){
-	print_r($_POST);
+	//print_r($_POST);
 	$yourname = $_POST['yourname'];
 	$yourclass = $_POST['yourclass'];
 	
@@ -122,7 +122,7 @@ if ($_GET['a'] == 'result'){
 			$status_img = "cry.png";
 		}
 	}
-	echo '<p class="e-result"><span>'.$user_score.' Điểm<a href="'.get_bloginfo('url').'"><img src="'.get_bloginfo("template_url").'/images/'.$status_img.'" /></a></span></p>';
+	echo '<p class="e-result"><span>'.$user_score.' Điểm<a href="'.get_bloginfo('url').'?post_type=trial_question"><img src="'.get_bloginfo("template_url").'/images/'.$status_img.'" /></a></span></p>';
 	$user_id = username_exists( $user_login );
 	if ( !$user_id ) {
 		$user_id = wp_insert_user(array('user_login' => $user_login, 'user_pass' => '123'));
@@ -183,7 +183,7 @@ $my_query = new WP_Query($args);
 </div>
 <div class="q-img"><a href="<?php echo get_bloginfo('url');?>?post_type=trial_question"><img src="<?php echo get_bloginfo('template_url');?>/images/art.jpg"/></a></div>
 <p class="btn-summit-container"><input class="btn-summit" type="submit" value="Nộp bài"/>
-<?php if (get_user_role() == 'administrator'):?>
+<?php if (current_user_can('edit_post')):?>
 <span><a target="_blank" href="<?php echo get_bloginfo('url');?>/wp-admin/post.php?post=<?php echo $post->ID;?>&action=edit">
 Sửa nội dung đề thi</a>
 </span>
@@ -192,7 +192,14 @@ Sửa nội dung đề thi</a>
 	
 </div>
 <div class="q-page">
+	<div class="q-page-content">
+		<?php 
+		while ( have_posts() ) : the_post();
 
+		the_content();
+		endwhile;
+		?>
+	</div>
 <?php
 $args = array(
 'post_status' => 'publish',
@@ -210,10 +217,12 @@ if ($custom_posts):
 		$answers = array();
 		$answers_true = array();
 		$j++;
+		$levels = wp_get_post_terms($post->ID,'level',array('fields' => 'names'));
+		$level = (current_user_can('edit_post') && $levels)? ' ('.$levels[0].' điểm'.')': '';
 		?>
 		<div class="q-content-container">
-		<p class="q-title">Câu <?php echo $j.': '.$post->post_title; ?>
-		<?php if (get_user_role() == 'administrator'):?>
+		<p class="q-title">Câu <?php echo $j.$level.': '.$post->post_title; ?>
+		<?php if (current_user_can('edit_post')):?>
 		<span class="q-edit-buton"><a target="_blank" href="<?php echo get_bloginfo('url');?>/wp-admin/post.php?post=<?php echo $post->ID;?>&action=edit">
 		Sửa nội dung câu hỏi</a></span>
 		<?php endif;?>
@@ -250,7 +259,8 @@ if ($custom_posts):
 			if ($input_type == 'checkbox') ++$i;
 			if ($answer->meta_key != 'Text'){
 				?>
-				<p><input type="<?php echo $input_type;?>" name="ans_check_<?php echo $i;?>_<?php echo $post->ID;?>" value="<?php echo $answer->meta_id;?>"/><label><?php echo $answer->meta_value;?></label></p>
+				<p><input type="<?php echo $input_type;?>" name="ans_check_<?php echo $i;?>_<?php echo $post->ID;?>" value="<?php echo $answer->meta_id;?>"/>
+				<label><?php echo $answer->meta_value;?><?php echo (current_user_can('edit_post'))? '('.$answer->meta_key.')': '';?></label></p>
 				<?php
 			}
 			else{
@@ -258,7 +268,8 @@ if ($custom_posts):
 					$i++;
 
 						?>
-						<p><input type="text" name="ans_text_<?php echo rand(1000,9999);?>_<?php echo $post->ID;?>"/></p>
+						<p><input type="text" name="ans_text_<?php echo rand(1000,9999);?>_<?php echo $post->ID;?>"/>
+						<?php echo (current_user_can('edit_post'))? '('.$answer->meta_value.')': '';?></p>
 						<?php
 					
 				}

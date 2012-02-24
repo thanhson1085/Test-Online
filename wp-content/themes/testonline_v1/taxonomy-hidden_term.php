@@ -4,19 +4,18 @@
  * Email: thanhson1085@gmail.com 
  */
 get_header();
-$term_name = $_GET['hidden_term'];
-$args = array(
-'post_status' => 'publish',
-'taxonomy_name' => 'hidden_term',
-'taxonomy_term' => $term_name,
-'post_type' => 'session',
-);
-$custom_posts = get_posts_by_taxonomy($args);
-$user_results = array();
+//global $post,$wpdb;
 
-if ($custom_posts):
-    foreach ($custom_posts as $post){
-        setup_postdata($post);
+
+$term_name = $_GET['hidden_term'];
+
+$user_results = array();
+$tmparr = explode('-',$term_name);
+$my_id = $tmparr[1];
+$post = get_post($my_id); 
+//if ($custom_posts):
+ //   foreach ($custom_posts as $post){
+ //       setup_postdata($post);
 		$user = get_userdatabylogin($post->ID);
 		$user_results = get_user_meta($user->ID, 'result',false);
 
@@ -64,8 +63,8 @@ if ($custom_posts):
 				</tr>
 			<?php
 			}
-	}
-endif;
+//	}
+//endif;
 			
 	?>
 		</tbody></table>

@@ -443,6 +443,7 @@ while ( $query->have_posts() ) : $query->the_post(); ?>
 		</li>
 	</ul>
 </div>
+<div id="loadingDiv"><img src="<?php echo get_bloginfo('template_url');?>/images/loader.gif"/></div>
 <div id="session-items"></div>
 </div><!-- end widget -->	
 <?php
@@ -451,7 +452,7 @@ $html .= 'var classterm_slug = "all";';
 $html .= 'var class_slug = "all";';
 $html .= 'var subject_slug = "all";';
 $html .= 'jQuery(document).ready(function() {';
-$html .= 'jQuery.post("' . get_bloginfo('template_url') . '/library/ajax/session.php",{modo: "ajaxget" },';
+$html .= 'jQuery.post("' . get_bloginfo('url') . '/wp-admin/admin-ajax.php",{action: "MyAjaxFunction", modo: "ajaxget" },';
 $html .= 'function(data){ jQuery("#session-items").html(data); }';
 $html .= ');';
 $html .= 'jQuery(".wg-menu ul li ul li").live("click", function() {';
@@ -464,7 +465,7 @@ $html .= 'class_slug = arr_id[1];';
 $html .= 'if (arr_id[0] == "subject")';
 $html .= 'subject_slug = arr_id[1];';
 $html .= 'var checked_item = jQuery(this).parent().parent().find("span.checked-item");checked_item.html(jQuery(this).html());';
-$html .= 'jQuery.post("' . get_bloginfo('template_url') . '/library/ajax/session.php",{ subject: subject_slug, classterm: classterm_slug, class: class_slug, modo: "ajaxget" },';
+$html .= 'jQuery.post("' . get_bloginfo('url') . '/wp-admin/admin-ajax.php",{ action: "MyAjaxFunction", subject: subject_slug, classterm: classterm_slug, class: class_slug, modo: "ajaxget" },';
 $html .= 'function(data){ jQuery("#session-items").html(data); }';
 $html .= ');});});';
 $html .= '</script>';
