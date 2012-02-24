@@ -855,7 +855,7 @@ function MyAjaxFunction(){
 
 	$args = array(
 		'tax_query' => $tax_query,
-		'posts_per_page' => '-1',
+		'paged' => $_POST['paged'],
 		'post_type' => 'session',
 		'post_status' => 'pending,publish',
 		'order' => 'ASC',
@@ -872,11 +872,31 @@ function MyAjaxFunction(){
 	//}
 
 	endwhile;
+	
 	if (!$query->post-count){
 		$html .= '<li>Không có đề thi nào trong danh mục tìm kiếm</li>';
 	}
-
+	
+	
 	$html .= '</ul>';
+
+
+$total_pages = $query->max_num_pages;
+
+if ($total_pages > 1){
+	echo $query->paged;
+	$current_page = max(1, $_POST['paged']);
+	$html .= '<div id="session-paging">'.paginate_links(array(
+		'show_all'     => true,
+		'type'         => 'plain',
+        'add_args'     => true,
+		'prev_text'    => __('&laquo; Trang trước'),
+		'next_text'    => __('Trang sau &raquo;'),
+		'current' => $current_page,
+		'total' => $total_pages,
+    )).'</div>';
+}
+	
 	echo ($html);
 	die();
 	//return $html;

@@ -225,6 +225,41 @@ jQuery(document).ready(function($){
         $(this).hide();
     })
 ;
+jQuery.post(ajax_link,{action: "MyAjaxFunction", paged: paged, modo: "ajaxget" },
+function(data){ jQuery("#session-items").html(data); }
+);
+jQuery(".wg-menu ul li ul li").live("click", function() {
+var get_id = jQuery(this).attr("id");
+var arr_id = get_id.split("_");
+if (arr_id[0] == "classterm")
+classterm_slug = arr_id[1];
+if (arr_id[0] == "class")
+class_slug = arr_id[1];
+if (arr_id[0] == "subject")
+subject_slug = arr_id[1];
+var checked_item = jQuery(this).parent().parent().find("span.checked-item");checked_item.html(jQuery(this).html());
+jQuery.post(ajax_link,{ action: "MyAjaxFunction", subject: subject_slug, classterm: classterm_slug, class: class_slug, modo: "ajaxget" },
+function(data){ jQuery("#session-items").html(data); }
+);});
+jQuery("#session-paging a").live("click", function(e) {
+	e.preventDefault();
+	switch (jQuery(this).attr('class')){
+		case "page-numbers":
+			paged =  parseInt(jQuery(this).html());
+			break;
+		case "next page-numbers":
+			paged++;
+			break;
+		case "prev page-numbers":
+			paged--;
+			break;
+	}
+
+	jQuery.post(ajax_link,
+	{ action: "MyAjaxFunction",paged: paged, subject: subject_slug, classterm: classterm_slug, class: class_slug, modo: "ajaxget" },
+	function(data){ jQuery("#session-items").html(data); }
+);});
+
 })
 
 
