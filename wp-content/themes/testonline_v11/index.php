@@ -5,37 +5,7 @@
  */
 
 get_header();
-if ($_GET['post_type'] != 'trial_question'){
-	?>
-	<div class="d-page-container">
-		<div class="d-page">	
-			<div class="d-logo"></div>
-				<?php
-				global $post;
-				$args = array( 'numberposts' => 1, 'post_type'=> 'session', 'post_status' => 'publish' );
-				$myposts = get_posts( $args );
-				foreach( $myposts as $post ) :	setup_postdata($post); ?>
-					
 
-					<div class="d-btn-test"> <img src="<?php echo get_bloginfo('template_url');?>/images/micky.gif" /><a href="<?php the_permalink(); ?>"/>Bài Thi</a></div>
-				<?php endforeach; ?>	
-					
-		
-			<div class="d-btn-demo"> <img src="<?php echo get_bloginfo('template_url');?>/images/micky.gif" /><a href="?post_type=trial_question"/>Phần Mềm<a></div>
-
-			<div class="img3"><img src="<?php echo get_bloginfo('template_url');?>/images/img7.jpg" /></div>
-			
-			<div class="img2"><img src="<?php echo get_bloginfo('template_url');?>/images/img8.jpg" /></div>
-			<div class="img1"><img src="<?php echo get_bloginfo('template_url');?>/images/img1.jpg" /></div>
-			
-		
-			<div class="d-flower3"><img src="<?php echo get_bloginfo('template_url');?>/images/flower3.png" /></div>
-		</div>
-	</div>
-	<?php
-	get_footer();
-	return;
-}
 
 ?>
 <div class="i-header">
@@ -60,117 +30,48 @@ if ($_GET['post_type'] != 'trial_question'){
 
 
 <div class="i-content">
-<div class="i-right-sidebar">
-<ul class="btn-test-list">
+
+<div class="i-body-content">
+
+<div class="tq-content-container">
 <?php
 global $post;
 $args = array( 'numberposts' => 1, 'post_type'=> 'session', 'post_status' => 'publish' );
 $myposts = get_posts( $args );
-foreach( $myposts as $post ) :	setup_postdata($post); ?>
-	<li><a href="<?php the_permalink(); ?>"><span>Làm bài thi</span></a></li>
-	<?php 
-	if (current_user_can('edit_post')){
-		?>
-		<li><a href="?hidden_term=hidden-<?php echo $post->ID; ?>" target="_blank"><span>Kết quả thi</span></a></li>
-		<?php
-	}
-
-	?>
-
-<?php endforeach; ?>
+foreach( $myposts as $post ) :	setup_postdata($post); 
+$classes = wp_get_post_terms($post->ID,'class',array('fields' => 'names'));
+$classterms = wp_get_post_terms($post->ID,'classterm',array('fields' => 'names'));
+$subjects = wp_get_post_terms($post->ID,'subject',array('fields' => 'names'));
+$marks = wp_get_post_terms($post->ID,'mark',array('fields' => 'names'));
+$times = wp_get_post_terms($post->ID,'time',array('fields' => 'names'));
+?>
+<div id="hot-action">
+<div id="exam-info">
+	<ul>
+		<li><span>
+		<?php echo 'Lớp: '.$classes[0];?>
+		</span></li>
+		<li><span>
+		<?php echo 'Học kỳ: '.$classterms[0];?>
+		</span></li>
+		<li><span>
+		<?php echo 'Môn: '.$subjects[0];?>
+		</span></li>
+		<li><span>
+		<?php echo 'Điểm tối đa:'.$marks[0];?>
+		</span></li>
+		<li><span>
+		<?php echo 'Thời gian làm bài:'.$times[0].' Phút';?>
+		</span></li>
 </ul>
-<!--p><a href="?hidden_term=<?php echo '#';?>">Sample Question</a></p-->
-<h2 class="i-right-h2">Ôn tập</h2>
-<form method="POST" action="index.php?post_type=trial_question">
-<div class="i-term-container">
-<h3 class="i-right-h3">Chọn lớp</h3>
-<?php
-$args = array( 'taxonomy' => 'class' );
-
-$terms = get_terms('class', $args);
-
-$count = count($terms);
-$checked = (!get_query_var('class'))? 'checked="checked"': '';
-if ($count > 0) {
-
-    foreach ($terms as $term) {
-		if (strtoupper(urlencode(get_query_var('class'))) != strtoupper($term->slug)){
-			echo '<p><input type="radio" name="class" '.$checked.' value="'.$term->slug.'"/><label>' . $term->name . '</label></p>';
-    	}
-		else{
-			echo '<p><input type="radio" name="class" checked="checked" value="'.$term->slug.'"/><label>' . $term->name . '</label></p>';
-			$class_name = $term->name;
-		}
-		$checked='';
-    }
-
-}
-?>
 </div>
+<div id="hot-button"><a href="<?php the_permalink();?>"><span>Làm bài thi</span></a>
+<a href="<?php the_permalink();?>"><span>Xem kết quả</span></a>
+</div></div>
 
-<div class="i-term-container">
-<h3 class="i-right-h3">Chọn học kỳ</h3>
+<?php endforeach;?>
 <?php
-$args = array( 'taxonomy' => 'classterm' );
 
-$terms = get_terms('classterm', $args);
-
-$count = count($terms); 
-$checked = (!get_query_var('classterm'))? 'checked="checked"': '';
-if ($count > 0) {
-
-    foreach ($terms as $term) {
-		if (strtoupper(urlencode(get_query_var('classterm'))) != strtoupper($term->slug)){
-			echo '<p><input type="radio" name="classterm" '.$checked.' value="'.$term->slug.'"/><label>' . $term->name . '</label></p>';
-    	}
-		else{
-			echo '<p><input type="radio" name="classterm" checked="checked" value="'.$term->slug.'"/><label>' . $term->name . '</label></p>';
-			$term_name = $term->name;
-		}
-		$checked='';	
-    }
-
-}
-
-?>
-</div>	
-<div class="i-term-container">
-<h3 class="i-right-h3">Chọn môn</h3>
-<?php
-$args = array( 'taxonomy' => 'subject' );
-
-$terms = get_terms('subject', $args);
-
-$count = count($terms); 
-//echo esc_html(get_query_var('subject'));
-$checked = (!get_query_var('subject'))? 'checked="checked"': '';
-if ($count > 0) {
-
-    foreach ($terms as $term) {
-		//echo  urlencode(get_query_var('subject')).'<>'.strtoupper($term->slug);
-		if (strtoupper(urlencode(get_query_var('subject'))) != strtoupper($term->slug)){
-			echo '<p><input type="radio" name="subject" '.$checked.' value="'.$term->slug.'"/><label>' . $term->name . '</label></p>';
-    	}
-		else{
-			echo '<p><input type="radio" name="subject" checked="checked" value="'.$term->slug.'"/><label>' . $term->name . '</label></p>';
-			$subject_name = $term->name;
-		}
-		$checked='';	
-    }
-}
-?>
-</div>
-<p class="i-right-btn"><input type="submit" value="Ôn tập"/></p>	
-</form>
-</div>
-<div class="i-body-content">
-
-<div class="tq-content-container">
-
-<?php
-/*if ( !get_query_var('class')){
-	echo '<div class="i-welcome"></div>';
-}*/
 $args = array(
 	'tax_query' => array(
 		'relation' => 'AND',
@@ -195,19 +96,22 @@ $args = array(
 	'post_status' => 'publish',
 	'order' => 'ASC',
 );
+$term_name = get_term_by('slug', get_query_var('classterm'), 'classterm');
+$class_name = get_term_by('slug', get_query_var('class'), 'class');
+$subject_name = get_term_by('slug', get_query_var('subject'), 'subject');
 $query = new WP_Query( $args );
 if ($query->post-count){
 ?>
 <div id="i-test-info">
 <ul>
 <li><span>
-<?php echo 'Lớp: '.$class_name;?>
+<?php echo 'Lớp: '.$class_name->name;?>
 </span></li>
 <li><span>
-<?php echo 'Học kỳ: '.$term_name;?>
+<?php echo 'Học kỳ: '.$term_name->name;?>
 </span></li>
 <li><span>
-<?php echo 'Môn: '.$subject_name;?>
+<?php echo 'Môn: '.$subject_name->name;?>
 </span></li>
 <li><span>
 <?php echo 'Làm đúng: <span id="true-answers">0</span>/'.$query->post_count;?>
@@ -228,23 +132,7 @@ else{
 		<div id="i-message" style="display: block;">Không có bài tập trong mục bạn đang tìm kiếm</div>
 		<?php
 	}
-	if (get_user_role() != 'administrator'):
-		?>	
-		
-		<div class="i-intro-container">
-			<div class="i-intro">
-			<?php 
-				$my_post_id = 1;
-				$my_post = get_post($my_post_id);
-			?>
-			<h1><?php echo $my_post->post_title; ?></h1>
-				<?php echo $my_post->post_content;?>
-			</div>
-		</div>
-		<?php
-		
-	endif;
-	
+
 }
 $j=0;
 while ( $query->have_posts() ) : $query->the_post(); ?>
@@ -309,7 +197,7 @@ while ( $query->have_posts() ) : $query->the_post(); ?>
 		</div>
 		<p class="next-page-container">
 		<?php
-			if (get_user_role() == 'administrator'):
+			if (current_user_can('edit_post')):
 			?>
 			<span class="btn-edit"><a target="_blank" href="<?php echo get_bloginfo('url');?>/wp-admin/post.php?post=<?php echo $post->ID;?>&action=edit">Sửa nội dung</a></span>
 			<?php
@@ -375,22 +263,47 @@ while ( $query->have_posts() ) : $query->the_post(); ?>
 <?php
 ?>
 </div><!-- end widget -->	
+<?php
+	if (!current_user_can('edit_post') && !$query->post-count):
+		?>	
+		
+		<div class="i-intro-container">
+			<div class="i-intro">
+			<?php 
+				$my_post_id = 1;
+				$my_post = get_post($my_post_id);
+			?>
+			<h1><?php echo $my_post->post_title; ?></h1>
+				<?php echo $my_post->post_content;?>
+			</div>
+		</div>
+		<?php
+		
+	endif;
+	
+?>
 
-<?php if (is_user_logged_in()):?>
+<?php if (current_user_can('edit_post')):?>
 <div class="wg-container"><!-- start widget -->
+<div class="right-box">
+	<ul>
+		<li id="session-items"></li>
+		<li id="question-items"></li>
+	</ul>
+</div>
 <div class="wg-menu">
 	<ul>
 		<li>
 			<div><span>Chọn Lớp:</span><span class="checked-item">Tất cả</span></div>
 			<ul>
-				<li id="class_all">
+				<li id="class_all" class="get-ajax-post" >
 					Tất cả
 				</li>
 				<?php 
 					$args = array('taxonomy'=>'class');
 					$classes = get_terms('class',$args);
 					foreach ($classes as $class){
-						echo '<li id="class_'.$class->slug.'">';
+						echo '<li id="class_'.$class->slug.'" class="get-ajax-post" >';
 						echo 'Lớp '.$class->name;
 						echo '</li>';
 					}
@@ -404,14 +317,14 @@ while ( $query->have_posts() ) : $query->the_post(); ?>
 		<li>
 			<div><span>Chọn học kỳ:</span><span class="checked-item">Tất cả</span></div>
 			<ul>
-				<li id="classterm_all">
+				<li id="classterm_all" class="get-ajax-post" >
 					Tất cả
 				</li>
 				<?php 
 					$args = array('taxonomy'=>'classterm');
 					$classterms = get_terms('classterm',$args);
 					foreach ($classterms as $classterm){
-						echo '<li id="classterm_'.$classterm->slug.'">';
+						echo '<li id="classterm_'.$classterm->slug.'" class="get-ajax-post" >';
 						echo 'Học kỳ '.$classterm->name;
 						echo '</li>';
 					}
@@ -425,14 +338,14 @@ while ( $query->have_posts() ) : $query->the_post(); ?>
 		<li>
 			<div><span>Chọn môn:</span><span class="checked-item">Tất cả</span></div>
 			<ul>
-				<li id="subject_all">
+				<li id="subject_all" class="get-ajax-post" >
 					Tất cả
 				</li>
 				<?php 
 					$args = array('taxonomy'=>'subject');
 					$subjects = get_terms('subject',$args);
 					foreach ($subjects as $subject){
-						echo '<li id="subject_'.$subject->slug.'">';
+						echo '<li id="subject_'.$subject->slug.'" class="get-ajax-post" >';
 						echo 'Môn '.$subject->name;
 						echo '</li>';
 					}
@@ -444,13 +357,14 @@ while ( $query->have_posts() ) : $query->the_post(); ?>
 	</ul>
 </div>
 <div id="loadingDiv"><img src="<?php echo get_bloginfo('template_url');?>/images/loader.gif"/></div>
-<div id="session-items"></div>
+
 </div><!-- end widget -->	
 <?php
 $html = '<script type="text/javascript">';
 $html .= 'var classterm_slug = "all";';
 $html .= 'var class_slug = "all";';
 $html .= 'var subject_slug = "all";';
+$html .= 'var hidden_term_slug = "all";';
 $html .= 'var paged = 1;';
 $html .= 'var ajax_link ="'. get_bloginfo('url') .'/wp-admin/admin-ajax.php";';
 $html .= '</script>';
@@ -459,7 +373,44 @@ endif;
 ?>
 
 </div>
+<div class="i-right-sidebar"> <!-- right sidebar -->
+	<div class="announcement box"> 
+	
+	<h1 class="area-header">THÔNG BÁO</h1> 
+	<ul> 
+	<?php
+		$args = array(
+			'posts_per_page' => '10',
+			'paged' => 1,
+			'post_type' => 'announcement',
+			'post_status' => 'publish',
+			'order' => 'DESC',
+		);
+		$query = new WP_Query( $args );
+		while ( $query->have_posts() ) : $query->the_post();
+	
+		
+ 
+			echo '<li> ';
+			echo (!current_user_can('edit_post'))?'<a href="#">':'<a href="'.admin_url().'post.php?post='.$post->ID.'&action=edit">';
+			the_title();
+			echo '</a> ('.date_i18n( __( 'd/m/Y g:i A' ), strtotime( $post->post_date ) ).')';// (06/08/2011 02:45 pm)';
+			//the_time();
+			echo '<p>';
+			the_content();
+			echo '</p> ';
 
+			echo '</li> ';
+		
+
+
+		endwhile;?>	
+	
+		</ul> 
+	</div> 
+</div> <!-- end sidebar -->
 </div>
+
+
 <?php 
 get_footer();

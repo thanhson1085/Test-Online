@@ -45,6 +45,7 @@ if ($_GET['a'] == 'result'){
 			$b = true; 	
 			$answers_checked= array_keys($selected_ids, $post_id);
 			foreach ($answers as $answer){
+	
 				foreach ($answers_checked as $key => $answer_checked ){
 					//echo $key.'</br>';
 					$b=false;
@@ -76,8 +77,7 @@ if ($_GET['a'] == 'result'){
 							$levels = wp_get_post_terms($post_id,'level',array('fields' => 'names'));
 							$level = ( $levels )?$levels[0]: 1;
 							$score += $level/sizeof($answers);
-						}			
-					
+						}					
 				
 			}
 			else{
