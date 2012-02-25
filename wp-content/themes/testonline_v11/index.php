@@ -407,6 +407,10 @@ endif;
 		endwhile;?>	
 	
 		</ul> 
+		<h1 class="area-header">LINKS</h1>
+		<ul>
+		<?php get_links('-1', '<li>', '</li>', '<br />', FALSE, 'id', TRUE,FALSE, -1, TRUE, TRUE); ?>
+		</ul>
 	</div> 
 </div> <!-- end sidebar -->
 </div>
