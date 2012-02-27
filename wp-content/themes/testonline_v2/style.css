@@ -502,6 +502,10 @@ p.p-title{
 	display: block;
 	background: transparent;
 	float:right;
+	position: absolute;
+	top: 0;
+	margin-top:5px;
+	right: 0;
 }
 #hot-action a{
 	background: #D24939;
@@ -518,15 +522,14 @@ p.p-title{
 	right: 0;
 	border-radius: 5px;
 }
-#hot-action { position: relative;}
-#hot-button{
-	float: right;
-	position: absolute;
-	top: 0;
-	margin-top:0;
-	right: 0;
-	
+#hot-action { 
+	position: relative;
+	height: auto;
+	border: solid 1px #e3e3e3;
+	background: white;
+	margin-top: 5px;
 }
+
 #hot-action a:hover{
 	color: #D8F939;
 }
@@ -557,9 +560,23 @@ p.p-title{
 	text-align: justify;
 	
 }
+#exam-info h3{
+	color: #BBB;
+	font-weight: normal;
+	font-size: 13px;
+	text-transform: uppercase;
+	line-height: 22px;
+}
 #exam-info ul,  #i-test-info ul {list-style: none; }
 #exam-info ul li, #i-test-info ul  li{display: inline; text-align: justify;padding-right: 30px;}
-#exam-info{ background: white; color: #D24939; border: solid 1px #eee; border-radius: 0;}
+#exam-info{ 
+	background: white; color: #D24939; border-radius: 0; margin-top: 0;
+	padding-top:0;
+	padding-bottom: 0;
+}
+#exam-info ul{
+	line-height: 25px;
+}
 .icon{ height: 10px; vertical-align: middle; padding:0;margin:0; margin-right: 5px;}
 
 .d-page-container{
@@ -888,6 +905,7 @@ cursor: pointer;}
 }
 #wg-classes-list > ul > li{
 	margin: 10px;
+	margin-right: 5px;
 	float: left;
 	width: 18%;
 	display: block;
@@ -918,6 +936,9 @@ cursor: pointer;}
 .wg-subject-list > ul > li > a:hover, .wg-session-list > ul > li > a:hover{
 	text-decoration: underline;
 	color: #ccc;
+}
+.wg-menu ul {
+	list-style:none;
 }
 .wg-menu ul li div{
 	color: white;

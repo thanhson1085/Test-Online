@@ -5,7 +5,12 @@
  */
 get_header();
 $term_name = $_GET['hidden_term'];
-$args = array(
+$user_results = array();
+$tmparr = explode('-',$term_name);
+$my_id = $tmparr[1];
+$post = get_post($my_id); 
+
+/*$args = array(
 'post_status' => 'publish',
 'taxonomy_name' => 'hidden_term',
 'taxonomy_term' => $term_name,
@@ -17,6 +22,8 @@ $user_results = array();
 if ($custom_posts):
     foreach ($custom_posts as $post){
         setup_postdata($post);
+*/
+
 		$users = get_users(array('meta_key'=> $post->ID));
 		//print_r($users);
 		//echo $post->ID;
@@ -68,7 +75,7 @@ if ($custom_posts):
 				</tr>
 			<?php
 			}
-	}
+//	}
 endif;
 			
 	?>

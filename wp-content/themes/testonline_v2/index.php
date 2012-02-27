@@ -15,7 +15,8 @@ get_header();
 	<div id="topbar">
 		<?php if ( is_user_logged_in() ) { ?>
 					
-			<i>Xin chào <?php echo wp_get_current_user()->user_login; ?></i> | <a href="<?php echo get_admin_url(); ?>">Quản trị</a>
+			<i>Xin chào <?php echo wp_get_current_user()->user_login; ?></i> 
+				<?php if (current_user_can('edit_post')): ?>| <a href="<?php echo get_admin_url(); ?>">Quản trị</a><?php endif;?>
 				| <a href="<?php echo wp_logout_url(); ?>">Đăng xuất</a>
 					
 			<?php } 
@@ -44,10 +45,11 @@ $classterms = wp_get_post_terms($post->ID,'classterm',array('fields' => 'names')
 $subjects = wp_get_post_terms($post->ID,'subject',array('fields' => 'names'));
 $marks = wp_get_post_terms($post->ID,'mark',array('fields' => 'names'));
 $times = wp_get_post_terms($post->ID,'time',array('fields' => 'names'));
-if (is_user_logged_in()):?>
-
+if (is_user_logged_in()):
+?>
 <div id="hot-action">
 <div id="exam-info">
+	<h3>Thông tin môn thi</h3>
 	<ul>
 		<li><span>
 		<?php echo 'Lớp: '.$classes[0];?>
@@ -67,10 +69,9 @@ if (is_user_logged_in()):?>
 </ul>
 </div>
 <div id="hot-button"><a href="<?php the_permalink();?>"><span>Làm bài thi</span></a>
-<?php if (current_user_can('edit_post')):?><a href="<?php echo get_bloginfo('url');?>/?hidden_term=hidden-<?php echo $post->ID;?>"><span>Xem kết quả</span></a><?php endif;?>
+<?php if (current_user_can('edit_post')):?><a target="_blank" href="<?php echo get_bloginfo('url');?>/?hidden_term=hidden-<?php echo $post->ID;?>"><span>Xem kết quả</span></a><?php endif;?>
 </div></div>
 <?php endif;?>
-
 <?php endforeach;?>
 <?php
 
@@ -362,15 +363,6 @@ while ( $query->have_posts() ) : $query->the_post(); ?>
 
 </div><!-- end widget -->	
 <?php
-$html = '<script type="text/javascript">';
-$html .= 'var classterm_slug = "all";';
-$html .= 'var class_slug = "all";';
-$html .= 'var subject_slug = "all";';
-$html .= 'var hidden_term_slug = "all";';
-$html .= 'var paged = 1;';
-$html .= 'var ajax_link ="'. get_bloginfo('url') .'/wp-admin/admin-ajax.php";';
-$html .= '</script>';
-echo $html;
 endif;
 ?>
 
