@@ -6,7 +6,8 @@
 
 get_header();
 
-
+	
+	
 ?>
 <div class="i-header">
 	<div class="i-logo"><a href="<?php echo get_bloginfo('url');?>?post_type=trial_question"><img src="<?php echo get_bloginfo("template_url");?>/images/logo5.png"></a></div>
@@ -362,6 +363,86 @@ while ( $query->have_posts() ) : $query->the_post(); ?>
 <div id="loadingDiv"><img src="<?php echo get_bloginfo('template_url');?>/images/loader.gif"/></div>
 
 </div><!-- end widget -->	
+
+<div class="wg-container"><!-- start user widget -->
+<div class="right-box">
+	<ul>
+		<li id="user-items"></li>
+		<li id="mark-items"></li>
+	</ul>
+</div>
+<div class="wg-menu">
+	<ul>
+		<li>
+			<div><span>Chọn Lớp:</span><span class="checked-item">Tất cả</span></div>
+			<ul>
+				<li id="class_all" class="get-ajax-user" >
+					Tất cả
+				</li>
+				<?php 
+					$args = array('taxonomy'=>'class', 'hide_empty' => 0);
+					$classes = get_terms('class',$args);
+					foreach ($classes as $class){
+						if( $class->parent){
+							echo '<li id="class_'.$class->slug.'" class="get-ajax-user" >';
+							echo 'Lớp '.$class->name;
+							echo '</li>';
+						}
+					}
+				?>			
+
+			</ul>
+			
+		</li>
+	</ul>
+	<ul>
+		<li>
+			<div><span>Chọn học kỳ:</span><span class="checked-item">Tất cả</span></div>
+			<ul>
+				<li id="classterm_all" class="get-ajax-user" >
+					Tất cả
+				</li>
+				<?php 
+					$args = array('taxonomy'=>'classterm');
+					$classterms = get_terms('classterm',$args);
+					foreach ($classterms as $classterm){
+						echo '<li id="classterm_'.$classterm->slug.'" class="get-ajax-user" >';
+						echo 'Học kỳ '.$classterm->name;
+						echo '</li>';
+					}
+				?>			
+
+			</ul>
+			
+		</li>
+	</ul>
+	<ul>
+		<li>
+			<div><span>Chọn môn:</span><span class="checked-item">Tất cả</span></div>
+			<ul>
+				<li id="subject_all" class="get-ajax-user" >
+					Tất cả
+				</li>
+				<?php 
+					$args = array('taxonomy'=>'subject');
+					$subjects = get_terms('subject',$args);
+					foreach ($subjects as $subject){
+						echo '<li id="subject_'.$subject->slug.'" class="get-ajax-user" >';
+						echo 'Môn '.$subject->name;
+						echo '</li>';
+					}
+				?>			
+
+			</ul>
+			
+		</li>
+	</ul>
+</div>
+<!--div id="loadingDiv"><img src="<?php echo get_bloginfo('template_url');?>/images/loader.gif"/></div-->
+
+</div><!-- end widget -->	
+
+
 <?php
 endif;
 ?>

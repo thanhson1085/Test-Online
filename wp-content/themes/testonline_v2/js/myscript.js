@@ -258,6 +258,22 @@ jQuery.post(ajax_link,{ action: "get_ajax_question",hidden_term: hidden_term_slu
 function(data){ jQuery("#question-items").html(data); });
 
 });
+
+// User Ajax
+jQuery(".get-ajax-user").live("click", function(e) {
+e.preventDefault();
+var get_id = jQuery(this).attr("id");
+var arr_id = get_id.split("_");
+
+if (arr_id[0] == "class")
+class_slug = arr_id[1];
+
+jQuery.post(ajax_link,{ action: "get_ajax_user", class: class_slug, modo: "ajaxget" },
+function(data){ jQuery("#user-items").html(data); });
+
+});
+
+// End
 jQuery("div.paging a").live("click", function(e) {
 	e.preventDefault();
 	switch (jQuery(this).attr('class')){

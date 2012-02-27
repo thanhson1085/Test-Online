@@ -3,7 +3,7 @@
  * Tue Feb 21, 2012 11:03:49 added by Thanh Son 
  * Email: thanhson1085@gmail.com 
  */
-function get_ajax_session(){
+function get_ajax_user(){
 	global $post;
 	
 	if (!empty($_POST['class'])) if ($_POST['class'] == 'all') $_POST['class'] = null;
@@ -25,27 +25,30 @@ function get_ajax_session(){
 		'tax_query' => $tax_query,
 		'posts_per_page' => '10',
 		'paged' => $_POST['paged'],
-		'post_type' => 'question',
-		'post_status' => 'publish',
 		'order' => 'ASC',
 	);
-	$query = new WP_Query( $args );
-	while ( $query->have_posts() ) : $query->the_post();
 
 	
-	//foreach ($hidden_terms as $hidden_term){
-		$html .= '<li><a href="?question='.$post->post_name.'">'.$post->post_title;
-		//$html .= '</a><a class="resultlink" target="_blank" href="?hidden_term=hidden-'.$post->ID.'">(Xem k?t qu?)</a></li>';
-	//}
-
-	endwhile;
+	$args = array(
+		'tax_query' => $tax_query,
+	);
+	$wp_user_query = new WP_User_Query($args);
+	// Get the results
+	$authors = $wp_user_query->get_results();
+    foreach ($authors as $author)
+    {
+        // get all the user's data
+        $author_info = get_userdata($author->ID);
+        $html .= $author_info->first_name.' '.$author_info->last_name;
+    }
+	//echo $html;
 	
-	if (!$query->post-count){
+	if (!$authors){
 		$html .= '<li>Không có user nào trong danh mục tìm kiếm</li>';
 	}
 	
 	$html .= '</ul>';
-	$total_pages = $query->max_num_pages;
+	/*$total_pages = $query->max_num_pages;
 
 	if ($total_pages > 1){
 		$current_page = max(1, $_POST['paged']);
@@ -58,7 +61,7 @@ function get_ajax_session(){
 			'current' => $current_page,
 			'total' => $total_pages,
 		)).'</div>';
-	}
+	}*/
 	echo ($html);
 	die();
 }

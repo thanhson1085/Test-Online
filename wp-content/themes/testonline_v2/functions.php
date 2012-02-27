@@ -6,6 +6,7 @@
 
 define('THEMELIB', TEMPLATEPATH . '/library');
 require_once(THEMELIB . '/extensions/user-tax.php');
+require_once(THEMELIB . '/extensions/user-ajax.php');
 
 if ( ! isset( $content_width ) )
 $content_width = 584;
