@@ -23,15 +23,15 @@ function get_ajax_user(){
 	$html .= '<h3>Danh mục User</h3><ul>';
 	$args = array(
 		'tax_query' => $tax_query,
-		'posts_per_page' => '10',
-		'paged' => $_POST['paged'],
+		'posts_per_page' => '1',
+		'paged' => '1',//$_POST['paged'],
 		'order' => 'ASC',
 	);
 
 	
-	$args = array(
+/*	$args = array(
 		'tax_query' => $tax_query,
-	);
+	);*/
 	$wp_user_query = new WP_User_Query($args);
 	// Get the results
 	$authors = $wp_user_query->get_results();
@@ -39,7 +39,7 @@ function get_ajax_user(){
     {
         // get all the user's data
         $author_info = get_userdata($author->ID);
-        $html .= $author_info->first_name.' '.$author_info->last_name;
+        $html .= '<li><a>'.$author_info->first_name.' '.$author_info->last_name.'</a><li>';
     }
 	//echo $html;
 	
@@ -48,10 +48,10 @@ function get_ajax_user(){
 	}
 	
 	$html .= '</ul>';
-	/*$total_pages = $query->max_num_pages;
+	/*$total_pages = $wp_user_query->max_num_pages;
 
 	if ($total_pages > 1){
-		$current_page = max(1, $_POST['paged']);
+		$current_page = max(1, 1);
 		$html .= '<div class="paging" id="question-paging">'.paginate_links(array(
 			'show_all'     => true,
 			'type'         => 'plain',

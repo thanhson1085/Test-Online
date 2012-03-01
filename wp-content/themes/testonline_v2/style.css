@@ -1002,15 +1002,17 @@ cursor: pointer;}
 	border-left: dotted 1px #ccc;
 	overflow: auto;
 }
-#question-items ul, #session-items ul{
+#question-items > ul, #session-items > ul{
 	list-style: none;
 	padding-left: 5px;
 }
- #question-items ul li, #session-items ul li {
+ #question-items > ul > li, #session-items > ul > li {
 	line-height: 20px;
 	margin-bottom: 10px;
+	display:inline-block;
+	width:100%;
  }
-#question-items ul li a, #session-items ul li a{
+#question-items > ul > li > span > a, #session-items  > ul > li > span > a{
 	text-decoration: none;
 	color: #2995e0;
 }
@@ -1031,7 +1033,7 @@ cursor: pointer;}
 	bottom: 10px;
 	right: 10px;
 }
-#session-items ul li a.get-ajax-post, #session-items ul li a.resultlink{	
+/*#session-items ul li a.get-ajax-post, #session-items ul li a.resultlink{	
 	margin-right:10px;
 	font-size: 12px;
 	color: #888;
@@ -1039,13 +1041,12 @@ cursor: pointer;}
 #session-items ul li a.get-ajax-post:hover, #session-items ul li a.resultlink:hover{
 	color: #FF7911;
 }
-a.get-ajax-post{
-	float:right;
-}
+*/
 #question-paging, #session-paging{
 	text-align:right;
 	margin-top: 20px;
 	margin-right: 15px;
+	display: inline-block;
 }
 #question-paging a, #session-paging a{
 	color: #2995e0;
@@ -1063,4 +1064,36 @@ a.get-ajax-post{
 .announcement ul li a{color: #2E73C2/* #6AA054*/;font-size:13px;}
 .announcement p{text-align:justify;}
 .area-header{color:#BBB; font-size:13px; font-family:verdana; font-weight: normal;}
+
+a.addnew{
+ float: right;
+ background: url(images/add.png) no-repeat bottom left;
+ padding-left: 20px;
+ text-decoration: none;
+ line-height: 20px;
+ text-transform: none;
+ vertical-align: bottom;
+ color:#2995e0;
+}
+a.addnew:hover{
+color:#FF7911;
+}
+ul.btn-list{
+	list-style: none;
+}
+ul.btn-list li{
+	float:left;
+	width: 33%;
+}
+ul.btn-list > li > a{
+	padding: 3px;
+	padding-left: 10px;
+	padding-right: 10px;
+	background: #B5E1FF;
+	border-radius: 3px;
+	color:#2995e0;
+}
+ul.btn-list > li > a:hover{
+	color: #FF7911;
+}
 ::selection{background:#FF5E99;color:#fff;text-shadow:none;}

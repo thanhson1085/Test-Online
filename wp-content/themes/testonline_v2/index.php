@@ -373,27 +373,34 @@ while ( $query->have_posts() ) : $query->the_post(); ?>
 </div>
 <div class="wg-menu">
 	<ul>
-		<li>
-			<div><span>Chọn Lớp:</span><span class="checked-item">Tất cả</span></div>
-			<ul>
-				<li id="class_all" class="get-ajax-user" >
-					Tất cả
-				</li>
-				<?php 
-					$args = array('taxonomy'=>'class', 'hide_empty' => 0);
-					$classes = get_terms('class',$args);
-					foreach ($classes as $class){
-						if( $class->parent){
-							echo '<li id="class_'.$class->slug.'" class="get-ajax-user" >';
-							echo 'Lớp '.$class->name;
-							echo '</li>';
-						}
-					}
-				?>			
+	<?php 
+		$args = array('taxonomy'=>'class', 'hide_empty' => 0);
+		$classes = get_terms('class',$args);
+		$b = true;
+		foreach ($classes as $class){
+			if(!$class->parent && !$b){
+				$html .= '</ul></li>';
+				$b = true;
+			}
+			if(!$class->parent && $b){
+				$b= false;
+				$html .= '<li><div><span>Lớp '.$class->name.
+							'</span></div><ul><li id="class_all" class="get-ajax-user" >Tất cả</li>';
+			}
+				/*$args = array('taxonomy'=>'class', 'hide_empty' => 0);
+				$classes = get_terms('class',$args);
+				foreach ($classes as $class){*/
+			if( $class->parent){
+				$html .= '<li id="class_'.$class->slug.'" class="get-ajax-user" >';
+				$html .= 'Lớp '.$class->name;
+				$html .= '</li>';
+			}
+				//}
 
-			</ul>
-			
-		</li>
+		}
+				$html .= '</ul></li>';
+		echo $html;
+		?>
 	</ul>
 	<ul>
 		<li>
