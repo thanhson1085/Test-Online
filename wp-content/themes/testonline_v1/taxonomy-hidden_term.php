@@ -40,7 +40,7 @@ $post = get_post($my_id);
 		</div>
 		<?php
 		if (empty($user_results)){
-			continue;
+			return;
 		}
 		?>
 		<table class="tbl-mark">

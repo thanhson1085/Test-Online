@@ -219,6 +219,7 @@ while ( $query->have_posts() ) : $query->the_post(); ?>
 			<div id="i-passed-list"></div>		
 		</div>
 <div class="wg-container"><!-- start widget -->
+<div class="wg-header">ĐỀ ÔN TẬP</div>
 <?php
 	$args = array('taxonomy'=>'class');
 	$classes = get_terms('class',$args);
@@ -289,6 +290,7 @@ while ( $query->have_posts() ) : $query->the_post(); ?>
 
 <?php if (current_user_can('edit_post')):?>
 <div class="wg-container"><!-- start widget -->
+<div class="wg-header">QUẢN LÝ ĐỀ THI & CÂU HỎI THI</div>
 <div class="right-box">
 	<ul>
 		<li id="session-items"></li>
@@ -360,10 +362,10 @@ while ( $query->have_posts() ) : $query->the_post(); ?>
 		</li>
 	</ul>
 </div>
-<div id="loadingDiv"><img src="<?php echo get_bloginfo('template_url');?>/images/loader.gif"/></div>
+
 
 </div><!-- end widget -->	
-
+<div id="loadingDiv"><img src="<?php echo get_bloginfo('template_url');?>/images/loader.gif"/></div>
 <div class="wg-container"><!-- start user widget -->
 <div class="right-box">
 	<ul>
@@ -402,7 +404,7 @@ while ( $query->have_posts() ) : $query->the_post(); ?>
 		echo $html;
 		?>
 	</ul>
-	<ul>
+	<!--ul>
 		<li>
 			<div><span>Chọn học kỳ:</span><span class="checked-item">Tất cả</span></div>
 			<ul>
@@ -443,7 +445,7 @@ while ( $query->have_posts() ) : $query->the_post(); ?>
 			</ul>
 			
 		</li>
-	</ul>
+	</ul-->
 </div>
 <!--div id="loadingDiv"><img src="<?php echo get_bloginfo('template_url');?>/images/loader.gif"/></div-->
 
@@ -489,7 +491,7 @@ endif;
 		endwhile;?>	
 	
 		</ul> 
-		<h1 class="area-header">LINKS</h1>
+		<h1 class="area-header">LIÊN KẾT</h1>
 		<ul>
 		<?php get_links('-1', '<li>', '</li>', '<br />', FALSE, 'id', TRUE,FALSE, -1, TRUE, TRUE); ?>
 		</ul>

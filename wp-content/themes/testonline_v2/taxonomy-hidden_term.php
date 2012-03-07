@@ -28,7 +28,7 @@ $post = get_post($my_id);
 	<div class="p-content-header">
 	<p class="p-title"><span>Kết quả thi</span></p>
 	<p><label>Môn thi:</label><span><?php  echo $subjects[0];?></span>
-	<label class="label-2">Lớp:</label><span><?php echo $class;//$class[1]; ?></span></p>
+	<label class="label-2">Lớp:</label><span><?php echo $classes[0];//$class[1]; ?></span></p>
 
 	<p><label>Học kỳ:</label><span><?php echo $terms[0]; ?></span>
 	<label class="label-2">Thời gian làm bài:</label><span><?php echo $times[0];?></span></p>

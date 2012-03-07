@@ -865,11 +865,18 @@ function MyAjaxFunction(){
 
 	while ( $query->have_posts() ) : $query->the_post();
 
-	
-	//foreach ($hidden_terms as $hidden_term){
-		$html .= '<li><a href="?session='.$post->post_name.'">'.$post->post_title;
-		$html .= '</a><a class="resultlink" target="_blank" href="?hidden_term=hidden-'.$post->ID.'">(Xem kết quả)</a></li>';
-	//}
+		$classes = wp_get_post_terms($post->ID,'class',array('fields' => 'slugs'));
+		$classterms = wp_get_post_terms($post->ID,'classterm',array('fields' => 'slugs'));
+		$subjects = wp_get_post_terms($post->ID,'subject',array('fields' => 'slugs'));
+		$hidden_terms = wp_get_post_terms($post->ID,'hidden_term');
+		$addnew_question_link = admin_url().'/post-new.php?post_type=question&class='.$classes[0].
+			'&classterm='.$classterms[0].'&subject='.$subjects[0].'&hidden_term='.$hidden_terms[0]->slug;	
+
+		$html .= '<li><span><a href="?session='.$post->post_name.'">'.$post->post_title.'('.$hidden_terms[0]->count.' Câu)';
+		$html .= '</a></span><ul class="btn-list"><li><a class="resultlink" target="_blank" href="?hidden_term=hidden-'.$post->ID.'">Xem kết quả</a>';
+		$html .= '</li><li><a target="_blank" href="'.$addnew_question_link.'">Thêm câu hỏi</a></li>';
+		$html .= '</ul></li>';
+
 
 	endwhile;
 	
@@ -905,4 +912,66 @@ if ($total_pages > 1){
     // creating Ajax call for WordPress
     add_action( 'wp_ajax_nopriv_MyAjaxFunction', 'MyAjaxFunction' );
     add_action( 'wp_ajax_MyAjaxFunction', 'MyAjaxFunction' );
+
+add_action( 'admin_print_scripts-post.php', 'load_jquery_if_necessary' );
+add_action( 'admin_print_scripts-post-new.php', 'load_jquery_if_necessary' );
+add_action( 'admin_head-post.php', 'disable_and_check_cat' );
+add_action( 'admin_head-post-new.php', 'disable_and_check_cat' );
+function load_jquery_if_necessary() {
+	wp_enqueue_script( 'jquery' );
+}
+function disable_and_check_cat() {
+	$classes = get_term_by('slug',$_GET['class'],'class');
+	$class = $classes->term_id;
+	$subjects = get_term_by('slug',$_GET['subject'],'subject');
+	$subject = $subjects->term_id;
+	$classterms = get_term_by('slug',$_GET['classterm'],'classterm');
+	$classterm = $classterms->term_id;
+	$hidden_terms = get_term_by('slug',$_GET['hidden_term'],'hidden_term');
+	$hidden_term = $hidden_terms->term_id;
+if ($class) :
+	?>
+	<script type="text/javascript">
+	jQuery(document).ready(function($){
+		var required_cat = $('input#in-class-<?php echo $class;?>');
+		if( !required_cat.attr('checked')  )
+			required_cat.attr('checked','checked');
+	});
+	</script>
+	<?php
+endif;
+if ($classterm) :
+	?>
+	<script type="text/javascript">
+	jQuery(document).ready(function($){
+		var required_cat = $('input#in-classterm-<?php echo $classterm;?>');
+		if( !required_cat.attr('checked')  )
+			required_cat.attr('checked','checked');
+	});
+	</script>
+	<?php
+endif;
+if ($subject) :
+	?>
+	<script type="text/javascript">
+	jQuery(document).ready(function($){
+		var required_cat = $('input#in-subject-<?php echo $subject;?>');
+		if( !required_cat.attr('checked')  )
+			required_cat.attr('checked','checked');
+	});
+	</script>
+	<?php
+endif;
+if ($hidden_term) :
+	?>
+	<script type="text/javascript">
+	jQuery(document).ready(function($){
+		var required_cat = $('input#in-hidden_term-<?php echo $hidden_term;?>');
+		if( !required_cat.attr('checked')  )
+			required_cat.attr('checked','checked');
+	});
+	</script>
+	<?php
+endif;
+}
 ?>

@@ -39,7 +39,7 @@ function get_ajax_user(){
     {
         // get all the user's data
         $author_info = get_userdata($author->ID);
-        $html .= '<li><a>'.$author_info->first_name.' '.$author_info->last_name.'</a><li>';
+        $html .= '<li><a href="'.get_bloginfo('url').'?page_id='.$author->ID.'">'.$author_info->first_name.' '.$author_info->last_name.'</a><li>';
     }
 	//echo $html;
 	

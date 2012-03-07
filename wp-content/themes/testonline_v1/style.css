@@ -999,22 +999,32 @@ cursor: pointer;}
 
 	box-shadow-left: 0 0px 5px #2995e0;
 }
-#session-items ul{
+#session-items > ul{
 	list-style: none;
 	padding-left: 5px;
+	margin-right:5px;
 		
 }
-#session-items ul li a{
+#session-items > ul > li{
+	line-height: 20px;
+	display: inline-block;
+	width: 100%;
+	margin-bottom: 5px;
+	border-bottom: dotted 1px #E3E3E3;
+	padding-bottom: 5px;
+	
+}
+#session-items ul > li > span > a{
 	text-decoration: none;
 	color: #2995e0;
 }
-#session-items h3{
+#session-items > h3{
 	margin: 5px;
 	text-transform: uppercase;
 	border-bottom: solid 1px #ccc;
 	font-weight: bold;
 }
-#session-items ul li a:hover{
+#session-items > ul > li > span > a:hover{
 	color: #FF7911;
 }
 #loadingDiv{
@@ -1024,10 +1034,7 @@ cursor: pointer;}
 	bottom: 10px;
 	right: 0;
 }
-a.resultlink{	
-	float: right;
-	margin-right:10px;
-}
+
 #session-paging{
 	text-align:right;
 	margin-top: 20px;
@@ -1041,5 +1048,25 @@ a.resultlink{
 }
 #session-paging span.current{
 	color: #ccc;
+}
+ul.btn-list{
+	list-style: none;
+}
+ul.btn-list li{
+	float:left;
+	width: 50%;
+}
+ul.btn-list > li > a{
+	padding: 2px;
+	padding-left: 10px;
+	padding-right: 10px;
+	border:dotted 1px #FF7911;
+	border-radius: 3px;
+	color:#2995e0;
+	text-decoration: none;
+	font-size: 10px;
+}
+ul.btn-list > li > a:hover{
+	color: #FF7911;
 }
 ::selection{background:#FF5E99;color:#fff;text-shadow:none;}

@@ -834,6 +834,14 @@ transform: rotate(0deg);
     bottom: 1em;
     right: 1em;
 }
+#loadingDiv{
+	background-color: #ccc;
+	font-size: 28px;
+	color:#000;
+	position: fixed;
+    bottom: .5em;
+    right: .5em;
+}
 .d-flower2{	
 	width: 280px;
 	height: 239px;
@@ -1022,17 +1030,12 @@ cursor: pointer;}
 	font-size: 13px;
 	border-bottom: solid 1px #ccc;
 	font-weight: bold;
+	position: relative;
 }
 #question-items ul li a:hover, #session-items ul li a:hover{
 	color: #FF7911;
 }
-#loadingDiv{
-	background: transparent;
-	position: absolute;
-	float:right;
-	bottom: 10px;
-	right: 10px;
-}
+
 /*#session-items ul li a.get-ajax-post, #session-items ul li a.resultlink{	
 	margin-right:10px;
 	font-size: 12px;
@@ -1065,17 +1068,22 @@ cursor: pointer;}
 .announcement p{text-align:justify;}
 .area-header{color:#BBB; font-size:13px; font-family:verdana; font-weight: normal;}
 
-a.addnew{
+h3 > a.addnew{
  float: right;
  background: url(images/add.png) no-repeat bottom left;
- padding-left: 20px;
+ padding-left: 18px;
  text-decoration: none;
- line-height: 20px;
+ line-height: 18px;
  text-transform: none;
  vertical-align: bottom;
  color:#2995e0;
+ position: absolute;
+ top:10px;
+ right: 0px;
+ font-weight: normal;
+ font-size: 11px;
 }
-a.addnew:hover{
+h3 > a.addnew:hover{
 color:#FF7911;
 }
 ul.btn-list{
@@ -1086,14 +1094,23 @@ ul.btn-list li{
 	width: 33%;
 }
 ul.btn-list > li > a{
-	padding: 3px;
+	padding: 2px;
 	padding-left: 10px;
 	padding-right: 10px;
-	background: #B5E1FF;
+	border:dotted 1px #FF7911;
 	border-radius: 3px;
 	color:#2995e0;
+	text-decoration: none;
+	font-size: 10px;
 }
 ul.btn-list > li > a:hover{
 	color: #FF7911;
+}
+div.wg-header{
+	padding-left: 10px;
+	font-weight: bold;
+	padding-top: 5px;
+	border-bottom: solid 1px #E3E3E3;
+	color: #D0162D;
 }
 ::selection{background:#FF5E99;color:#fff;text-shadow:none;}
