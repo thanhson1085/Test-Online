@@ -7,6 +7,7 @@
 define('THEMELIB', TEMPLATEPATH . '/library');
 require_once(THEMELIB . '/extensions/user-tax.php');
 require_once(THEMELIB . '/extensions/user-ajax.php');
+require_once(THEMELIB . '/extensions/user-info-ajax.php');
 
 if ( ! isset( $content_width ) )
 $content_width = 584;
@@ -935,12 +936,12 @@ function MyAjaxFunction(){
 	$classes = wp_get_post_terms($post->ID,'class',array('fields' => 'slugs'));
 	$classterms = wp_get_post_terms($post->ID,'classterm',array('fields' => 'slugs'));
 	$subjects = wp_get_post_terms($post->ID,'subject',array('fields' => 'slugs'));
-	$hidden_terms = wp_get_post_terms($post->ID,'hidden_term',array('fields' => 'slugs'));
+	$hidden_terms = wp_get_post_terms($post->ID,'hidden_term');
 	$addnew_question_link = admin_url().'/post-new.php?post_type=question&class='.$classes[0].
-		'&classterm='.$classterms[0].'&subject='.$subjects[0].'&hidden_term='.$hidden_terms[0];
+		'&classterm='.$classterms[0].'&subject='.$subjects[0].'&hidden_term='.$hidden_terms[0]->slug;
 	
 	//foreach ($hidden_terms as $hidden_term){
-		$html .= '<li><span><a href="?session='.$post->post_name.'">'.$post->post_title;
+		$html .= '<li><span><a href="?session='.$post->post_name.'">'.$post->post_title.'('.$hidden_terms[0]->count.' Câu)';
 		$html .= '</a></span><ul class="btn-list"><li><a class="resultlink" target="_blank" href="?hidden_term=hidden-'.$post->ID.'">Xem kết quả</a>';
 		$html .= '</li><li><a target="_blank" href="'.$addnew_question_link.'">Thêm câu hỏi</a></li>';
 		$html .= '<li><a class="get-ajax-post" href="#" id="hiddenterm_hidden-'.$post->ID.'">Xem câu hỏi</a></li></ul></li>';

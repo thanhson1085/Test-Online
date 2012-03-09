@@ -4,7 +4,6 @@
  * Email: thanhson1085@gmail.com 
  */
 function get_ajax_user(){
-	global $post;
 	
 	if (!empty($_POST['class'])) if ($_POST['class'] == 'all') $_POST['class'] = null;
 	
@@ -20,7 +19,7 @@ function get_ajax_user(){
 			);
 	}
 
-	$html .= '<h3>Danh mục User</h3><ul>';
+	$html .= '<ul id="user-items">';
 	$args = array(
 		'tax_query' => $tax_query,
 		'posts_per_page' => '1',
@@ -39,7 +38,9 @@ function get_ajax_user(){
     {
         // get all the user's data
         $author_info = get_userdata($author->ID);
-        $html .= '<li><a href="'.get_bloginfo('url').'?page_id='.$author->ID.'">'.$author_info->first_name.' '.$author_info->last_name.'</a><li>';
+        $html .= '<li>'.get_avatar( $author->ID, $size = '60', $default = '<path_to_url>' ).
+					' <a class="user-info-detail" id ="'.$author->ID.'" href="'.get_bloginfo('url').'?page_id='.$author->ID.'">'.$author_info->first_name.	
+					' '.$author_info->last_name.'<br /><span>'.$author->user_email.'</span></a><li>';
     }
 	//echo $html;
 	
@@ -48,6 +49,7 @@ function get_ajax_user(){
 	}
 	
 	$html .= '</ul>';
+	$html .= '<div id="user-info"></div>';
 	/*$total_pages = $wp_user_query->max_num_pages;
 
 	if ($total_pages > 1){

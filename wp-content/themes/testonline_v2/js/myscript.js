@@ -298,6 +298,43 @@ jQuery("div.paging a").live("click", function(e) {
 	}
 });
 
+jQuery("#friend-list-menu li a").live("click", function(e) {
+	e.preventDefault();
+	var get_id = jQuery(this).attr("id");
+	var arr_id = get_id.split("_");
+
+	if (arr_id[0] == "user-class")
+	class_slug = arr_id[1];
+
+	jQuery.post(ajax_link,{ action: "get_ajax_user", class: class_slug, modo: "ajaxget" },
+	function(data){ 
+		jQuery("#mybox").html(data); 
+		jQuery("#fade").fadeIn(100);
+		jQuery("#mybox").fadeIn(300);
+	});
+
+});
+jQuery("#fade").click(function(){
+		jQuery("#fade").css("display","none");
+		jQuery("#mybox").css("display","none");
+		
+});
+
+jQuery(".user-info-detail").live("click", function(e) {
+	e.preventDefault();
+	var get_id = jQuery(this).attr("id");
+
+	user_id = get_id;
+
+	jQuery.post(ajax_link,{ action: "get_ajax_user_info", user_id: user_id, modo: "ajaxget" },
+	function(data){ 
+		jQuery("#user-info").html(data); 
+
+	});
+
+});
+
+
 })
 
 

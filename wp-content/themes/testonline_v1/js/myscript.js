@@ -260,6 +260,7 @@ jQuery("#session-paging a").live("click", function(e) {
 	function(data){ jQuery("#session-items").html(data); }
 );});
 
+
 })
 
 

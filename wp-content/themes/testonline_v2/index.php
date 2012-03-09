@@ -365,92 +365,6 @@ while ( $query->have_posts() ) : $query->the_post(); ?>
 
 
 </div><!-- end widget -->	
-<div id="loadingDiv"><img src="<?php echo get_bloginfo('template_url');?>/images/loader.gif"/></div>
-<div class="wg-container"><!-- start user widget -->
-<div class="right-box">
-	<ul>
-		<li id="user-items"></li>
-		<li id="mark-items"></li>
-	</ul>
-</div>
-<div class="wg-menu">
-	<ul>
-	<?php 
-		$args = array('taxonomy'=>'class', 'hide_empty' => 0);
-		$classes = get_terms('class',$args);
-		$b = true;
-		foreach ($classes as $class){
-			if(!$class->parent && !$b){
-				$html .= '</ul></li>';
-				$b = true;
-			}
-			if(!$class->parent && $b){
-				$b= false;
-				$html .= '<li><div><span>Lớp '.$class->name.
-							'</span></div><ul><li id="class_all" class="get-ajax-user" >Tất cả</li>';
-			}
-				/*$args = array('taxonomy'=>'class', 'hide_empty' => 0);
-				$classes = get_terms('class',$args);
-				foreach ($classes as $class){*/
-			if( $class->parent){
-				$html .= '<li id="class_'.$class->slug.'" class="get-ajax-user" >';
-				$html .= 'Lớp '.$class->name;
-				$html .= '</li>';
-			}
-				//}
-
-		}
-				$html .= '</ul></li>';
-		echo $html;
-		?>
-	</ul>
-	<!--ul>
-		<li>
-			<div><span>Chọn học kỳ:</span><span class="checked-item">Tất cả</span></div>
-			<ul>
-				<li id="classterm_all" class="get-ajax-user" >
-					Tất cả
-				</li>
-				<?php 
-					$args = array('taxonomy'=>'classterm');
-					$classterms = get_terms('classterm',$args);
-					foreach ($classterms as $classterm){
-						echo '<li id="classterm_'.$classterm->slug.'" class="get-ajax-user" >';
-						echo 'Học kỳ '.$classterm->name;
-						echo '</li>';
-					}
-				?>			
-
-			</ul>
-			
-		</li>
-	</ul>
-	<ul>
-		<li>
-			<div><span>Chọn môn:</span><span class="checked-item">Tất cả</span></div>
-			<ul>
-				<li id="subject_all" class="get-ajax-user" >
-					Tất cả
-				</li>
-				<?php 
-					$args = array('taxonomy'=>'subject');
-					$subjects = get_terms('subject',$args);
-					foreach ($subjects as $subject){
-						echo '<li id="subject_'.$subject->slug.'" class="get-ajax-user" >';
-						echo 'Môn '.$subject->name;
-						echo '</li>';
-					}
-				?>			
-
-			</ul>
-			
-		</li>
-	</ul-->
-</div>
-<!--div id="loadingDiv"><img src="<?php echo get_bloginfo('template_url');?>/images/loader.gif"/></div-->
-
-</div><!-- end widget -->	
-
 
 <?php
 endif;
@@ -491,14 +405,39 @@ endif;
 		endwhile;?>	
 	
 		</ul> 
+		<h1 class="area-header">BẠN BÈ</h1>
+		<ul id="friend-list-menu">
+		<?php 
+			$args = array('taxonomy'=>'class', 'hide_empty' => 0);
+			$classes = get_terms('class',$args);
+			$html = '';
+			foreach ($classes as $class){
+
+				if(!empty($class->parent)){
+					
+					$html .= '<li><a href="#" id="user-class_"'.$class->slug.'>Lớp '.$class->name.
+								'</a></li>';
+				}
+
+			}
+				
+			echo $html;
+			?>
+		</ul>
 		<h1 class="area-header">LIÊN KẾT</h1>
 		<ul>
 		<?php get_links('-1', '<li>', '</li>', '<br />', FALSE, 'id', TRUE,FALSE, -1, TRUE, TRUE); ?>
 		</ul>
+
+	
 	</div> 
 </div> <!-- end sidebar -->
 </div>
+<div id="loadingDiv"><img src="<?php echo get_bloginfo('template_url');?>/images/loader.gif"/></div>
+	
 
+<div id="mybox" class="light-box"></div>
+<div id="fade" class="black_overlay"></div>
 
 <?php 
 get_footer();
