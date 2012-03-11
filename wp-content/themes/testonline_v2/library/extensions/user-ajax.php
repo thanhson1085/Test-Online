@@ -7,7 +7,6 @@ function get_ajax_user(){
 	
 	if (!empty($_POST['class'])) if ($_POST['class'] == 'all') $_POST['class'] = null;
 	
-	//require_once('../../../../../wp-blog-header.php');
 	$tax_query = array();
 	$tax_query['relation'] = 'AND';
 	if ($_POST['class']){
@@ -23,14 +22,11 @@ function get_ajax_user(){
 	$args = array(
 		'tax_query' => $tax_query,
 		'posts_per_page' => '1',
-		'paged' => '1',//$_POST['paged'],
+		'paged' => '1',
 		'order' => 'ASC',
 	);
 
-	
-/*	$args = array(
-		'tax_query' => $tax_query,
-	);*/
+
 	$wp_user_query = new WP_User_Query($args);
 	// Get the results
 	$authors = $wp_user_query->get_results();
@@ -49,7 +45,7 @@ function get_ajax_user(){
 	}
 	
 	$html .= '</ul>';
-	$html .= '<div id="user-info"></div>';
+	$html .= '<div class="user-info-container"><div id="user-info"></div></div>';
 	/*$total_pages = $wp_user_query->max_num_pages;
 
 	if ($total_pages > 1){

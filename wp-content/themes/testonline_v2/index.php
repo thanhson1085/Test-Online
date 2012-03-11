@@ -415,7 +415,7 @@ endif;
 
 				if(!empty($class->parent)){
 					
-					$html .= '<li><a href="#" id="user-class_"'.$class->slug.'>Lớp '.$class->name.
+					$html .= '<li><a href="#" id="user-class_'.$class->slug.'">Lớp '.$class->name.
 								'</a></li>';
 				}
 
@@ -438,6 +438,7 @@ endif;
 
 <div id="mybox" class="light-box"></div>
 <div id="fade" class="black_overlay"></div>
+
 
 <?php 
 get_footer();
