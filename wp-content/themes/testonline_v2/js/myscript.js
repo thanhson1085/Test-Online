@@ -353,7 +353,6 @@ var current_question = 1;
 var passed_list="<span> Những câu hỏi đã làm xong:</span>";
 
 jQuery(document).ready(function($){
-	//alert(jQuery('#max-time').html());
 
 	/*jQuery('#i-submit-form').submit(function(){
 		
@@ -405,7 +404,6 @@ jQuery(document).ready(function($){
 		oTrues.each(function(){
 			//var iTrue = jQuery(this).find('input');
 			if (!jQuery(this).attr('checked')){
-				//alert('thanh son');
 				b = false;
 			}
 		});
@@ -560,7 +558,6 @@ if (arr_id[0] == "hiddenterm"){
 else{
 	hidden_term_slug = "all";
 }
-//alert(hidden_term_slug);
 if( hidden_term_slug == "all"){
 	var checked_item = jQuery(this).parent().parent().find("span.checked-item");
 	checked_item.html(jQuery(this).html());
@@ -618,7 +615,6 @@ jQuery("#friend-list-menu li a").live("click", function(e) {
 
 	if (arr_id[0] == "user-class")
 	class_slug = arr_id[1];
-	alert(class_slug);
 
 	jQuery.post(ajax_link,{ action: "get_ajax_user", class: class_slug, modo: "ajaxget" },
 	function(data){ 

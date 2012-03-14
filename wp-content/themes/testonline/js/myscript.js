@@ -29,7 +29,6 @@ alignmenu:function($, e, megamenu_pos){
 	var menutop=megamenu.offsety+megamenu.anchorheight  //get y coord of menu
 	menuleft = megamenu.$anchorobj.offset().left
 	$menu.css({left:menuleft+"px", top:menutop+"px"})
-	//alert(menuleft)
 	this.$shimobj.css({width:megamenu.actualwidth+"px", height:megamenu.actualheight+"px", left:menuleft+"px", top:menutop+"px", display:"block"})
 },
 
@@ -166,7 +165,6 @@ var question_list="";
 var current_question = 1;
 var passed_list="<span> Những câu hỏi đã làm xong:</span>";
 jQuery(document).ready(function($){
-	//alert(jQuery('#max-time').html());
 
 	jQuery('#i-submit-form').submit(function(){
 		
@@ -219,7 +217,6 @@ jQuery(document).ready(function($){
 		oTrues.each(function(){
 			//var iTrue = jQuery(this).find('input');
 			if (!jQuery(this).attr('checked')){
-				//alert('thanh son');
 				b = false;
 			}
 		});
