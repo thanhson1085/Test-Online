@@ -5,7 +5,6 @@
  */
 ?><script src="<?php echo get_bloginfo('template_url'); ?>/js/jquery-ui.js"></script>
 <script src="<?php echo get_bloginfo('template_url'); ?>/js/myscript.js"></script>
-		<div class="footer"> <div class="footer-info">Developed by Thinh Liet School.</div></div>	
 	</div><!-- #main -->
 
 </div><!-- #page -->

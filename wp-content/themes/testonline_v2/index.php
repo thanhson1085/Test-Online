@@ -439,6 +439,7 @@ endif;
 <div id="mybox" class="light-box"></div>
 <div id="fade" class="black_overlay"></div>
 
+ <div class="footer"> <div class="footer-info">Developed by Thinh Liet School.</div></div>
 
 <?php 
 get_footer();

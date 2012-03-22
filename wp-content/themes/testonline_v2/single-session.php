@@ -134,23 +134,11 @@ if ($_GET['a'] == 'result'){
 	echo '<p class="e-result"><span>'.$user_score.' Điểm<a href="'.get_bloginfo('url').'?post_type=trial_question"><img src="'.get_bloginfo("template_url").'/images/'.$status_img.'" /></a></span></p>';
 	
 	add_user_meta(get_current_user_id(), $session_post_id, $user_score);
+	get_footer();
 	return;
 	
 }
-/*
-$args=array(
-  'name' => $term_name,
-  'post_type' => 'session',
-  'post_status' => 'publish',
-  'posts_per_page' => 1,
-  'caller_get_posts'=> 1
-);
-$my_query = null;
-$my_query = new WP_Query($args);
-*/
-//if( $my_query->have_posts() ) {
-//  	while ($my_query->have_posts()) : 
-//	$my_query->the_post(); 
+
 	if(post_password_required( $post ) && $_POST['yourpassword'] != $post->post_password){
 		?>
 		<form method="POST" action="?session=<?php echo $_GET['session'];?>">
@@ -158,6 +146,7 @@ $my_query = new WP_Query($args);
 		<input type="submit" value="Thi"/>
 		</form>
 		<?php
+		get_footer();
 		return;
 	}
 	else{
@@ -179,13 +168,12 @@ $my_query = new WP_Query($args);
 	<p><label>Học kỳ:</label><span><?php echo $terms[0]; ?></span>
 	<label class="label-2">Thời gian làm bài:</label><span id="max-time"><?php echo $times[0];?></span></p>
 	<p><label>Điểm tối đa:</label><span><?php echo $marks[0];?></span> </p>
- 	<?php
-//	endwhile;
-//}
-//wp_reset_query();  // Restore global post data stomped by the_post().
+<?php 
+	$user_info = get_userdata(get_current_user_id());
+	$user_classes = wp_get_object_terms(get_current_user_id(),'class');
 ?>
-<p><label>Họ và tên:</label><input type="text" name="yourname" /></p>
-<p><label class="label-2">Lớp:</label><input type="text" name="yourclass" /></p>
+<p><label>Họ và tên:</label><span><?php echo $user_info->first_name;?></span></p>
+<p><label class="label-2">Lớp:</label><span><?php echo $user_classes[0]->name;?></span></p>
 </div>
 <div class="q-img"><a href="<?php echo get_bloginfo('url');?>?post_type=trial_question"><img src="<?php echo get_bloginfo('template_url');?>/images/art.jpg"/></a></div>
 <p class="btn-summit-container"><input class="btn-summit" type="submit" value="Nộp bài"/>
@@ -300,4 +288,6 @@ else : endif;
 </div>
 <p class="btn-summit-container"><input class="btn-summit" type="submit" value="Nộp bài"/></p>
 </form>
+ <div class="footer"> <div class="footer-info">Developed by Thinh Liet School.</div></div>
+
 <?php get_footer(); ?>

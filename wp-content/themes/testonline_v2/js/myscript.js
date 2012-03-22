@@ -654,9 +654,6 @@ jQuery(".user-info-detail").live("click", function(e) {
 	});
 
 });
-
-
-
 			  
 })
 
