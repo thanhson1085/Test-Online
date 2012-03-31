@@ -90,7 +90,6 @@ h3 {font-size: 16px; font-weight: bold;line-height: 30px;}
 	background: white;
 }
 
-
 .q-content-container img{
 	max-width: 900px;
 	height: auto;
@@ -224,8 +223,8 @@ p.password-container{
 	text-align: center;
 }
 p.password-container input[type="submit"]{
-    border: solid 1px #2995E0;
-	background: #2995E0;
+    border: solid 1px #2995e0;
+	background: #2995e0;
     border-radius:3px;
 	color: white;
 	cursor: pointer;
@@ -239,7 +238,7 @@ p.password-container label, p.password-container span{
     font-family: verdana;
 }
 p.password-container input[type="password"]{
-    border: solid 1px #2995E0;
+    border: solid 1px #2995e0;
     border-radius:3px;
     height: 35px;
     width: 200px;
@@ -260,7 +259,7 @@ p.password-container span:hover{
 	color: #ccc;
 }
 p.password-container input[type="password"]:focus,p.password-container input[type="submit"]:hover, p.password-container input[type="submit"]:focus {
-	border-color: #2995E0; box-shadow: 0 0 8px #2995E0; -moz-box-shadow: 0 0 8px #2995E0; -webkit-box-shadow: 0 0 8px #2995E0;outline:0;
+	border-color: #2995e0; box-shadow: 0 0 8px #2995e0; -moz-box-shadow: 0 0 8px #2995e0; -webkit-box-shadow: 0 0 8px #2995e0;outline:0;
 }
 p.password-container input[type="password"]:focus{
 	background: white;
@@ -270,8 +269,8 @@ p.e-result{
 	padding-top: 200px;
 }
 p.e-result span{
-    border: solid 1px #2995E0;
-    background: #2995E0;
+    border: solid 1px #2995e0;
+    background: #2995e0;
     border-radius:10px;
     color: white;
     height: 100px;
@@ -361,7 +360,7 @@ p.p-title{
 	border-bottom: solid 1px #ddd;
 	margin-bottom: 10px;
 	position: relative;
-	background: #2995E0;
+	background: #2995e0;
 
 }
 .btn-test-list li a{
@@ -380,7 +379,7 @@ p.p-title{
 	font-weight: bold;
 	font-size: 16px;
 	text-transform: uppercase;
-	background: #2995E0 url(images/nobita.png) no-repeat top left;
+	background: #2995e0 url(images/nobita.png) no-repeat top left;
 }
 .btn-test-list li a:hover, .btn-test-list li a:focus{
 	background: #65DF38 url(images/nobita.png) no-repeat top left;
@@ -405,8 +404,8 @@ p.p-title{
 	line-height: 25px;
 }
 .i-term-container{
-	border: solid 1px #2995E0;
-	border-top: solid 30px #2995E0;
+	border: solid 1px #2995e0;
+	border-top: solid 30px #2995e0;
 	border-radius: 0 0 5px 5px;
 	padding: 5px;
 	padding-bottom:10px;
@@ -436,7 +435,7 @@ p.p-title{
 .i-right-btn input{
 	width: 194px;
 	height: 35px;
-	background:#2995E0 url(images/nobita2.png) no-repeat top right;
+	background:#2995e0 url(images/nobita2.png) no-repeat top right;
 	color: white;
 	border-radius: 5px;
 	outline: 0;
@@ -474,7 +473,7 @@ p.p-title{
 	float: right;
 	top: 5px;
 	right: 10px;
-	color: #2995E0;
+	color: #2995e0;
 	
 		
 }
@@ -538,7 +537,7 @@ p.p-title{
 }
 .btn-edit, .btn-bypass, .btn-next{
 	padding: 5px;
-	background: #2995E0;
+	background: #D24939;
 	border-radius: 5px;
 	color: white;
 	padding-left: 10px;
@@ -554,7 +553,7 @@ p.p-title{
 }
 
 #exam-info, #i-test-info{
-	background:#2995E0;
+	background:#2995e0;
 	margin-top: 10px;
 	border-radius: 5px;
 	line-height: 15px;
@@ -562,6 +561,10 @@ p.p-title{
 	padding: 10px;
 	text-align: justify;
 	
+}
+#i-test-info{
+	border-radius: 0;
+	margin-top: 0;
 }
 #exam-info h3{
 	color: #BBB;
@@ -881,10 +884,8 @@ transform: rotate(0deg);
 	width: 270px;
 }
 #i-question-list{
-	background:#2995E0;
+	background:#2995e0;
 	color: white;
-	margin-top: 10px;
-	border-radius: 5px;
 	padding: 10px;
 	padding-bottom: 5px;
 	padding-top: 5px;
@@ -896,9 +897,9 @@ color: #cb1677;
 cursor: pointer;}
 #i-passed-list{
 	background: white;
-	border-radius: 5px;
-	border: solid 1px #ccc;
-	color: #2995E0;
+
+	border-top: solid 1px #e3e3e3;
+	color: #2995e0;
 	padding: 10px;
 	margin-top: 10px;
 	display:none;
@@ -1266,6 +1267,21 @@ div.wg-header{
 	width: 50%;
 	float: left;
 }
+.tq-content{
+min-height: 400px;
+padding-top: 30px;
+}
 
+.wg-container.trial-question  > .q-content-container{
+	margin-top: 0;
+	border: 0;
+}
+.wg-container.trial-question  > #i-message{
+	border-radius: 0;
+	margin-top: 0;
+}
+.item-selected{
+	color: #D0162D;;
+}
 .slimScrollDiv {padding-right: 10px;}
 ::selection{background:#FF5E99;color:#fff;text-shadow:none;}

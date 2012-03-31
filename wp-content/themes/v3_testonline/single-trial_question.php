@@ -3,8 +3,31 @@
  * Mon Feb 13, 2012 11:34:46 added by Thanh Son 
  * Email: thanhson1085@gmail.com 
  */
+get_header();	
 ?>
-        <p><?php echo $post->post_title; ?></p>
+<div class="i-header">
+	<div class="i-logo"><a href="<?php echo get_bloginfo('url');?>?post_type=trial_question"><img src="<?php echo get_bloginfo("template_url");?>/images/kvslogo.png"></a></div>
+	<div class="img4"><img src="<?php echo get_bloginfo('template_url');?>/images/img8.jpg" /></div>
+	<div class="img5"><img src="<?php echo get_bloginfo('template_url');?>/images/img12.jpg" /></div>
+	<div id="topbar">
+		<?php if ( is_user_logged_in() ) { ?>
+					
+			<i>Xin chào <?php echo wp_get_current_user()->user_login; ?></i> 
+				<?php if (current_user_can('edit_post')): ?>| <a href="<?php echo get_admin_url(); ?>">Quản trị</a><?php endif;?>
+				| <a href="<?php echo wp_logout_url(); ?>">Đăng xuất</a>
+					
+			<?php } 
+			else{
+					?>
+						<a href="<?php echo wp_login_url(); ?>">Đăng nhập</a> 
+					<?php
+					}
+					?>
+	</div>
+</div>
+<div class="tq-content">
+
+        <p class="q-title"><?php echo $post->post_title; ?></p>
         <p><?php the_content();//echo $post->post_content; ?></p>
         <?php
         $answers = get_post_metadata($post->ID,array('False','True'));
@@ -42,5 +65,9 @@
                 }
             }
         }
-
-
+?>
+</div>
+ <div class="footer"> <div class="footer-info">Developed by KVS Company.</div>
+ </div>
+<?php
+get_footer();

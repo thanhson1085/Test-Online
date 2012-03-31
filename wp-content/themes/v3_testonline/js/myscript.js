@@ -354,19 +354,9 @@ var passed_list="<span> Những câu hỏi đã làm xong:</span>";
 
 jQuery(document).ready(function($){
 
-	/*jQuery('#i-submit-form').submit(function(){
-		
-		if ( jQuery('input[name="yourname"]').val() == "" && jQuery('input[name="yourclass"]').val() == ""){
-			jQuery('.q-message').html('Vui lòng nhập tên và lớp học của bạn!');
-			jQuery('.q-message').fadeIn(300);
-			//setTimeout("jQuery('#q-message').fadeOut(300)",10000)
-			return false;
-		}
-	})*/
+
 	seconds = jQuery('#max-time').html(); 
-//Timer
-	
-	//document.getElementById("clock").firstChild.nodeValue ='30' 
+
 	if(typeof jQuery('#clock').attr('id') != 'undefined'){
 		display(); 
 	}
@@ -520,6 +510,8 @@ jQuery(document).ready(function($){
 		jQuery('#'+jQuery(this).attr('class')).fadeIn(300);
 		current_question = jQuery(this).attr('class').substring(7);
 		jQuery('#no-answers').html(current_question);
+		jQuery('#i-question-list span').removeClass('item-selected');
+		jQuery(this).addClass('item-selected');
 		
 	});
 	jQuery('.wg-menu ul li div').click(function(){

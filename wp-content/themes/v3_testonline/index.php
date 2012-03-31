@@ -104,8 +104,11 @@ $term_name = get_term_by('slug', get_query_var('classterm'), 'classterm');
 $class_name = get_term_by('slug', get_query_var('class'), 'class');
 $subject_name = get_term_by('slug', get_query_var('subject'), 'subject');
 $query = new WP_Query( $args );
+$hasTest = $query->post-count;
 if ($query->post-count){
 ?>
+<div class="wg-container trial-question">
+<div class="wg-header">NỘI DUNG ĐỀ ÔN TẬP</div>
 <div id="i-test-info">
 <ul>
 <li><span>
@@ -126,6 +129,7 @@ if ($query->post-count){
 </ul>
 </div>
 <div id="i-question-list"></div>
+
 <div id="i-message"></div>
 
 <?php
@@ -217,7 +221,11 @@ while ( $query->have_posts() ) : $query->the_post(); ?>
 					
 					?>
 			<div id="i-passed-list"></div>		
-		</div>
+</div>
+<?php if($hasTest):?>
+</div>
+<?php endif;?>
+
 <div class="wg-container"><!-- start widget -->
 <div class="wg-header">ĐỀ ÔN TẬP</div>
 <?php
@@ -352,7 +360,7 @@ while ( $query->have_posts() ) : $query->the_post(); ?>
 					$subjects = get_terms('subject',$args);
 					foreach ($subjects as $subject){
 						echo '<li id="subject_'.$subject->slug.'" class="get-ajax-post" >';
-						echo 'Môn '.$subject->name;
+						echo $subject->name;
 						echo '</li>';
 					}
 				?>			
@@ -439,7 +447,7 @@ endif;
 <div id="mybox" class="light-box"></div>
 <div id="fade" class="black_overlay"></div>
 
- <div class="footer"> <div class="footer-info">Developed by Thinh Liet School.</div></div>
+ <div class="footer"> <div class="footer-info">Developed by KVS Company.</div></div>
 
 <?php 
 get_footer();

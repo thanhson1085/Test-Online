@@ -288,6 +288,6 @@ else : endif;
 </div>
 <p class="btn-summit-container"><input class="btn-summit" type="submit" value="Nộp bài"/></p>
 </form>
- <div class="footer"> <div class="footer-info">Developed by Thinh Liet School.</div></div>
+ <div class="footer"> <div class="footer-info">Developed by KVS Company.</div></div>
 
 <?php get_footer(); ?>
