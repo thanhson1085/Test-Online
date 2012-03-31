@@ -41,6 +41,7 @@
 
 	?></title>
 <link rel="profile" href="http://gmpg.org/xfn/11" />
+<link href="<?php bloginfo('template_url')?>/images/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon">
 <link rel="stylesheet" type="text/css" media="all" href="<?php bloginfo( 'stylesheet_url' ); ?>" />
 <link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>" />
 <!--[if lt IE 9]>
