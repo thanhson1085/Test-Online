@@ -10,7 +10,7 @@ get_header();
 	
 ?>
 <div class="i-header">
-	<div class="i-logo"><a href="<?php echo get_bloginfo('url');?>?post_type=trial_question"><img src="<?php echo get_bloginfo("template_url");?>/images/kvslogo.png"></a></div>
+	<!--div class="i-logo"><a href="<?php echo get_bloginfo('url');?>?post_type=trial_question"><img src="<?php echo get_bloginfo("template_url");?>/images/kvslogo.png"></a></div-->
 	<div class="img4"><img src="<?php echo get_bloginfo('template_url');?>/images/img8.jpg" /></div>
 	<div class="img5"><img src="<?php echo get_bloginfo('template_url');?>/images/img12.jpg" /></div>
 	<div id="topbar">

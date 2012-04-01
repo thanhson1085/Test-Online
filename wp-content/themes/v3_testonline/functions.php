@@ -792,7 +792,16 @@ function custom_login_logo() {
 	</style>';
 }
 add_action('login_head', 'custom_login_logo');
-
+function change_wp_login_url() {
+    echo bloginfo('url');
+ }
+function change_wp_login_title() {
+	echo get_option('blogname');
+}
+add_filter('login_headerurl', 'change_wp_login_url');
+add_filter('login_headertitle', 'change_wp_login_title');
+	
+	
 function get_user_role() {
     global $current_user;
 
