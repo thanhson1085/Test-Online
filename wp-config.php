@@ -33,6 +33,9 @@ define('DB_CHARSET', 'utf8');
 /** The Database Collate type. Don't change this if in doubt. */
 define('DB_COLLATE', '');
 
+/** Enable the WordPress Object Cache. */
+define('ENABLE_CACHE', true);
+
 /**#@+
  * Authentication Unique Keys and Salts.
  *
@@ -88,3 +91,7 @@ if ( !defined('ABSPATH') )
 
 /** Sets up WordPress vars and included files. */
 require_once(ABSPATH . 'wp-settings.php');
+
+/*  Tue Apr 10, 2012 11:44:16 added by Thanh Son for memcached server*/
+global $memcached_servers;
+$memcached_servers = array('default' => array('127.0.0.1:11211'));
