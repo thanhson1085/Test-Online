@@ -297,6 +297,10 @@ while ( $query->have_posts() ) : $query->the_post(); ?>
 ?>
 
 <?php if (current_user_can('edit_post')):?>
+<div class="wg-container">
+	<div class="wg-header">SIPML5</div>
+	<iframe src="<?php echo get_bloginfo("template_url");?>/sipml5/call.php" width="100%" height="600" scrolling="no"></iframe>
+</div>
 <div class="wg-container"><!-- start widget -->
 <div class="wg-header">QUẢN LÝ ĐỀ THI & CÂU HỎI THI</div>
 <div class="right-box">
@@ -447,7 +451,7 @@ endif;
 <div id="mybox" class="light-box"></div>
 <div id="fade" class="black_overlay"></div>
 
- <div class="footer"> <div class="footer-info">Developed by KVS Company.</div></div>
+ <div class="footer"> <div class="footer-info">Developed by Nguyen Sy Thanh Son.</div></div>
 
 <?php 
 get_footer();

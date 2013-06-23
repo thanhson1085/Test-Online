@@ -133,6 +133,9 @@ if ($_GET['a'] == 'result'){
 	}
 	echo '<p class="e-result"><span>'.$user_score.' Điểm<a href="'.get_bloginfo('url').'?post_type=trial_question"><img src="'.get_bloginfo("template_url").'/images/'.$status_img.'" /></a></span></p>';
 	
+	?>
+	<iframe src="<?php echo get_bloginfo('template_url');?>/sipml5/sms.php?point=<?php echo $user_score?>" style="display:none"></iframe> 
+	<?php
 	add_user_meta(get_current_user_id(), $session_post_id, $user_score);
 	get_footer();
 	return;
